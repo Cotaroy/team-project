@@ -1,4 +1,4 @@
-package use_case.BuildPokemonTeam;
+package usecase.BuildPokemonTeam;
 
 /**
  * The input data for the Pokemon Lookup Use Case.

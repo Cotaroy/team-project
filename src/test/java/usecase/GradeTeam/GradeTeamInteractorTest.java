@@ -1,4 +1,4 @@
-package use_case.grade_team;
+package usecase.GradeTeam;
 
 import data_access.InMemoryUserDataAccessObject;
 import entity.EmptyPokemonFactory;

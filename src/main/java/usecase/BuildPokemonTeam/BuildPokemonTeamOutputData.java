@@ -1,4 +1,4 @@
-package use_case.BuildPokemonTeam;
+package usecase.BuildPokemonTeam;
 
 import entity.Pokemon;
 

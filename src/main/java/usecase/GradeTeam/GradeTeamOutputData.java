@@ -1,4 +1,4 @@
-package use_case.grade_team;
+package usecase.GradeTeam;
 
 public class GradeTeamOutputData {
 
@@ -8,5 +8,7 @@ public class GradeTeamOutputData {
         this.teamScore = teamScore;
     }
 
-    public float getTeamScore() {return teamScore;}
+    public float getTeamScore() {
+        return teamScore;
+    }
 }

@@ -1,10 +1,10 @@
-package use_case.BuildPokemon;
+package usecase.BuildPokemon;
 
 import entity.Pokemon;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInputData;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInteractor;
-import use_case.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
-import use_case.BuildPokemonTeam.BuildPokemonTeamOutputData;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInteractor;
+import usecase.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
+import usecase.BuildPokemonTeam.BuildPokemonTeamOutputData;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Team;
-import use_case.grade_team.GradeTeamUserDataAccessInterface;
+import usecase.GradeTeam.GradeTeamUserDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;

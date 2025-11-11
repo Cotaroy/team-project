@@ -1,4 +1,4 @@
-package use_case.BuildPokemonTeam;
+package usecase.BuildPokemonTeam;
 
 /**
  * The output boundary for the Pokemon Lookup Use Case.

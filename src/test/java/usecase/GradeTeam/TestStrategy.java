@@ -1,4 +1,4 @@
-package use_case.grade_team;
+package usecase.GradeTeam;
 
 import entity.GradingStrategy;
 import entity.Team;

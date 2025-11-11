@@ -1,9 +1,7 @@
-package use_case.BuildPokemonTeam;
+package usecase.BuildPokemonTeam;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import entity.Pokemon;
@@ -11,7 +9,6 @@ import entity.Pokemon;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary {
     private final BuildPokemonTeamOutputBoundary userPresenter;
