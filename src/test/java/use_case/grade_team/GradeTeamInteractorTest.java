@@ -3,7 +3,6 @@ package use_case.grade_team;
 import data_access.InMemoryUserDataAccessObject;
 import entity.EmptyPokemonFactory;
 import entity.GradingStrategy;
-import entity.Pokemon;
 import entity.Team;
 import org.junit.jupiter.api.Test;
 
