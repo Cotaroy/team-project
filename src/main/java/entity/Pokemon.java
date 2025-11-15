@@ -9,6 +9,7 @@ public class Pokemon {
         private Type type1;
         private Type type2;
         private ArrayList<Integer> stats;
+        // 0: hp, 1: attack, 2: defense, 3: special-attack, 4: special-defense, 5: speed
         private ArrayList<Integer> abilities;
         private int hidden;
         private ArrayList<Integer> moves;

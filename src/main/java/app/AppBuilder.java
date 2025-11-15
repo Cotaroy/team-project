@@ -2,9 +2,9 @@ package app;
 
 import entity.EmptyPokemonFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.pokemon.PokemonLookupController;
-import interface_adapter.pokemon.PokemonLookupPresenter;
-import interface_adapter.pokemon.PokemonLookupViewModel;
+import interface_adapter.pokemon_lookup.PokemonLookupController;
+import interface_adapter.pokemon_lookup.PokemonLookupPresenter;
+import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import use_case.PokemonLookup.PokemonLookupInputBoundary;
 import use_case.PokemonLookup.PokemonLookupInteractor;
 import use_case.PokemonLookup.PokemonLookupOutputBoundary;
