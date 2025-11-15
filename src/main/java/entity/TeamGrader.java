@@ -21,8 +21,10 @@ public class TeamGrader implements GradingStrategy{
         HashSet<String> offensiveCoverage = new HashSet<>();
         HashSet<String> defensiveCoverage = new HashSet<>();
         for (Pokemon value : pokemon) {
-            offensiveCoverage.addAll(value.getStrengths());
-            defensiveCoverage.addAll(value.getResistances());
+            if (value != null) {
+                offensiveCoverage.addAll(value.getStrengths());
+                defensiveCoverage.addAll(value.getResistances());
+            }
         }
         return (defensiveCoverage.size() + offensiveCoverage.size());
     }
@@ -30,17 +32,19 @@ public class TeamGrader implements GradingStrategy{
     private static float getStatScore(Pokemon[] pokemon) {
         float result = 0;
         for (Pokemon value : pokemon) {
-            ArrayList<Integer> stats = value.getStats();
-            float sumStats = 0;
-            for (int stat : stats) {
-                sumStats += stat;
-            }
-            if (sumStats <= 399) {
-                result += 5;
-            } else if (sumStats > 600) {
-                result += 10;
-            } else {
-                result += 6 + (int) (sumStats - 400) / 50;
+            if (value != null) {
+                ArrayList<Integer> stats = value.getStats();
+                float sumStats = 0;
+                for (int stat : stats) {
+                    sumStats += stat;
+                }
+                if (sumStats <= 399) {
+                    result += 5;
+                } else if (sumStats > 600) {
+                    result += 10;
+                } else {
+                    result += 6 + (int) (sumStats - 400) / 50;
+                }
             }
         }
         return result;
