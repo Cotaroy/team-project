@@ -25,11 +25,10 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
     }
 
     @Override
-    public void execute(PokemonLookupInputData pokemonLookupInputData) throws IOException {
+    public void execute(PokemonLookupInputData pokemonLookupInputData) throws IOException, PokemonNotFoundException {
         String name = pokemonLookupInputData.getName().toLowerCase();
         if ("".equals(name)) {
             userPresenter.prepareFailView("No Pokemon name provided.");
-            return;
         } else {
             name = name.replace(" ", "-");
             ArrayList<String> hyphens = new ArrayList<>(Arrays.asList(
@@ -83,13 +82,13 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
             try (Response response = client.newCall(request1).execute()) {
                 if (!response.isSuccessful()) {
                     userPresenter.prepareFailView("Pokemon not found: " + name);
-                    return;
+                    throw new PokemonNotFoundException(name);
                 }
 
                 try (Response response2 = client.newCall(request2).execute()) {
                     if (!response2.isSuccessful()) {
                         userPresenter.prepareFailView("Pokemon not found: " + name);
-                        return;
+                        throw new PokemonNotFoundException(name);
                     }
 
                     // Parse the response JSON
