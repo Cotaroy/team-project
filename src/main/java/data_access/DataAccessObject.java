@@ -49,14 +49,34 @@ public class DataAccessObject implements BuildPokemonTeamDataAccessInterface {
         }
 
     }
-    public Team loadTeam(String name){
-        Team team = null;
-        return team;
-    }
-    public boolean exists(String name){
-        boolean x = true;
-        return x;
+    public Team loadTeam(String name) {
+        String line = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader("teamStorage/teams.csv"));) {
+            //parse lines until reaching the team
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("teamName")) {
+                    break;
+                }
+            }
+            String[] parts = line.split(",");
+            int partsLength = parts.length - 1;
+            Team team = new Team(name);
+
+            //Add each pokemon from the line to a new team
+            for(int i = 1; i < partsLength; i++){
+                team.setTeamName(parts[i]);     //set pokemon
+            }
+            return team;
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Failed to load team", e);
+        }
     }
 
-}
+        public boolean exists (String name){
+            boolean x = true;
+            return x;
+        }
 
+
+    }
