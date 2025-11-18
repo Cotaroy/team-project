@@ -13,11 +13,11 @@ import java.io.IOException;
 import entity.Pokemon;
 
 public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
-    private final Pokemon pokemon;
+    private final RegionPokedexDataAccessInterface dataAccess;
     private final RegionPokedexOutputBoundary userPresenter;
 
-    public RegionPokedexInteractor(Pokemon pokemon, RegionPokedexOutputBoundary userPresenter) {
-        this.pokemon = pokemon;
+    public RegionPokedexInteractor(RegionPokedexDataAccessInterface dataAccess, RegionPokedexOutputBoundary userPresenter) {
+        this.dataAccess = dataAccess;
         this.userPresenter = userPresenter;
     }
 
@@ -26,43 +26,12 @@ public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
         String name = regionPokedexInputData.getPokedex().toLowerCase();
         if ("".equals(name)) {
             userPresenter.prepareFailureView(("No pokemon game provided"));
+            return;
         }
-        else {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request1 = new Request.Builder()
-                    .url("https://pokeapi.co/api/v2/pokedex/" + name)
-                    .build();
-
-            try (Response response = client.newCall(request1).execute()) {
-                if (!response.isSuccessful()) {
-                    userPresenter.prepareFailureView(("Pokedex could not be found"));
-                    return;
-                }
-
-                String responseBody = response.body().string();
-                JSONObject json = new JSONObject(responseBody);
-                JSONArray entries = json.getJSONArray("pokemon_entries");
-
-                ArrayList<String> pokemons =  new ArrayList<>();
-                for (int i = 0; i < entries.length(); i++) {
-                    JSONObject entry = entries.getJSONObject(i);
-                    JSONObject species = entry.getJSONObject("pokemon_species");
-                    String pokemonName = species.getString("name");
-                    pokemons.add(pokemonName);
-                }
-
-                RegionPokedexOutputData outputData = new RegionPokedexOutputData(pokemons);
-
-                userPresenter.prepareSuccessView(outputData);
-
-            }
-
-
-
-
-        }
-
+        ArrayList<String> pokemons = dataAccess.getPokedexData(name);
+        RegionPokedexOutputData outputData = new RegionPokedexOutputData(pokemons);
+        userPresenter.prepareSuccessView(outputData);
 
     }
+
 }
