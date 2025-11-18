@@ -19,7 +19,7 @@ class TestPokemonLookupInteractor {
 
     // a basic pokemon test
     @Test
-    void MagikarpTest() throws IOException {
+    void MagikarpTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
         ArrayList<Integer> abilitykarp = new ArrayList<>(Arrays.asList(33));
         ArrayList<Integer> moveskarp = new ArrayList<>(Arrays.asList(33, 56, 150, 175, 340));
@@ -53,7 +53,7 @@ class TestPokemonLookupInteractor {
 
     // returns the specific form data
     @Test
-    void AegislashTest() throws IOException {
+    void AegislashTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         ArrayList<Integer> stats = new ArrayList<>(Arrays.asList(60, 50, 140, 50, 140, 60));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
@@ -78,7 +78,7 @@ class TestPokemonLookupInteractor {
 
     // returns a formless pokemon that still has a hyphen
     @Test
-    void TingLuTest() throws IOException {
+    void TingLuTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         PokemonLookupInputData inputData = new PokemonLookupInputData("ting-lu");
@@ -102,7 +102,7 @@ class TestPokemonLookupInteractor {
 
     // dual type return the right weakness test
     @Test
-    void LudicoloTest() throws IOException {
+    void LudicoloTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
 //        HashSet<String> waterstrength = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
 //        HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
 //        HashSet<String> wateres = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
@@ -138,7 +138,7 @@ class TestPokemonLookupInteractor {
 
     // dual type return the right strengths test (no duplicates)
     @Test
-    void AurorusTest() throws IOException {
+    void AurorusTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
 //        HashSet<String> icestrength = new HashSet<>(Arrays.asList("flying", "ground", "grass", "dragon"));
 //        HashSet<String> iceweak = new HashSet<>(Arrays.asList("fighting", "fire", "rock", "steel"));
 //        HashSet<String> iceres = new HashSet<>(Arrays.asList("ice"));
@@ -175,7 +175,7 @@ class TestPokemonLookupInteractor {
     // dual types return the right resistances
 
     @Test
-    void DurantTest() throws IOException {
+    void DurantTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
 //        HashSet<String> bugstrength = new HashSet<>(Arrays.asList("grass", "dark", "psychic"));
 //        HashSet<String> bugweak = new HashSet<>(Arrays.asList("fire", "rock", "flying"));
 //        HashSet<String> bugres = new HashSet<>(Arrays.asList("ground", "grass", "fighting"));
@@ -211,7 +211,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has one ability
     @Test
-    void ShedinjaTest() throws IOException {
+    void ShedinjaTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         ArrayList<Integer> abilitykarp = new ArrayList<>(Arrays.asList(25));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
@@ -235,7 +235,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has one ability and one hidden ability
     @Test
-    void GarchompTest() throws IOException {
+    void GarchompTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         ArrayList<Integer> ability = new ArrayList<>(Arrays.asList(8));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
@@ -261,7 +261,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has all three abilities
     @Test
-    void ScolipedeTest() throws IOException {
+    void ScolipedeTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         ArrayList<Integer> ability = new ArrayList<>(Arrays.asList(38, 68));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();

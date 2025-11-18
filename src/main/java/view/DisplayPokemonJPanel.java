@@ -5,8 +5,10 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class DisplayPokemonJPanel extends JPanel {
@@ -36,6 +38,7 @@ public class DisplayPokemonJPanel extends JPanel {
             this.pokemonInfo.add(pokemonBasicInfo);
             this.pokemonInfo.add(pokemonStatsInfo);
             this.pokemonInfo.revalidate();
+            this.pokemonInfo.repaint();
 
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

@@ -1,4 +1,5 @@
 package use_case.PokemonLookup;
+
 import entity.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,7 +23,7 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
     public PokemonLookupInteractor(PokemonLookupOutputBoundary pokemonLookupOutputBoundary,
                                    Pokemon Pokemon, PokemonLookupDataAccessInterface dataAccess) {
         this.userPresenter = pokemonLookupOutputBoundary;
-       this.pokemon = Pokemon;
+        this.pokemon = Pokemon;
         this.dataAccess = dataAccess;
     }
 
@@ -34,17 +35,17 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
             return;
         } else {
             Pokemon pokemon = dataAccess.getPokemon(name);
-                    final PokemonLookupOutputData pokemonLookupOutputData =
-                            new PokemonLookupOutputData(pokemon);
-                    userPresenter.prepareSuccessView(pokemonLookupOutputData);
-                }
-                }
+            final PokemonLookupOutputData pokemonLookupOutputData =
+                    new PokemonLookupOutputData(pokemon);
+            userPresenter.prepareSuccessView(pokemonLookupOutputData);
+        }
+    }
 //            ;
 //            final PokemonLookupOutputData pokemonLookupOutputData =
 //                    new PokemonLookupOutputData(Pokemon);
 //            userPresenter.prepareSuccessView(pokemonLookupOutputData);
 
-        }
+}
 
 
 

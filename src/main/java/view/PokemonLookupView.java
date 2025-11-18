@@ -3,6 +3,7 @@ package view;
 import interface_adapter.pokemon_lookup.PokemonLookupController;
 import interface_adapter.pokemon_lookup.PokemonLookupState;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
+import use_case.PokemonLookup.PokemonLookupInputBoundary;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -10,6 +11,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -45,19 +48,25 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
-                            final PokemonLookupState currentState = pokemonLookupViewModel.getState();
-
-                            try {
-                                pokemonLookupController.execute(currentState.getPokemonName());
-                                displayPokemon.setPokemon(currentState.getDisplayPokemon());
-
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            } catch (NullPointerException e) {
-                                JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
-                            }
+                            updatePokemonDisplay(pokemonLookupViewModel);
                         }
                     }
+                }
+        );
+        pokemonNameInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent evt) {
+                        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                            updatePokemonDisplay(pokemonLookupViewModel);
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
                 }
         );
 
@@ -68,6 +77,17 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         this.add(title);
         this.add(pokemonNameInfo);
         this.add(displayPokemon);
+    }
+
+    private void updatePokemonDisplay(PokemonLookupViewModel pokemonLookupViewModel) {
+        final PokemonLookupState currentState = pokemonLookupViewModel.getState();
+        try {
+            pokemonLookupController.execute(currentState.getPokemonName());
+            displayPokemon.setPokemon(currentState.getDisplayPokemon());
+
+        } catch (IOException | PokemonLookupInputBoundary.PokemonNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
+        }
     }
 
     private void addPokemonNameListener() {

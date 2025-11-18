@@ -13,7 +13,7 @@ public class PokemonLookupController {
         this.userPokemonLookupUseCaseInteractor = userPokemonLookupUseCaseInteractor;
     }
 
-    public void execute(String pokemonName) throws IOException {
+    public void execute(String pokemonName) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         final PokemonLookupInputData pokemonLookupInputData = new PokemonLookupInputData(pokemonName);
 
         userPokemonLookupUseCaseInteractor.execute(pokemonLookupInputData);
