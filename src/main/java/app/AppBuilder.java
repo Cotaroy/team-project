@@ -8,6 +8,8 @@ import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import use_case.PokemonLookup.PokemonLookupInputBoundary;
 import use_case.PokemonLookup.PokemonLookupInteractor;
 import use_case.PokemonLookup.PokemonLookupOutputBoundary;
+import use_case.PokemonLookup.PokemonLookupDataAccessInterface;
+import data_access.PokemonLookupDataAccessObject;
 import view.PokemonLookupView;
 import view.ViewManager;
 
@@ -26,6 +28,7 @@ public class AppBuilder {
 
     private PokemonLookupView pokemonLookupView;
     private PokemonLookupViewModel pokemonLookupViewModel;
+    private final PokemonLookupDataAccessObject PokemonLookupDataAccessObject = new PokemonLookupDataAccessObject();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -42,7 +45,7 @@ public class AppBuilder {
         final PokemonLookupOutputBoundary pokemonLookupOutputBoundary = new PokemonLookupPresenter(
                 pokemonLookupViewModel, viewManagerModel);
         final PokemonLookupInputBoundary pokemonLookupInteractor =
-                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create());
+                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create(), PokemonLookupDataAccessObject);
         PokemonLookupController controller = new PokemonLookupController(pokemonLookupInteractor);
         pokemonLookupView.setPokemonLookupController(controller);
         return this;

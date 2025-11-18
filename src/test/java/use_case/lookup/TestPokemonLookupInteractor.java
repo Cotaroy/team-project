@@ -1,5 +1,6 @@
 package use_case.lookup;
 
+import data_access.PokemonLookupDataAccessObject;
 import entity.Pokemon;
 import entity.EmptyPokemonFactory;
 
@@ -23,7 +24,8 @@ class TestPokemonLookupInteractor {
         ArrayList<Integer> abilitykarp = new ArrayList<>(Arrays.asList(33));
         ArrayList<Integer> moveskarp = new ArrayList<>(Arrays.asList(33, 56, 150, 175, 340));
         ArrayList<Integer> eggkarp = new ArrayList<>(Arrays.asList(12, 14));
-        ArrayList<Integer> pokedexkarp = new ArrayList<>(Arrays.asList(129, 129, 76, 52, 23, 23, 76, 13, 49, 53, 91, 91, 34, 51, 41, 111, 34, 54, 53, 129, 144, 42, 62, 80, 134, 43, 32));
+        ArrayList<Integer> pokedexkarp = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+                29, 30, 31, 32, 34));
         HashSet<String> waterstrength = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
         HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
         HashSet<String> wateres = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
@@ -32,10 +34,12 @@ class TestPokemonLookupInteractor {
                 waterstrength, waterweak, wateres);
         Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, 155, moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
-        PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary()
+        {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals(magikarp, outputData.getPokemon());
+                assertEquals(magikarp.toString(), outputData.getPokemon().toString());
             }
 
             @Override
@@ -43,7 +47,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, magikarp);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, magikarp, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -54,6 +58,7 @@ class TestPokemonLookupInteractor {
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         PokemonLookupInputData inputData = new PokemonLookupInputData("aegislash-shield");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -66,7 +71,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
 
     }
@@ -77,6 +82,7 @@ class TestPokemonLookupInteractor {
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         PokemonLookupInputData inputData = new PokemonLookupInputData("ting-lu");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -88,7 +94,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
 
     }
@@ -114,6 +120,7 @@ class TestPokemonLookupInteractor {
 //        emptymon.setType2(type2);
         HashSet<String> ludicoloweakness = new HashSet<>(Arrays.asList("poison", "flying", "bug"));
         PokemonLookupInputData inputData = new PokemonLookupInputData("ludicolo");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -125,7 +132,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -149,6 +156,7 @@ class TestPokemonLookupInteractor {
 //        emptymon.setType1(type1);
 //        emptymon.setType2(type2);
         PokemonLookupInputData inputData = new PokemonLookupInputData("aurorus");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -160,7 +168,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -185,6 +193,7 @@ class TestPokemonLookupInteractor {
 //        emptymon.setType2(type2);
         HashSet<String> durantres = new HashSet<>(Arrays.asList("normal", "bug", "poison", "steel", "grass", "psychic", "ice", "dragon", "fairy"));
         PokemonLookupInputData inputData = new PokemonLookupInputData("durant");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -196,7 +205,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -208,6 +217,7 @@ class TestPokemonLookupInteractor {
         Pokemon emptymon = factoree.create();
         emptymon.setAbilities(abilitykarp);
         PokemonLookupInputData inputData = new PokemonLookupInputData("shedinja");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -219,7 +229,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -232,6 +242,7 @@ class TestPokemonLookupInteractor {
         emptymon.setAbilities(ability);
         emptymon.setHidden(24);
         PokemonLookupInputData inputData = new PokemonLookupInputData("garchomp");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -244,7 +255,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 
@@ -257,6 +268,7 @@ class TestPokemonLookupInteractor {
         emptymon.setAbilities(ability);
         emptymon.setHidden(3);
         PokemonLookupInputData inputData = new PokemonLookupInputData("scolipede");
+        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -269,7 +281,7 @@ class TestPokemonLookupInteractor {
                 fail(errorMessage);
             }
         };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon);
+        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
     }
 

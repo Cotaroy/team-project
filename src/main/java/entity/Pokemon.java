@@ -46,6 +46,11 @@ public class Pokemon {
                     '}';
         }
 
+        @Override
+        public boolean equals(Object pokemon2) {
+            return this.toString() == pokemon2.toString();
+        }
+
         // Getters and Setters
         public String getName() {
             return name;
