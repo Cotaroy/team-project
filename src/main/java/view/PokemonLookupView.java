@@ -22,6 +22,9 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
     private final JTextField pokemonNameInputField = new JTextField(15);
     private PokemonLookupController pokemonLookupController = null;
+    //For filter
+    private final JTextField filterTypeInputField = new JTextField(15);
+    private final JTextField filterValueInputField = new JTextField(15);
 
     private final JButton search;
     private final DisplayPokemonJPanel displayPokemon = new DisplayPokemonJPanel();
@@ -41,6 +44,14 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         buttons.add(search);
 
         pokemonNameInfo.add(buttons);
+
+        //For filter
+        final JPanel filterInfo = new JPanel();
+        filterInfo.add(new JLabel("Filter by:"));
+        filterInfo.add(filterTypeInputField);
+        filterInfo.add(new JLabel("Value:"));
+        filterInfo.add(filterValueInputField);
+        filterInfo.add(new JButton("Filter"));
 
         search.addActionListener(
                 new ActionListener() {
@@ -66,6 +77,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         this.add(title);
         this.add(pokemonNameInfo);
+        this.add(filterInfo);
         this.add(displayPokemon);
     }
 
