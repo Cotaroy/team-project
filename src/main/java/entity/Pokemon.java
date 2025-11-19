@@ -10,15 +10,15 @@ public class Pokemon {
         private Type type2;
         private ArrayList<Integer> stats;
         // 0: hp, 1: attack, 2: defense, 3: special-attack, 4: special-defense, 5: speed
-        private ArrayList<Integer> abilities;
-        private int hidden;
-        private ArrayList<Integer> moves;
+        private ArrayList<Ability> abilities;
+        private Ability hidden;
+        private ArrayList<Move> moves;
         private ArrayList<Integer> egggroup;
         private ArrayList<Integer> pokedexes;
         private String sprite;
         // Constructor
         public Pokemon(String name, Type type1, Type type2, ArrayList<Integer> stats,
-                       ArrayList<Integer> abilities, int hidden, ArrayList<Integer> moves, ArrayList<Integer> egggroup, ArrayList<Integer> pokedexes, String sprite) {
+                       ArrayList<Ability> abilities, Ability hidden, ArrayList<Move> moves, ArrayList<Integer> egggroup, ArrayList<Integer> pokedexes, String sprite) {
             this.name = name;
             this.type1 = type1;
             this.type2 = type2;
@@ -84,27 +84,27 @@ public class Pokemon {
             this.stats = stats;
         }
 
-        public ArrayList<Integer> getAbilities() {
+        public ArrayList<Ability> getAbilities() {
             return abilities;
         }
 
-        public void setAbilities(ArrayList<Integer> abilities) {
+        public void setAbilities(ArrayList<Ability> abilities) {
             this.abilities = abilities;
         }
 
-        public int getHidden() {
+        public Ability getHidden() {
             return hidden;
         }
 
-        public void setHidden(int hidden) {
+        public void setHidden(Ability hidden) {
             this.hidden = hidden;
         }
 
-        public List<Integer> getMoves() {
+        public List<Move> getMoves() {
             return moves;
         }
 
-        public void setMoves(ArrayList<Integer> moves) {
+        public void setMoves(ArrayList<Move> moves) {
             this.moves = moves;
         }
 
@@ -188,19 +188,6 @@ public class Pokemon {
             resistances.addAll(resistancesf2);
 
             return resistances;
-        }
-
-    // Helper methods to add single elements
-        public void addStat(int stat) {
-            this.stats.add(stat);
-        }
-
-        public void addAbility(int ability) {
-            this.abilities.add(ability);
-        }
-
-        public void addMove(int move) {
-            this.moves.add(move);
         }
     }
 

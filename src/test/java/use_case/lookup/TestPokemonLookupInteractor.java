@@ -1,5 +1,7 @@
 package use_case.lookup;
 
+import data_access.AbilityMap;
+import data_access.MoveMap;
 import data_access.PokemonLookupDataAccessObject;
 import entity.Pokemon;
 import entity.EmptyPokemonFactory;
@@ -9,6 +11,8 @@ import java.util.*;
 import java.util.HashSet;
 
 import entity.Type;
+import entity.Move;
+import entity.Ability;
 import org.junit.jupiter.api.Test;
 import use_case.PokemonLookup.*;
 
@@ -20,9 +24,11 @@ class TestPokemonLookupInteractor {
     // a basic pokemon test
     @Test
     void MagikarpTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+        MoveMap movemap = new MoveMap();
+        AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
-        ArrayList<Integer> abilitykarp = new ArrayList<>(Arrays.asList(33));
-        ArrayList<Integer> moveskarp = new ArrayList<>(Arrays.asList(33, 56, 150, 175, 340));
+        ArrayList<Ability> abilitykarp = new ArrayList<>(Arrays.asList(abilitymap.getAbility(33)));
+        ArrayList<Move> moveskarp = new ArrayList<>(Arrays.asList(movemap.getMove(33), movemap.getMove(56), movemap.getMove(150), movemap.getMove(175), movemap.getMove(340)));
         ArrayList<Integer> eggkarp = new ArrayList<>(Arrays.asList(12, 14));
         ArrayList<Integer> pokedexkarp = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
                 29, 30, 31, 32, 34));
@@ -32,7 +38,7 @@ class TestPokemonLookupInteractor {
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres);
-        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, 155, moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
+        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
         PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary()
@@ -212,7 +218,8 @@ class TestPokemonLookupInteractor {
     // pokemon only has one ability
     @Test
     void ShedinjaTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-        ArrayList<Integer> abilitykarp = new ArrayList<>(Arrays.asList(25));
+        AbilityMap abilitymap = new AbilityMap();
+        ArrayList<Ability> abilitykarp = new ArrayList<>(Arrays.asList(abilitymap.getAbility(25)));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         emptymon.setAbilities(abilitykarp);
@@ -221,7 +228,7 @@ class TestPokemonLookupInteractor {
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals(emptymon.getAbilities(), outputData.getPokemon().getAbilities());
+                assertEquals(emptymon.getAbilities().get(0).toString(), outputData.getPokemon().getAbilities().get(0).toString());
             }
 
             @Override
@@ -236,18 +243,19 @@ class TestPokemonLookupInteractor {
     // pokemon only has one ability and one hidden ability
     @Test
     void GarchompTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-        ArrayList<Integer> ability = new ArrayList<>(Arrays.asList(8));
+        AbilityMap abilitymap = new AbilityMap();
+        ArrayList<Ability> ability = new ArrayList<>(Arrays.asList(abilitymap.getAbility(8)));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         emptymon.setAbilities(ability);
-        emptymon.setHidden(24);
+        emptymon.setHidden(abilitymap.getAbility(24));
         PokemonLookupInputData inputData = new PokemonLookupInputData("garchomp");
         PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals(emptymon.getAbilities(), outputData.getPokemon().getAbilities());
-                assertEquals(24, outputData.getPokemon().getHidden());
+                assertEquals(emptymon.getAbilities().get(0).toString(), outputData.getPokemon().getAbilities().get(0).toString());
+                assertEquals(abilitymap.getAbility(24).toString(), outputData.getPokemon().getHidden().toString());
             }
 
             @Override
@@ -262,18 +270,21 @@ class TestPokemonLookupInteractor {
     // pokemon only has all three abilities
     @Test
     void ScolipedeTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-        ArrayList<Integer> ability = new ArrayList<>(Arrays.asList(38, 68));
+        AbilityMap abilitymap = new AbilityMap();
+        ArrayList<Ability> ability = new ArrayList<>(Arrays.asList(abilitymap.getAbility(38),
+                abilitymap.getAbility(68)));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         emptymon.setAbilities(ability);
-        emptymon.setHidden(3);
+        emptymon.setHidden(abilitymap.getAbility(3));
         PokemonLookupInputData inputData = new PokemonLookupInputData("scolipede");
         PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals(emptymon.getAbilities(), outputData.getPokemon().getAbilities());
-                assertEquals(3, outputData.getPokemon().getHidden());
+                assertEquals(emptymon.getAbilities().get(0).toString(), outputData.getPokemon().getAbilities().get(0).toString());
+                assertEquals(emptymon.getAbilities().get(1).toString(), outputData.getPokemon().getAbilities().get(1).toString());
+                assertEquals(abilitymap.getAbility(3).toString(), outputData.getPokemon().getHidden().toString());
             }
 
             @Override

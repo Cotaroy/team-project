@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import entity.Pokemon;
+import entity.Move;
+import entity.Ability;
 import use_case.PokemonLookup.PokemonLookupDataAccessInterface;
 import use_case.PokemonLookup.PokemonLookupOutputData;
 
@@ -17,6 +19,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInterface {
+    private MoveMap movemap = new MoveMap();
+    private AbilityMap abilitymap = new AbilityMap();
+
 
     @Override
     public Pokemon getPokemon(String name) throws IOException {
@@ -99,45 +104,45 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
                     stats.add(json.getJSONArray("stats").getJSONObject(count).getInt("base_stat"));
                 }
                 ;
-                ArrayList<Integer> abilities = new ArrayList<Integer>();
-                int hidden = 0;
+                ArrayList<Ability> abilities = new ArrayList<Ability>();
+                Ability hidden = null;
                 // a pokemon has 1 regular ability
                 if (json.getJSONArray("abilities").length() == 1) {
                     String pabil = json.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").getString("url");
                     String[] aabil = pabil.split("/");
                     int abil = Integer.parseInt(aabil[aabil.length - 1]);
-                    abilities.add(abil);
+                    abilities.add(abilitymap.getAbility(abil));
                 }
                 // a pokemon has 1 hidden ability and 1 regular ability
                 if (json.getJSONArray("abilities").length() == 2 && json.getJSONArray("abilities").getJSONObject(1).getInt("slot") == 3) {
                     String pabil = json.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").getString("url");
                     String[] aabil = pabil.split("/");
                     int abil = Integer.parseInt(aabil[aabil.length - 1]);
-                    abilities.add(abil);
+                    abilities.add(abilitymap.getAbility(abil));
                     String hiden = json.getJSONArray("abilities").getJSONObject(1).getJSONObject("ability").getString("url");
                     String[] ahiden = hiden.split("/");
-                    hidden = Integer.parseInt(ahiden[ahiden.length - 1]);
+                    hidden = abilitymap.getAbility(Integer.parseInt(ahiden[ahiden.length - 1]));
                 }
                 // a pokemon has all regular and hidden abilities
                 if (json.getJSONArray("abilities").length() == 3) {
                     String pabil = json.getJSONArray("abilities").getJSONObject(0).getJSONObject("ability").getString("url");
                     String[] aabil = pabil.split("/");
                     int abil = Integer.parseInt(aabil[aabil.length - 1]);
-                    abilities.add(abil);
+                    abilities.add(abilitymap.getAbility(abil));
                     String pabil2 = json.getJSONArray("abilities").getJSONObject(1).getJSONObject("ability").getString("url");
                     String[] aabil2 = pabil2.split("/");
                     int abil2 = Integer.parseInt(aabil2[aabil2.length - 1]);
-                    abilities.add(abil2);
+                    abilities.add(abilitymap.getAbility(abil2));
                     String hiden = json.getJSONArray("abilities").getJSONObject(2).getJSONObject("ability").getString("url");
                     String[] ahiden = hiden.split("/");
-                    hidden = Integer.parseInt(ahiden[ahiden.length - 1]);
+                    hidden = abilitymap.getAbility(Integer.parseInt(ahiden[ahiden.length - 1]));;
                 }
-                ArrayList<Integer> moves = new ArrayList<Integer>();
+                ArrayList<Move> moves = new ArrayList<Move>();
                 for (int i = 0; i < json.getJSONArray("moves").length(); i++) {
                     String pmove = json.getJSONArray("moves").getJSONObject(i).getJSONObject("move").getString("url");
                     String[] amove = pmove.split("/");
                     int move = Integer.parseInt(amove[amove.length - 1]);
-                    moves.add(move);
+                    moves.add(movemap.getMove(move));
                 }
                 ArrayList<Integer> egggroup = new ArrayList<Integer>();
                 for (int i = 0; i < json2.getJSONArray("egg_groups").length(); i++) {

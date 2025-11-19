@@ -6,62 +6,61 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MoveMap {
-    private final Map<String, Move> moves = new HashMap<>();
-
-    public MoveMap() {
-        this("moves.json");
-    }
+    private final Map<Integer, Move> moves = new HashMap<>();
 
     public Move getMove(int id) {
-        return moves.get(Integer.toString(id));
+        return moves.get(id);
     }
 
-    public MoveMap(String filename) {
+    public MoveMap() {
         try {
-            String jsonString = Files.readString(Paths.get(getClass().getClassLoader().getResource(filename).toURI()));
+            String jsonText = new String(
+                    getClass().getClassLoader().getResourceAsStream("moves.json").readAllBytes()
+            );
 
-            JSONArray jsonArray = new JSONArray(jsonString);
+            // Parse as JSON object
+            JSONObject root = new JSONObject(jsonText);
 
-            for (int i = 0; i < jsonArray.length(); i++) {
+            // Convert dictionary values to an array
+            JSONArray jsonArray = new JSONArray();
 
-                JSONObject moveData = jsonArray.getJSONObject(i);
-                String id = moveData.getString("id");
-
-                String name = moveData.getString("name");
-                int power = 0;
-                try {
-                    power =  moveData.getInt("power");
-                } catch (NullPointerException e) {
-                    power = 0;
-                }
-                int accuracy = 0;
-                try {
-                    accuracy =  moveData.getInt("power");
-                } catch (NullPointerException e) {
-                    accuracy = 0;
-                }
-
-                String effect = moveData.getJSONObject("effect_entries").getString("effect");
-
-                String url = moveData.getJSONObject("type").getString("url");
-                int type_id = url.charAt(url.length() - 2);
-
-                int damage = 0;
-
-                Move move = new Move(name, power, accuracy, effect, type_id, damage);
-
-                moves.put(id, move);
-
+            for (String key : root.keySet()) {
+                jsonArray.put(root.getJSONObject(key));
             }
 
-        } catch (IOException | URISyntaxException e) {
+            for (int i = 1; i < jsonArray.length(); i++) {
+
+                JSONObject moveData = jsonArray.getJSONObject(i);
+                int id = moveData.getInt("id");
+
+                String name = moveData.getString("name");
+                String damage = moveData.getJSONObject("damage_class").getString("name");
+                int power;
+                try {
+                    power =  moveData.getInt("power");
+                } catch (JSONException e) {
+                    power = 0;
+                }
+                int accuracy;
+                try {
+                    accuracy =  moveData.getInt("accuracy");
+                } catch (JSONException e) {
+                    accuracy = 0;
+                }
+                String ptype2 = moveData.getJSONObject("type").getString("url");
+                String[] atype2 = ptype2.split("/");
+                int typeid = Integer.parseInt(atype2[atype2.length - 1]);
+
+                Move move = new Move(id, name, power, accuracy, typeid, damage);
+
+                moves.put(id, move);
+            }
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

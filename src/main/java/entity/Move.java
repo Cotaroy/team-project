@@ -1,22 +1,27 @@
 package entity;
 
 public class Move {
+    private int id;
     private String name;
     private int power;
     private int accuracy;
-    private String effect;
     private int type_id;
-    private int damage;
+    private String damage;
 
-    public Move(String name, int power, int accuracy, String effect, int type_id, int damage) {
+    public Move(int id, String name, int power, int accuracy, int type_id, String damage) {
+        this.id = id;
         this.name = name;
         this.power = power;
         this.accuracy = accuracy;
-        this.effect = effect;
         this.type_id = type_id;
         this.damage = damage;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+    public int getId() { return id; }
     public String getName() {
         return name;
     }
@@ -35,22 +40,16 @@ public class Move {
     public void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
     }
-    public String getEffect() {
-        return effect;
-    }
-    public void setEffect(String effect) {
-        this.effect = effect;
-    }
     public int getType_id() {
         return type_id;
     }
     public void setType_id(int type_id) {
         this.type_id = type_id;
     }
-    public int getDamage() {
+    public String getDamage() {
         return damage;
     }
-    public void setDamage(int damage) {
+    public void setDamage(String damage) {
         this.damage = damage;
     }
 
