@@ -34,7 +34,7 @@ class TestPokemonLookupInteractor {
                 29, 30, 31, 32, 34));
         HashSet<String> waterstrength = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
         HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
-        HashSet<String> wateres = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
+        HashSet<String> wateres = new HashSet<>(Arrays.asList("steel", "fire", "ice", "water"));
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres);

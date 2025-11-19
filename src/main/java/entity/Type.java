@@ -39,6 +39,12 @@ public class Type {
 
     @Override
     public String toString() {
-        return name;
+        return "Type{" +
+                "name='" + name + '\'' +
+                "id=" + id +
+                "strengths=" + strengths +
+                "weaknesses=" + weaknesses +
+                "resistances=" + resistances +
+                '}';
     }
 }
