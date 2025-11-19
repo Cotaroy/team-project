@@ -4,6 +4,7 @@ import interface_adapter.pokemon_lookup.PokemonLookupController;
 import interface_adapter.pokemon_lookup.PokemonLookupState;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import use_case.PokemonLookup.PokemonLookupInputBoundary;
+import use_case.filter.FilterPokemonDataAccess;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -22,12 +23,14 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
     private final JTextField pokemonNameInputField = new JTextField(15);
     private PokemonLookupController pokemonLookupController = null;
-    //For filter
+
     private final JTextField filterTypeInputField = new JTextField(15);
     private final JTextField filterValueInputField = new JTextField(15);
 
     private final JButton search;
+    private final JButton filterButton;
     private final DisplayPokemonJPanel displayPokemon = new DisplayPokemonJPanel();
+    private final DisplayFilterJList displayFilter = new DisplayFilterJList();
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
@@ -45,13 +48,14 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         pokemonNameInfo.add(buttons);
 
-        //For filter
+        //Making filter panel
         final JPanel filterInfo = new JPanel();
         filterInfo.add(new JLabel("Filter by:"));
         filterInfo.add(filterTypeInputField);
         filterInfo.add(new JLabel("Value:"));
         filterInfo.add(filterValueInputField);
-        filterInfo.add(new JButton("Filter"));
+        filterButton = new JButton("Filter");
+        filterInfo.add(filterButton);
 
         search.addActionListener(
                 new ActionListener() {
@@ -67,11 +71,36 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                                 JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
                             }
                         }
+
                     }
                 }
         );
 
+        filterButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(filterButton)) {
+
+                            String filterType = filterTypeInputField.getText();
+                            String filterValue = filterValueInputField.getText();
+                            FilterPokemonDataAccess dataAccess =  new FilterPokemonDataAccess();
+
+                            if(dataAccess.filterTargetExists(filterType, filterValue)) {
+                                displayFilter.setPokemonList(dataAccess.getPokemonByFilter(filterType, filterValue));
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Not a valid Filter");
+                            }
+                        }
+
+                    }
+                }
+
+        );
+
         addPokemonNameListener();
+        addFilterTypeListener();
+        addFilterValueListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -79,6 +108,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         this.add(pokemonNameInfo);
         this.add(filterInfo);
         this.add(displayPokemon);
+        this.add(displayFilter);
     }
 
     private void addPokemonNameListener() {
@@ -87,6 +117,58 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
             private void documentListenerHelper() {
                 final PokemonLookupState currentState = pokemonLookupViewModel.getState();
                 currentState.setPokemonName(pokemonNameInputField.getText());
+                pokemonLookupViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+    }
+
+    private void addFilterTypeListener() {
+        filterTypeInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final PokemonLookupState currentState = pokemonLookupViewModel.getState();
+                currentState.setFilterType(filterTypeInputField.getText());
+                pokemonLookupViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+    }
+
+    private void addFilterValueListener() {
+        filterValueInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final PokemonLookupState currentState = pokemonLookupViewModel.getState();
+                currentState.setFilterValue(filterValueInputField.getText());
                 pokemonLookupViewModel.setState(currentState);
             }
 
