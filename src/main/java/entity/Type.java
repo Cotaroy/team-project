@@ -37,7 +37,14 @@ public class Type {
         return resistances;
     }
 
-    public String toProperName() {
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
+    @Override
+    public String toString() {
+        return "Type{" +
+                "name='" + name + '\'' +
+                "id=" + id +
+                "strengths=" + strengths +
+                "weaknesses=" + weaknesses +
+                "resistances=" + resistances +
+                '}';
     }
 }
