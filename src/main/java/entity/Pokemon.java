@@ -1,7 +1,5 @@
 package entity;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Pokemon {
         // Private fields
@@ -55,6 +53,58 @@ public class Pokemon {
         public String getName() {
             return name;
         }
+
+        // returns the Pokemon's name as a proper, formatted noun as opposed to its internal name
+
+        public String getProperName() {
+            if (name == null || name.isEmpty()) return name;
+
+            // Exact-format exceptions (NOT the mo-o line)
+            Map<String, String> fixedExceptions = new HashMap<>();
+            fixedExceptions.put("ho-oh", "Ho-Oh");
+            fixedExceptions.put("porygon-z", "Porygon-Z");
+            fixedExceptions.put("ting-lu", "Ting-Lu");
+            fixedExceptions.put("chi-yu", "Chi-Yu");
+            fixedExceptions.put("wo-chien", "Wo-Chien");
+            fixedExceptions.put("chien-pao", "Chien-Pao");
+            fixedExceptions.put("jangmo-o", "Jangmo-o");
+            fixedExceptions.put("hakamo-o", "Hakamo-o");
+            fixedExceptions.put("kommo-o", "Kommo-o");
+
+            // If the name is in fixed exceptions, return exact formatted version
+            if (fixedExceptions.containsKey(name.toLowerCase())) {
+                return fixedExceptions.get(name.toLowerCase());
+            }
+
+            // If there is no hyphen, format as a normal name
+            if (!name.contains("-")) {
+                return capitalize(name);
+            }
+
+            // Split at hyphen
+            String[] parts = name.split("-", 2);
+            String first = parts[0];
+            String second = parts[1];
+
+            // rule: name-mega → Mega Name
+            if (second.equalsIgnoreCase("mega")) {
+                return capitalize(second) + " " + capitalize(first);
+            }
+
+            // rule: name-anythingElse → Name anythingElse Form
+            return capitalize(first) + " " + capitalize(second) + " Form";
+        }
+
+    // Capitalize first letter
+    private static String capitalize(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    // Capitalizes both sides of a hyphen normally (for jangmo-o, etc.)
+    private static String capitalizeHyphenated(String s) {
+        String[] parts = s.split("-");
+        return capitalize(parts[0]) + "-" + capitalize(parts[1]);
+    }
 
         public void setName(String name) {
             this.name = name;
