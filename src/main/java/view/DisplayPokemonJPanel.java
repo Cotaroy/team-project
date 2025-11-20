@@ -50,12 +50,11 @@ public class DisplayPokemonJPanel extends JPanel {
         JPanel basicPokemonInfo = new JPanel();
         basicPokemonInfo.setLayout(new BoxLayout(basicPokemonInfo, BoxLayout.Y_AXIS));
         basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        String name = Character.toUpperCase(pokemon.getName().charAt(0)) +
-                pokemon.getName().substring(1);
+        String name = pokemon.getProperName();
         basicPokemonInfo.add(new JLabel("Name: " + name));
-        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1()));
+        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
         if (pokemon.getType2() != null) {
-            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2()));
+            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
         }
         return basicPokemonInfo;
     }
