@@ -56,6 +56,13 @@ public class DisplayPokemonJPanel extends JPanel {
         if (pokemon.getType2() != null) {
             basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
         }
+        basicPokemonInfo.add(new JLabel("Abilities: " + pokemon.getAbilities().get(0).getProperName()));
+        if (pokemon.getAbilities().size() == 2) {
+            basicPokemonInfo.add(new JLabel(pokemon.getAbilities().get(1).getProperName()));
+        }
+        if (pokemon.getHidden() != null) {
+            basicPokemonInfo.add(new JLabel("Hidden Ability: " + pokemon.getHidden().getProperName()));
+        }
         return basicPokemonInfo;
     }
 
