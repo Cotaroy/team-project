@@ -34,7 +34,8 @@ public class AppBuilder {
     public AppBuilder addPokemonLookupView() {
         pokemonLookupViewModel = new PokemonLookupViewModel();
         pokemonLookupView = new PokemonLookupView(pokemonLookupViewModel);
-        cardPanel.add(pokemonLookupView, pokemonLookupView.getName());
+        JScrollPane scrollerPokemonLookupView = new JScrollPane(pokemonLookupView);
+        cardPanel.add(scrollerPokemonLookupView, pokemonLookupView.getName());
         return this;
     }
 
