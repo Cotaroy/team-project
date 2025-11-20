@@ -37,8 +37,7 @@ public class Type {
         return resistances;
     }
 
-    @Override
-    public String toString() {
+    public String toProperName() {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 }
