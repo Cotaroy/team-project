@@ -8,13 +8,16 @@ public class Type {
     private HashSet<String> strengths;
     private HashSet<String> weaknesses;
     private HashSet<String> resistances;
+    private String sprite;
 
-    public Type(String name, int id, HashSet<String> strengths, HashSet<String> weaknesses, HashSet<String> resistances) {
+    public Type(String name, int id, HashSet<String> strengths, HashSet<String> weaknesses, HashSet<String> resistances
+    , String sprite) {
         this.name = name;
         this.id = id;
         this.strengths = strengths;
         this.weaknesses = weaknesses;
         this.resistances = resistances;
+        this.sprite = sprite;
     }
 
     public String getName() {
@@ -39,6 +42,11 @@ public class Type {
 
     public String toProperName() {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
+    }
+
+    public String getSprite ()
+    {
+        return sprite;
     }
 
     @Override

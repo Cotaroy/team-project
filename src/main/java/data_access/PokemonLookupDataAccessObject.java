@@ -158,7 +158,10 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
                     int dex = Integer.parseInt(adex[adex.length - 1]);
                     pokedexes.add(dex);
                 }
-                String sprite = json.getJSONObject("sprites").getString("front_default");
+           //     String sprite = json.getJSONObject("sprites").getString("front_default");
+                String sprite = json.getJSONObject("sprites").getJSONObject("other").
+                        getJSONObject("official-artwork").getString("front_default");
+
                 Pokemon pokemon = new Pokemon(pokename, type1, type2, stats, abilities, hidden, moves, egggroup, pokedexes, sprite);
                 return pokemon;
             }
@@ -177,8 +180,9 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
             JSONObject json = new JSONObject(responseBody);
 
             String name = json.getString("name");
+            String sprite = json.getJSONObject("sprites").getJSONObject("generation-vi").getJSONObject("omega-ruby-alpha-sapphire").getString("name_icon");
 
-            json = json.getJSONObject("damage_relations");
+                    json = json.getJSONObject("damage_relations");
 
             JSONArray doubleDamageFromJSON = json.getJSONArray("double_damage_from");
             JSONArray doubleDamageToJSON = json.getJSONArray("double_damage_to");
@@ -196,7 +200,7 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
             HashSet<String> resistances = new HashSet<>(halfDamageFrom);
             resistances.addAll(noDamageFrom);
 
-            return new Type(name, typeID, strengths, weaknesses, resistances);
+            return new Type(name, typeID, strengths, weaknesses, resistances,sprite);
         }
     }
 

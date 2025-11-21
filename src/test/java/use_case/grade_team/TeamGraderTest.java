@@ -18,11 +18,13 @@ class TeamGraderTest {
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),
                 new HashSet<>(),
-                new HashSet<>(Arrays.asList("ghost", "rock", "steel")));
+                new HashSet<>(Arrays.asList("ghost", "rock", "steel")),
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/1.png");
         Type fightingType = new Type("fighting", 2,
                 new HashSet<>(Arrays.asList("normal", "rock", "steel", "ice", "dark")),
                 new HashSet<>(Arrays.asList("flying", "psychic", "fairy")),
-                new HashSet<>(Arrays.asList("bug", "rock", "dark")));
+                new HashSet<>(Arrays.asList("bug", "rock", "dark")),
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/2.png");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
         pokemon.setType1(normalType);
