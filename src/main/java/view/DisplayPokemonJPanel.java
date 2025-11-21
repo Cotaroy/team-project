@@ -122,7 +122,9 @@ public class DisplayPokemonJPanel extends JPanel {
         type1Label.setIcon(new ImageIcon(sprite1));
         JPanel Type1Panel = new JPanel();
         Type1Panel.setLayout(new BoxLayout(Type1Panel, BoxLayout.X_AXIS));
-        Type1Panel.add(new JLabel("Type: "));
+        Type1Panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        type1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
         Type1Panel.add(type1Label);
         basicPokemonInfo.add(Type1Panel);
       //  basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
@@ -134,17 +136,21 @@ public class DisplayPokemonJPanel extends JPanel {
             type2Label.setIcon(new ImageIcon(sprite2));
             JPanel Type2Panel = new JPanel();
             Type2Panel.setLayout(new BoxLayout(Type2Panel, BoxLayout.X_AXIS));
-            Type2Panel.add(new JLabel("Type: "));
+            Type2Panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            type2Label.setAlignmentX(Component.LEFT_ALIGNMENT);
             Type2Panel.add(type2Label);
             basicPokemonInfo.add(Type2Panel);
           //  basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
         }
-        basicPokemonInfo.add(new JLabel("Abilities: " + pokemon.getAbilities().get(0).getProperName()));
+        basicPokemonInfo.add(new JLabel("Abilities:"));
+        basicPokemonInfo.add(new JLabel(pokemon.getAbilities().get(0).getProperName()));
         if (pokemon.getAbilities().size() == 2) {
             basicPokemonInfo.add(new JLabel(pokemon.getAbilities().get(1).getProperName()));
         }
         if (pokemon.getHidden() != null) {
-            basicPokemonInfo.add(new JLabel("Hidden Ability: " + pokemon.getHidden().getProperName()));
+            basicPokemonInfo.add(new JLabel("Hidden Ability:"));
+            basicPokemonInfo.add(new JLabel(pokemon.getHidden().getProperName()));
         }
         JList<String> moveList = new JList<>();
         DefaultListModel<String> listModel = new DefaultListModel<>();
