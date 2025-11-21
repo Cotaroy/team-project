@@ -186,6 +186,7 @@ public class DisplayPokemonJPanel extends JPanel {
 
         JPanel MovePanel = new JPanel();
         MovePanel.setLayout(new BoxLayout(MovePanel, BoxLayout.X_AXIS));
+        MovePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         MovePanel.add(new JLabel("Moves: "));
         MovePanel.add(scrollPane);
 
@@ -197,6 +198,7 @@ public class DisplayPokemonJPanel extends JPanel {
     private static JPanel getPokemonStatsInfo(Pokemon pokemon) {
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         statsPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
         ArrayList<Integer> stats = pokemon.getStats();
