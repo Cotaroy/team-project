@@ -62,9 +62,9 @@ public class DisplayPokemonInTeamJPanel extends JPanel {
         String name = Character.toUpperCase(pokemon.getName().charAt(0)) +
                 pokemon.getName().substring(1);
         basicPokemonInfo.add(new JLabel("Name: " + name));
-        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1()));
+        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().getName()));
         if (pokemon.getType2() != null) {
-            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2()));
+            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().getName()));
         }
         return basicPokemonInfo;
     }
