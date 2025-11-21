@@ -1,5 +1,6 @@
 package interface_adapter.pokemon_lookup;
 
+import entity.Pokemon;
 import use_case.PokemonLookup.PokemonLookupInputBoundary;
 import use_case.PokemonLookup.PokemonLookupInputData;
 
@@ -11,6 +12,10 @@ public class PokemonLookupController {
 
     public PokemonLookupController(PokemonLookupInputBoundary userPokemonLookupUseCaseInteractor) {
         this.userPokemonLookupUseCaseInteractor = userPokemonLookupUseCaseInteractor;
+    }
+
+    public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+        userPokemonLookupUseCaseInteractor.switchToTeamBuilderView(index, pokemon);
     }
 
     public void execute(String pokemonName) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {

@@ -1,5 +1,6 @@
 package view;
 
+import entity.Pokemon;
 import interface_adapter.pokemon_lookup.PokemonLookupController;
 import interface_adapter.pokemon_lookup.PokemonLookupState;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
@@ -19,18 +20,21 @@ import java.io.IOException;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "PokemonLookupView";
+    private final String viewName;
     private final PokemonLookupViewModel pokemonLookupViewModel;
 
     private final JTextField pokemonNameInputField = new JTextField(15);
     private PokemonLookupController pokemonLookupController = null;
 
     private final JButton search;
+    private final JButton saveToTeam;
     private final DisplayPokemonJPanel displayPokemon = new DisplayPokemonJPanel();
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
         this.pokemonLookupViewModel.addPropertyChangeListener(this);
+
+        this.viewName = pokemonLookupViewModel.getViewName();
 
         final JLabel title = new JLabel(PokemonLookupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -41,6 +45,8 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         final JPanel buttons = new JPanel();
         search = new JButton(PokemonLookupViewModel.SEARCH_BUTTON_LABEL);
         buttons.add(search);
+        saveToTeam = new JButton(PokemonLookupViewModel.SAVE_TO_TEAM_LABEL);
+        buttons.add(saveToTeam);
 
         pokemonNameInfo.add(buttons);
 
@@ -53,6 +59,24 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                     }
                 }
         );
+
+        saveToTeam.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(saveToTeam)) {
+                            PokemonLookupState currentState = pokemonLookupViewModel.getState();
+                            Pokemon currentPokemon = currentState.getDisplayPokemon();
+                            if (currentPokemon != null) {
+                                pokemonLookupController.switchToTeamBuilderView(currentState.getIndex(), currentPokemon);
+                            }
+                            else {
+                                JOptionPane.showMessageDialog(null, "No pokemon to add.");
+                            }
+                        }
+                    }
+                }
+        );
+
         pokemonNameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -83,7 +107,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         final PokemonLookupState currentState = pokemonLookupViewModel.getState();
         try {
             pokemonLookupController.execute(currentState.getPokemonName());
-            displayPokemon.setPokemon(currentState.getDisplayPokemon());
+            displayPokemon.setPokemon(currentState.getDisplayPokemon(), 384, 384);
 
         } catch (IOException | PokemonLookupInputBoundary.PokemonNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");

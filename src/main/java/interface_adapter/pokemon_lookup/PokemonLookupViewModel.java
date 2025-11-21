@@ -8,6 +8,7 @@ public class PokemonLookupViewModel extends ViewModel<PokemonLookupState> {
     public static final String POKEMON_NAME_LABEL = "Pokemon Name";
 
     public static final String SEARCH_BUTTON_LABEL = "Search";
+    public static final String SAVE_TO_TEAM_LABEL = "Save to Team";
     public static final String POKEMON_INFO_LABEL = "Pokemon Info";
 
     public PokemonLookupViewModel() {

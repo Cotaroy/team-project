@@ -44,7 +44,7 @@ class TeamGraderTest {
             }
 
             @Override
-            public void prepareFailureView(String errorMessage) {
+            public void prepareFailView(String errorMessage) {
                 fail("Use Case failure is unexpected.");
             }
         };
