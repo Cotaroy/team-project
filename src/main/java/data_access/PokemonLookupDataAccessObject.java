@@ -158,7 +158,10 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
                     int dex = Integer.parseInt(adex[adex.length - 1]);
                     pokedexes.add(dex);
                 }
-                String sprite = json.getJSONObject("sprites").getString("front_default");
+           //     String sprite = json.getJSONObject("sprites").getString("front_default");
+                String sprite = json.getJSONObject("sprites").getJSONObject("other").
+                        getJSONObject("official-artwork").getString("front_default");
+
                 Pokemon pokemon = new Pokemon(pokename, type1, type2, stats, abilities, hidden, moves, egggroup, pokedexes, sprite);
                 return pokemon;
             }
@@ -177,7 +180,7 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
             JSONObject json = new JSONObject(responseBody);
 
             String name = json.getString("name");
-            String sprite = json.getJSONObject("sprites").getJSONObject("generation-viii").getJSONObject("legends-arceus").getString("name_icon");
+            String sprite = json.getJSONObject("sprites").getJSONObject("generation-vi").getJSONObject("omega-ruby-alpha-sapphire").getString("name_icon");
 
                     json = json.getJSONObject("damage_relations");
 
