@@ -1,6 +1,7 @@
 package app;
 
 import data_access.BuildPokemonTeamDataAccessObject;
+import data_access.PokemonLookupDataAccessObject;
 import entity.EmptyPokemonFactory;
 import entity.TeamGrader;
 import interface_adapter.ViewManagerModel;
@@ -34,12 +35,11 @@ public class AppBuilder {
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // this dont exist yet
-     final BuildPokemonTeamDataAccessObject buildPokemonTeamDataAccessObject = new BuildPokemonTeamDataAccessObject();
+    private final BuildPokemonTeamDataAccessObject buildPokemonTeamDataAccessObject = new BuildPokemonTeamDataAccessObject();
+    private final PokemonLookupDataAccessObject pokemonLookupDataAccessObject = new PokemonLookupDataAccessObject();
 
     private PokemonLookupView pokemonLookupView;
     private PokemonLookupViewModel pokemonLookupViewModel;
-    private final PokemonLookupDataAccessObject PokemonLookupDataAccessObject = new PokemonLookupDataAccessObject();
 
     private TeamBuilderView teamBuilderView;
     private TeamBuilderViewModel teamBuilderViewModel;
@@ -59,7 +59,7 @@ public class AppBuilder {
         final PokemonLookupOutputBoundary pokemonLookupOutputBoundary = new PokemonLookupPresenter(
                 pokemonLookupViewModel, teamBuilderViewModel, viewManagerModel);
         final PokemonLookupInputBoundary pokemonLookupInteractor =
-                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create(), PokemonLookupDataAccessObject);
+                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create(), pokemonLookupDataAccessObject);
         PokemonLookupController controller = new PokemonLookupController(pokemonLookupInteractor);
         pokemonLookupView.setPokemonLookupController(controller);
         return this;
