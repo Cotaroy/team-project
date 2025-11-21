@@ -19,8 +19,12 @@ public class LoadTeamInteractor implements LoadTeamInputBoundary {
         else {
             try {
                 Team team = dataAccess.loadTeam(teamName);
-                final LoadTeamOutputData outputData = new LoadTeamOutputData(team);
-                presenter.prepareSuccessView(outputData);
+                if (team == null) {
+                    presenter.prepareFailureView("Team not found.");
+                } else {
+                    final LoadTeamOutputData outputData = new LoadTeamOutputData(team);
+                    presenter.prepareSuccessView(outputData);
+                }
             }
             catch (Exception e) {
                 presenter.prepareFailureView("Some exception occurred");
