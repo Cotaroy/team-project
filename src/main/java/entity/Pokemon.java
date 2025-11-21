@@ -44,9 +44,19 @@ public class Pokemon {
                     '}';
         }
 
-        @Override
-        public boolean equals(Object pokemon2) {
-            return this.toString() == pokemon2.toString();
+        public Pokemon getCopy() {
+            return new Pokemon(
+                    name,
+                    type1,
+                    type2,
+                    stats,
+                    abilities,
+                    hidden,
+                    moves,
+                    egggroup,
+                    pokedexes,
+                    sprite
+            );
         }
 
         // Getters and Setters

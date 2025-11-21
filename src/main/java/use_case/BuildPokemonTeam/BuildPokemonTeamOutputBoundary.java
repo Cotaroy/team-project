@@ -15,4 +15,10 @@ public interface BuildPokemonTeamOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    /**
+     * Switches to PokemonLookup View
+     * @param index the index of the Pokemon we are trying to change
+     */
+    void switchToPokemonLookupView(int index);
 }

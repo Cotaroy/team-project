@@ -70,4 +70,9 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
         final Team team = buildPokemonTeamInputData.getTeam();
         userDataAccessObject.saveTeam(team);
     }
+
+    @Override
+    public void switchToPokemonLookupView(int index) {
+        userPresenter.switchToPokemonLookupView(index);
+    }
 }

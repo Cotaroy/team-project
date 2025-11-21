@@ -11,12 +11,12 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class DisplayPokemonJPanel extends JPanel {
+public class DisplayPokemonInTeamJPanel extends JPanel {
 
     private final JLabel spriteLabel = new JLabel();
     private final JPanel pokemonInfo = new JPanel();
 
-    DisplayPokemonJPanel() {
+    DisplayPokemonInTeamJPanel() {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         pokemonInfo.setLayout(new BoxLayout(pokemonInfo, BoxLayout.Y_AXIS));
@@ -59,11 +59,12 @@ public class DisplayPokemonJPanel extends JPanel {
         JPanel basicPokemonInfo = new JPanel();
         basicPokemonInfo.setLayout(new BoxLayout(basicPokemonInfo, BoxLayout.Y_AXIS));
         basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        String name = pokemon.getProperName();
+        String name = Character.toUpperCase(pokemon.getName().charAt(0)) +
+                pokemon.getName().substring(1);
         basicPokemonInfo.add(new JLabel("Name: " + name));
-        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
+        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1()));
         if (pokemon.getType2() != null) {
-            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
+            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2()));
         }
         return basicPokemonInfo;
     }
