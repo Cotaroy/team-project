@@ -2,12 +2,14 @@ package app;
 
 import data_access.BuildPokemonTeamDataAccessObject;
 import entity.EmptyPokemonFactory;
+import entity.TeamGrader;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.pokemon_lookup.PokemonLookupController;
 import interface_adapter.pokemon_lookup.PokemonLookupPresenter;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import interface_adapter.team_builder.TeamBuilderController;
 import interface_adapter.team_builder.TeamBuilderPresenter;
+import interface_adapter.team_builder.TeamBuilderState;
 import interface_adapter.team_builder.TeamBuilderViewModel;
 import use_case.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import use_case.BuildPokemonTeam.BuildPokemonTeamInteractor;
@@ -15,6 +17,9 @@ import use_case.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
 import use_case.PokemonLookup.PokemonLookupInputBoundary;
 import use_case.PokemonLookup.PokemonLookupInteractor;
 import use_case.PokemonLookup.PokemonLookupOutputBoundary;
+import use_case.grade_team.GradeTeamInputBoundary;
+import use_case.grade_team.GradeTeamInteractor;
+import use_case.grade_team.GradeTeamOutputBoundary;
 import view.PokemonLookupView;
 import view.TeamBuilderView;
 import view.ViewManager;
@@ -67,11 +72,14 @@ public class AppBuilder {
     }
 
     public AppBuilder addTeamBuilderUseCase() {
-        final BuildPokemonTeamOutputBoundary  buildPokemonTeamOutputBoundary = new TeamBuilderPresenter(
+        final TeamBuilderPresenter buildPokemonTeamOutputBoundary = new TeamBuilderPresenter(
                 teamBuilderViewModel, pokemonLookupViewModel, viewManagerModel);
         final BuildPokemonTeamInputBoundary buildPokemonTeamInteractor =
                 new BuildPokemonTeamInteractor(buildPokemonTeamDataAccessObject, buildPokemonTeamOutputBoundary, EmptyPokemonFactory.create());
-        TeamBuilderController controller = new  TeamBuilderController(buildPokemonTeamInteractor);
+        TeamBuilderController controller = new TeamBuilderController(new TeamGrader(), buildPokemonTeamInteractor);
+
+        controller.setUserGradeTeamUseCaseInteractor(new GradeTeamInteractor(teamBuilderViewModel.getState(), buildPokemonTeamOutputBoundary));
+
         teamBuilderView.setTeamBuilderController(controller);
         return this;
     }

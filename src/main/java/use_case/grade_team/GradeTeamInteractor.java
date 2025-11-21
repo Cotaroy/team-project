@@ -17,7 +17,7 @@ public class GradeTeamInteractor implements GradeTeamInputBoundary {
             GradeTeamOutputData gradeTeamOutputData = new GradeTeamOutputData(teamScore);
             userPresenter.prepareSuccessView(gradeTeamOutputData);
         }catch(Exception e){
-            userPresenter.prepareFailureView("Some exception occurred");
+            userPresenter.prepareFailView("Some exception occurred");
         }
     }
 }

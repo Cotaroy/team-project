@@ -26,6 +26,10 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     final JPanel teamDisplayPanel = new JPanel();
 
     private final JButton saveButton;
+    private final JButton loadButton;
+    private final JButton gradeTeamButton;
+
+    private final JTextField teamScore = new JTextField();
 
     public TeamBuilderView(TeamBuilderViewModel teamBuilderViewModel) {
 
@@ -64,6 +68,15 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         final JPanel buttons = new JPanel();
         saveButton = new JButton(TeamBuilderViewModel.SAVE_BUTTON_LABEL);
         buttons.add(saveButton);
+        loadButton = new JButton(TeamBuilderViewModel.LOAD_BUTTON_LABEL);
+        buttons.add(loadButton);
+        gradeTeamButton = new JButton(TeamBuilderViewModel.GRADE_TEAM_BUTTON_LABEL);
+        buttons.add(gradeTeamButton);
+
+        LabelTextPanel gradeTeamPanel = new LabelTextPanel(new JLabel("Team Score: "), teamScore);
+        teamScore.setEditable(false);
+
+        buttons.add(gradeTeamPanel);
 
         saveButton.addActionListener(
                 new ActionListener() {
@@ -80,6 +93,24 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                     }
                 }
         );
+
+        loadButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(loadButton)) {
+                    // TODO implement the loading use case
+                }
+            }
+        });
+
+        gradeTeamButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(gradeTeamButton)) {
+                    final TeamBuilderState currentState = teamBuilderViewModel.getState();
+                    teamBuilderController.gradeTeam(currentState.getTeam());
+                    teamScore.setText(currentState.getTeamScore() + "");
+                }
+            }
+        });
 
         addTeamNameListener();
 

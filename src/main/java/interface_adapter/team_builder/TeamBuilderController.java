@@ -1,17 +1,29 @@
 package interface_adapter.team_builder;
 
+import entity.GradingStrategy;
 import entity.Team;
 import use_case.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import use_case.BuildPokemonTeam.BuildPokemonTeamInputData;
+import use_case.grade_team.GradeTeamInputBoundary;
+import use_case.grade_team.GradeTeamInputData;
 
 import java.io.IOException;
 
 public class TeamBuilderController {
 
+    private final GradingStrategy gradingStrategy;
+
     private final BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor;
 
-    public TeamBuilderController(BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor) {
+    private GradeTeamInputBoundary userGradeTeamUseCaseInteractor;
+
+    public TeamBuilderController(GradingStrategy gradingStrategy, BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor) {
+        this.gradingStrategy = gradingStrategy;
         this.userTeamBuilderUseCaseInteractor = userTeamBuilderUseCaseInteractor;
+    }
+
+    public void setUserGradeTeamUseCaseInteractor(GradeTeamInputBoundary userGradeTeamUseCaseInteractor) {
+        this.userGradeTeamUseCaseInteractor = userGradeTeamUseCaseInteractor;
     }
 
     public void addToTeam(String name, Team team, int index) throws IOException {
@@ -36,8 +48,18 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.saveTeam(buildPokemonTeamInputData);
     }
 
+    public void loadTeam(Team team) throws IOException {
+        // TODO load team
+    }
+
+    public void gradeTeam(Team team) {
+        final GradeTeamInputData gradeTeamInputData = new GradeTeamInputData(team.getTeamName(), gradingStrategy);
+        userGradeTeamUseCaseInteractor.execute(gradeTeamInputData);
+    }
+
     public void switchToPokemonLookupView(int index) {
         userTeamBuilderUseCaseInteractor.switchToPokemonLookupView(index);
     }
+
 
 }
