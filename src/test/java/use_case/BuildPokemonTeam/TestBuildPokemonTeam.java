@@ -32,6 +32,11 @@ public class TestBuildPokemonTeam {
 
             }
 
+            @Override
+            public void switchToPokemonLookupView(int index) {
+
+            }
+
         };
 
         InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -58,6 +63,11 @@ public class TestBuildPokemonTeam {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+
+            }
+
+            @Override
+            public void switchToPokemonLookupView(int index) {
 
             }
         };
@@ -96,6 +106,11 @@ public class TestBuildPokemonTeam {
             public void prepareFailView(String errorMessage) {
                 assertEquals("Team is full. Please remove a Pokemon or create a new Team.", errorMessage);
             }
+
+            @Override
+            public void switchToPokemonLookupView(int index) {
+
+            }
         };
 
         InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -130,6 +145,11 @@ public class TestBuildPokemonTeam {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail("The Pokemon was not removed properly!");
+            }
+
+            @Override
+            public void switchToPokemonLookupView(int index) {
+
             }
 
         };

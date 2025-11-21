@@ -52,6 +52,11 @@ class TestPokemonLookupInteractor {
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
             }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
+            }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, magikarp, dataAccess);
         interactor.execute(inputData);
@@ -76,6 +81,11 @@ class TestPokemonLookupInteractor {
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
             }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
+            }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
@@ -98,6 +108,11 @@ class TestPokemonLookupInteractor {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
@@ -137,6 +152,11 @@ class TestPokemonLookupInteractor {
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
             }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
+            }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
@@ -172,6 +192,11 @@ class TestPokemonLookupInteractor {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
@@ -210,6 +235,11 @@ class TestPokemonLookupInteractor {
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
             }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
+            }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
         interactor.execute(inputData);
@@ -234,6 +264,11 @@ class TestPokemonLookupInteractor {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
@@ -261,6 +296,11 @@ class TestPokemonLookupInteractor {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
@@ -290,6 +330,11 @@ class TestPokemonLookupInteractor {
             @Override
             public void prepareFailView(String errorMessage) {
                 fail(errorMessage);
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
