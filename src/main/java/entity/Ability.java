@@ -11,6 +11,11 @@ public class Ability {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName() {
         return name;
     }

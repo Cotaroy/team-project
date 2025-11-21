@@ -1,7 +1,5 @@
 package entity;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Pokemon {
         // Private fields
@@ -10,15 +8,15 @@ public class Pokemon {
         private Type type2;
         private ArrayList<Integer> stats;
         // 0: hp, 1: attack, 2: defense, 3: special-attack, 4: special-defense, 5: speed
-        private ArrayList<Integer> abilities;
-        private int hidden;
-        private ArrayList<Integer> moves;
+        private ArrayList<Ability> abilities;
+        private Ability hidden;
+        private ArrayList<Move> moves;
         private ArrayList<Integer> egggroup;
         private ArrayList<Integer> pokedexes;
         private String sprite;
         // Constructor
         public Pokemon(String name, Type type1, Type type2, ArrayList<Integer> stats,
-                       ArrayList<Integer> abilities, int hidden, ArrayList<Integer> moves, ArrayList<Integer> egggroup, ArrayList<Integer> pokedexes, String sprite) {
+                       ArrayList<Ability> abilities, Ability hidden, ArrayList<Move> moves, ArrayList<Integer> egggroup, ArrayList<Integer> pokedexes, String sprite) {
             this.name = name;
             this.type1 = type1;
             this.type2 = type2;
@@ -66,6 +64,58 @@ public class Pokemon {
             return name;
         }
 
+        // returns the Pokemon's name as a proper, formatted noun as opposed to its internal name
+
+        public String getProperName() {
+            if (name == null || name.isEmpty()) return name;
+
+            // Exact-format exceptions (NOT the mo-o line)
+            Map<String, String> fixedExceptions = new HashMap<>();
+            fixedExceptions.put("ho-oh", "Ho-Oh");
+            fixedExceptions.put("porygon-z", "Porygon-Z");
+            fixedExceptions.put("ting-lu", "Ting-Lu");
+            fixedExceptions.put("chi-yu", "Chi-Yu");
+            fixedExceptions.put("wo-chien", "Wo-Chien");
+            fixedExceptions.put("chien-pao", "Chien-Pao");
+            fixedExceptions.put("jangmo-o", "Jangmo-o");
+            fixedExceptions.put("hakamo-o", "Hakamo-o");
+            fixedExceptions.put("kommo-o", "Kommo-o");
+
+            // If the name is in fixed exceptions, return exact formatted version
+            if (fixedExceptions.containsKey(name.toLowerCase())) {
+                return fixedExceptions.get(name.toLowerCase());
+            }
+
+            // If there is no hyphen, format as a normal name
+            if (!name.contains("-")) {
+                return capitalize(name);
+            }
+
+            // Split at hyphen
+            String[] parts = name.split("-", 2);
+            String first = parts[0];
+            String second = parts[1];
+
+            // rule: name-mega → Mega Name
+            if (second.equalsIgnoreCase("mega")) {
+                return capitalize(second) + " " + capitalize(first);
+            }
+
+            // rule: name-anythingElse → Name anythingElse Form
+            return capitalize(first) + " " + capitalize(second) + " Form";
+        }
+
+    // Capitalize first letter
+    private static String capitalize(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    // Capitalizes both sides of a hyphen normally (for jangmo-o, etc.)
+    private static String capitalizeHyphenated(String s) {
+        String[] parts = s.split("-");
+        return capitalize(parts[0]) + "-" + capitalize(parts[1]);
+    }
+
         public void setName(String name) {
             this.name = name;
         }
@@ -94,27 +144,27 @@ public class Pokemon {
             this.stats = stats;
         }
 
-        public ArrayList<Integer> getAbilities() {
+        public ArrayList<Ability> getAbilities() {
             return abilities;
         }
 
-        public void setAbilities(ArrayList<Integer> abilities) {
+        public void setAbilities(ArrayList<Ability> abilities) {
             this.abilities = abilities;
         }
 
-        public int getHidden() {
+        public Ability getHidden() {
             return hidden;
         }
 
-        public void setHidden(int hidden) {
+        public void setHidden(Ability hidden) {
             this.hidden = hidden;
         }
 
-        public List<Integer> getMoves() {
+        public List<Move> getMoves() {
             return moves;
         }
 
-        public void setMoves(ArrayList<Integer> moves) {
+        public void setMoves(ArrayList<Move> moves) {
             this.moves = moves;
         }
 
@@ -198,19 +248,6 @@ public class Pokemon {
             resistances.addAll(resistancesf2);
 
             return resistances;
-        }
-
-    // Helper methods to add single elements
-        public void addStat(int stat) {
-            this.stats.add(stat);
-        }
-
-        public void addAbility(int ability) {
-            this.abilities.add(ability);
-        }
-
-        public void addMove(int move) {
-            this.moves.add(move);
         }
     }
 

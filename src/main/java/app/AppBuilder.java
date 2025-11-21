@@ -39,6 +39,7 @@ public class AppBuilder {
 
     private PokemonLookupView pokemonLookupView;
     private PokemonLookupViewModel pokemonLookupViewModel;
+    private final PokemonLookupDataAccessObject PokemonLookupDataAccessObject = new PokemonLookupDataAccessObject();
 
     private TeamBuilderView teamBuilderView;
     private TeamBuilderViewModel teamBuilderViewModel;
@@ -58,7 +59,7 @@ public class AppBuilder {
         final PokemonLookupOutputBoundary pokemonLookupOutputBoundary = new PokemonLookupPresenter(
                 pokemonLookupViewModel, teamBuilderViewModel, viewManagerModel);
         final PokemonLookupInputBoundary pokemonLookupInteractor =
-                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create());
+                new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create(), PokemonLookupDataAccessObject);
         PokemonLookupController controller = new PokemonLookupController(pokemonLookupInteractor);
         pokemonLookupView.setPokemonLookupController(controller);
         return this;
