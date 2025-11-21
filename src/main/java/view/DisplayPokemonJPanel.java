@@ -1,15 +1,19 @@
 package view;
 
+import entity.Move;
 import entity.Pokemon;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DisplayPokemonJPanel extends JPanel {
 
@@ -49,7 +53,7 @@ public class DisplayPokemonJPanel extends JPanel {
     private static JPanel getPokemonBasicInfo(Pokemon pokemon) {
         JPanel basicPokemonInfo = new JPanel();
         basicPokemonInfo.setLayout(new BoxLayout(basicPokemonInfo, BoxLayout.Y_AXIS));
-        basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+    //    basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         String name = pokemon.getProperName();
         basicPokemonInfo.add(new JLabel("Name: " + name));
         basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
@@ -63,6 +67,41 @@ public class DisplayPokemonJPanel extends JPanel {
         if (pokemon.getHidden() != null) {
             basicPokemonInfo.add(new JLabel("Hidden Ability: " + pokemon.getHidden().getProperName()));
         }
+        JList<String> moveList = new JList<>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        List<String> moves = new ArrayList<>();
+        for (Move move : pokemon.getMoves()) {
+            moves.add(move.capitalize());
+        }
+
+// Sort alphabetically
+        Collections.sort(moves);
+
+// Add to the model
+        for (String m : moves) {
+            listModel.addElement(m);
+        }
+
+
+        moveList.setModel(listModel);
+
+// make it non-selectable
+        moveList.setEnabled(false);
+
+// shrink the visible size
+        moveList.setVisibleRowCount(1); // small height
+
+        JScrollPane scrollPane = new JScrollPane(moveList);
+        scrollPane.setPreferredSize(new Dimension(160, 80));
+        scrollPane.setMaximumSize(new Dimension(160, 80));  // <-- IMPORTANT
+        scrollPane.setMinimumSize(new Dimension(160, 80));  // <-- IMPORTANT
+
+        JPanel MovePanel = new JPanel();
+        MovePanel.setLayout(new BoxLayout(MovePanel, BoxLayout.X_AXIS));
+        MovePanel.add(new JLabel("Moves: "));
+        MovePanel.add(scrollPane);
+
+        basicPokemonInfo.add(MovePanel);
         return basicPokemonInfo;
     }
 

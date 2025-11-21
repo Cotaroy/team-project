@@ -37,7 +37,7 @@ class TestPokemonLookupInteractor {
         HashSet<String> wateres = new HashSet<>(Arrays.asList("steel", "fire", "ice", "water"));
 
         Type type1 = new Type("water", 11,
-                waterstrength, waterweak, wateres);
+                waterstrength, waterweak, wateres, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/11.png");
         Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
         PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();

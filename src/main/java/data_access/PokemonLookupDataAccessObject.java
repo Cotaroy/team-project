@@ -177,8 +177,9 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
             JSONObject json = new JSONObject(responseBody);
 
             String name = json.getString("name");
+            String sprite = json.getJSONObject("sprites").getJSONObject("generation-viii").getJSONObject("legends-arceus").getString("name_icon");
 
-            json = json.getJSONObject("damage_relations");
+                    json = json.getJSONObject("damage_relations");
 
             JSONArray doubleDamageFromJSON = json.getJSONArray("double_damage_from");
             JSONArray doubleDamageToJSON = json.getJSONArray("double_damage_to");
@@ -196,7 +197,7 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
             HashSet<String> resistances = new HashSet<>(halfDamageFrom);
             resistances.addAll(noDamageFrom);
 
-            return new Type(name, typeID, strengths, weaknesses, resistances);
+            return new Type(name, typeID, strengths, weaknesses, resistances,sprite);
         }
     }
 
