@@ -17,6 +17,68 @@ public class DisplayPokemonJPanel extends JPanel {
     private final JLabel spriteLabel = new JLabel();
     private final JPanel pokemonInfo = new JPanel();
 
+    private static class BarChartPanel extends JPanel {
+
+        private final java.util.List<Integer> stats;
+        private final String[] labels = {
+                "HP", "Atk", "Def", "SpA", "SpD", "Spe"
+        };
+
+        private final Color[] statColors = {
+                new Color(230, 80, 80),   // HP - red
+                new Color(255, 150, 60),  // Attack - orange
+                new Color(240, 220, 90),  // Defense - yellow
+                new Color(100, 149, 255), // SpA - blue
+                new Color(120, 200, 120), // SpD - green
+                new Color(255, 0, 255)  // Speed - pink
+        };
+
+        public BarChartPanel(java.util.List<Integer> stats) {
+            this.stats = stats;
+            setPreferredSize(new Dimension(300, 200));
+            setMinimumSize(new Dimension(300, 200));
+            setMaximumSize(new Dimension(300, 200));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int width = getWidth();
+            int height = getHeight() - 30; // label area
+
+            int maxStat = stats.stream().max(Integer::compareTo).orElse(1);
+            int barWidth = width / stats.size();
+
+            for (int i = 0; i < stats.size(); i++) {
+                int val = stats.get(i);
+                int barHeight = (int) ((val / (double) maxStat) * (height - 20));
+
+                int x = i * barWidth + 10;
+                int y = height - barHeight;
+
+                // 🟥 Stat-colored bar
+                g2.setColor(statColors[i]);
+                g2.fillRect(x, y, barWidth - 20, barHeight);
+
+                // Border for visibility
+                g2.setColor(Color.BLACK);
+                g2.drawRect(x, y, barWidth - 20, barHeight);
+
+                // Value above bar
+                g2.drawString(String.valueOf(val), x + 5, y - 5);
+
+                // Stat label
+                g2.drawString(labels[i], x + 5, height + 15);
+            }
+        }
+    }
+
+
     DisplayPokemonJPanel() {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -88,7 +150,10 @@ public class DisplayPokemonJPanel extends JPanel {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         List<String> moves = new ArrayList<>();
         for (Move move : pokemon.getMoves()) {
-            moves.add(move.capitalize());
+            if (move != null) {
+                moves.add(move.capitalize());
+            }
+            else continue;
         }
 
 // Sort alphabetically
@@ -124,16 +189,22 @@ public class DisplayPokemonJPanel extends JPanel {
 
     @NotNull
     private static JPanel getPokemonStatsInfo(Pokemon pokemon) {
-        JPanel pokemonStatsInfo = new JPanel();
-        pokemonStatsInfo.setLayout(new BoxLayout(pokemonStatsInfo, BoxLayout.Y_AXIS));
-        pokemonStatsInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        JPanel statsPanel = new JPanel();
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        statsPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
         ArrayList<Integer> stats = pokemon.getStats();
-        pokemonStatsInfo.add(new JLabel("HP: " + stats.get(0)));
-        pokemonStatsInfo.add(new JLabel("Attack: " + stats.get(1)));
-        pokemonStatsInfo.add(new JLabel("Defense: " + stats.get(2)));
-        pokemonStatsInfo.add(new JLabel("Special-Attack: " + stats.get(3)));
-        pokemonStatsInfo.add(new JLabel("Special-Defense: " + stats.get(4)));
-        pokemonStatsInfo.add(new JLabel("Speed: " + stats.get(5)));
-        return pokemonStatsInfo;
+
+        JLabel title = new JLabel("Base Stats");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 14));
+
+        statsPanel.add(title);
+        statsPanel.add(Box.createRigidArea(new Dimension(0, 8)));
+
+        BarChartPanel chart = new BarChartPanel(stats);
+        statsPanel.add(chart);
+
+        return statsPanel;
     }
 }
