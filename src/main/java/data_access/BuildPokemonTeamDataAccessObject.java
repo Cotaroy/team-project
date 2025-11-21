@@ -5,15 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import entity.EmptyPokemonFactory;
 import entity.Pokemon;
 import entity.Team;
-import interface_adapter.pokemon_lookup.PokemonLookupController;
 import org.jetbrains.annotations.NotNull;
 import use_case.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import use_case.PokemonLookup.PokemonLookupInputData;
+import use_case.LoadTeam.LoadTeamDataAccessInterface;
 
-public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface {
+public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface,
+        LoadTeamDataAccessInterface {
     private static final String TEAMS_FILE_PATH = "teamStorage/teams.csv";
 
     @Override
@@ -62,7 +61,7 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
         }
 
     }
-
+    @Override
     public Team loadTeam(String teamName) {
         String line = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(TEAMS_FILE_PATH));) {
