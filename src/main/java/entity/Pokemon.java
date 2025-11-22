@@ -103,11 +103,6 @@ public class Pokemon {
 
         final String splitBy = "-";
 
-        // Split at hyphen
-        final String[] parts = name.split(splitBy, 2);
-        final String first = parts[0];
-        final String second = parts[1];
-
         String result = "";
 
         if (name == null || name.isEmpty()) {
@@ -125,12 +120,18 @@ public class Pokemon {
         }
 
         // rule: name-mega → Mega Name
-        else if ("mega".equalsIgnoreCase(second)) {
+        else if ("mega".equalsIgnoreCase(name.split(splitBy, 2)[1])) {
+            final String[] parts = name.split(splitBy, 2);
+            final String first = parts[0];
+            final String second = parts[1];
             result = capitalize(second) + " " + capitalize(first);
         }
 
         // rule: name-anythingElse → Name anythingElse Form
         else {
+            final String[] parts = name.split(splitBy, 2);
+            final String first = parts[0];
+            final String second = parts[1];
             result = capitalize(first) + " " + capitalize(second) + " Form";
         }
         return result;

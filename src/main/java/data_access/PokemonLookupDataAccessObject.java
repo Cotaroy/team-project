@@ -9,10 +9,8 @@ import org.json.JSONObject;
 import entity.Pokemon;
 import entity.Move;
 import entity.Ability;
-import use_case.PokemonLookup.PokemonLookupDataAccessInterface;
-import use_case.PokemonLookup.PokemonLookupOutputData;
+import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

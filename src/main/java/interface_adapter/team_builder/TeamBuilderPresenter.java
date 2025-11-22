@@ -3,11 +3,10 @@ package interface_adapter.team_builder;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.pokemon_lookup.PokemonLookupState;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
-import use_case.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
-import use_case.BuildPokemonTeam.BuildPokemonTeamOutputData;
-import use_case.grade_team.GradeTeamOutputBoundary;
-import use_case.grade_team.GradeTeamOutputData;
-import view.PokemonLookupView;
+import usecase.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
+import usecase.BuildPokemonTeam.BuildPokemonTeamOutputData;
+import usecase.grade_team.GradeTeamOutputBoundary;
+import usecase.grade_team.GradeTeamOutputData;
 
 public class TeamBuilderPresenter implements BuildPokemonTeamOutputBoundary, GradeTeamOutputBoundary {
 
