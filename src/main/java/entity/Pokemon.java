@@ -254,6 +254,8 @@ public class Pokemon {
      * @return Set of strings that the Pokemon is weak to
      */
     public Set<String> getWeaknesses() {
+        validateType2();
+
         final Set<String> weaknesses1 = new HashSet<>(type1.getWeaknesses());
         final Set<String> weaknesses2 = new HashSet<>(type2.getWeaknesses());
         final Set<String> resistances1 = new HashSet<>(type1.getResistances());
@@ -276,6 +278,8 @@ public class Pokemon {
      * @return Set of strings that the Pokemon is strong against
      */
     public Set<String> getStrengths() {
+        validateType2();
+
         final Set<String> strengths = new HashSet<>(type1.getStrengths());
         strengths.addAll(type2.getStrengths());
         return strengths;
@@ -286,6 +290,8 @@ public class Pokemon {
      * @return Set of string that the Pokemon resists
      */
     public Set<String> getResistances() {
+        validateType2();
+
         final Set<String> weaknesses1 = new HashSet<>(type1.getWeaknesses());
         final Set<String> weaknesses2 = new HashSet<>(type2.getWeaknesses());
         final Set<String> resistances1 = new HashSet<>(type1.getResistances());
@@ -310,6 +316,16 @@ public class Pokemon {
         resistances.addAll(resistancesf2);
 
         return resistances;
+    }
+
+    /**
+     * Changes type2 to an empty type if it is null.
+     */
+    public void validateType2() {
+        if (type2 == null) {
+            type2 = new Type("", 0,
+                    new HashSet<String>(), new HashSet<String>(), new HashSet<String>(), "");
+        }
     }
 }
 
