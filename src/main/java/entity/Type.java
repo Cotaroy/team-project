@@ -30,15 +30,15 @@ public class Type {
     }
 
     public Set<String> getStrengths() {
-        return strengths;
+        return new HashSet<>(this.strengths);
     }
 
     public Set<String> getWeaknesses() {
-        return weaknesses;
+        return new HashSet<>(this.weaknesses);
     }
 
     public Set<String> getResistances() {
-        return resistances;
+        return new HashSet<>(this.resistances);
     }
 
     /**
