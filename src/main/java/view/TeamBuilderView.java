@@ -1,10 +1,9 @@
 package view;
 
-import entity.Pokemon;
 import entity.Team;
-import interface_adapter.team_builder.TeamBuilderController;
-import interface_adapter.team_builder.TeamBuilderState;
-import interface_adapter.team_builder.TeamBuilderViewModel;
+import interfaceadapter.team_builder.TeamBuilderController;
+import interfaceadapter.team_builder.TeamBuilderState;
+import interfaceadapter.team_builder.TeamBuilderViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
