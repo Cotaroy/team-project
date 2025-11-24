@@ -34,6 +34,6 @@ public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInte
 
     @Override
     public Team loadTeam(String teamName) {
-        return null;
+        return teams.get(teamName);
     }
 }
