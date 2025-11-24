@@ -29,8 +29,14 @@ public class TeamGrader implements GradingStrategy {
         final Set<String> defensiveCoverage = new HashSet<>();
         for (Pokemon value : pokemon) {
             if (value != null) {
-                offensiveCoverage.addAll(value.getStrengths());
-                defensiveCoverage.addAll(value.getResistances());
+                if (value.getType2() == null) {
+                    offensiveCoverage.addAll(value.getType1().getStrengths());
+                    defensiveCoverage.addAll(value.getType1().getResistances());
+                }
+                else {
+                    offensiveCoverage.addAll(value.getStrengths());
+                    defensiveCoverage.addAll(value.getResistances());
+                }
             }
         }
         return defensiveCoverage.size() + offensiveCoverage.size();
