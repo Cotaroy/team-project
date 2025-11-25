@@ -32,39 +32,21 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     private final JButton buttonRemove = new JButton("Remove");
     public JPanel[] teamSlots = new JPanel[6];
     private int currentSlotIndex = -1;
-
-
-
-
-
-
     public TeamBuilderView(TeamBuilderViewModel teamBuilderViewModel) {
 
         this.teamBuilderViewModel = teamBuilderViewModel;
         this.teamBuilderViewModel.addPropertyChangeListener(this);
-
         this.viewName = teamBuilderViewModel.getViewName();
-
         final JLabel title = new JLabel(TeamBuilderViewModel.TITLE_LABEL);
         title.setAlignmentX(CENTER_ALIGNMENT);
-
         teamNameInputField.setText(teamBuilderViewModel.getState().getTeam().getTeamName());
         final LabelTextPanel teamNameInfo = new LabelTextPanel(
                 new JLabel(TeamBuilderViewModel.TEAM_NAME_LABEL), teamNameInputField);
-
-
         teamDisplayPanel.setLayout(new GridLayout(3, 2, 5, 5));
-
-//        teamSlot0.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-//        teamSlot0.revalidate();
-//        teamSlot0.repaint();
-
         pokemonActionPanel.add(buttonAdd);
         pokemonActionPanel.add(buttonRemove);
         buttonAdd.setVisible(false);
         buttonRemove.setVisible(false);
-
-
 
         JPanel teamSlot0 = new DisplayPokemonInTeamJPanel();
         teamDisplayPanel.add(teamSlot0);
@@ -85,8 +67,6 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         teamSlots[3] = teamSlot3;
         teamSlots[4] = teamSlot4;
         teamSlots[5] = teamSlot5;
-
-
 
         setTeamSlotBorders();
         addTeamSlotMouseListeners();
@@ -268,15 +248,6 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         updateSlotDisplays();
     }
 
-    public void addPokemonActionListener(ActionListener actionListener) {
-        System.out.println("add button was hit");
-        buttonAdd.addActionListener(actionListener);
-    }
-
-    public void removePokemonActionListener(ActionListener actionListener) {
-        System.out.println("remove button was hit");
-        buttonRemove.addActionListener(actionListener);
-    }
 
 
 
