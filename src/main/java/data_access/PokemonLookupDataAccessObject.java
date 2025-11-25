@@ -1,14 +1,11 @@
 package data_access;
-import entity.Type;
+import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import entity.Pokemon;
-import entity.Move;
-import entity.Ability;
 import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
 
 import java.io.IOException;
@@ -160,8 +157,18 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
                 String sprite = json.getJSONObject("sprites").getJSONObject("other").
                         getJSONObject("official-artwork").getString("front_default");
 
-                Pokemon pokemon = new Pokemon(pokename, type1, type2, stats, abilities, hidden, moves, egggroup, pokedexes, sprite);
-                return pokemon;
+                return new PokemonBuilder()
+                        .setName(pokename)
+                        .setType1(type1)
+                        .setType2(type2)
+                        .setStats(stats)
+                        .setAbilities(abilities)
+                        .setHidden(hidden)
+                        .setMoves(moves)
+                        .setEggGroups(egggroup)
+                        .setPokedexes(pokedexes)
+                        .setSprite(sprite)
+                        .build();
             }
         }
     }

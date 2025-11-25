@@ -29,20 +29,17 @@ public class Pokemon {
     private ArrayList<Integer> pokedexes;
     private String sprite;
 
-    // Constructor
-    public Pokemon(String name, Type type1, Type type2, ArrayList<Integer> stats,
-                   ArrayList<Ability> abilities, Ability hidden, ArrayList<Move> moves,
-                   ArrayList<Integer> egggroup, ArrayList<Integer> pokedexes, String sprite) {
-        this.name = name;
-        this.type1 = type1;
-        this.type2 = type2;
-        this.stats = stats;
-        this.abilities = abilities;
-        this.hidden = hidden;
-        this.moves = moves;
-        this.egggroup = egggroup;
-        this.pokedexes = pokedexes;
-        this.sprite = sprite;
+    public Pokemon() {
+        this.name = "";
+        this.type1 = null;
+        this.type2 = null;
+        this.stats = new ArrayList<>();
+        this.abilities = new ArrayList<>();
+        this.hidden = null;
+        this.moves = new ArrayList<>();
+        this.egggroup = new ArrayList<>();
+        this.pokedexes = new ArrayList<>();
+        this.sprite = "";
     }
 
     @Override
@@ -61,18 +58,18 @@ public class Pokemon {
     }
 
     public Pokemon getCopy() {
-        return new Pokemon(
-                name,
-                type1,
-                type2,
-                stats,
-                abilities,
-                hidden,
-                moves,
-                egggroup,
-                pokedexes,
-                sprite
-        );
+        return new PokemonBuilder()
+                .setName(name)
+                .setType1(type1)
+                .setType2(type2)
+                .setStats(stats)
+                .setAbilities(abilities)
+                .setHidden(hidden)
+                .setMoves(moves)
+                .setEggGroups(egggroup)
+                .setPokedexes(pokedexes)
+                .setSprite(sprite)
+                .build();
     }
 
     // Getters and Setters

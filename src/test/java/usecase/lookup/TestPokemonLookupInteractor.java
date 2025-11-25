@@ -3,16 +3,12 @@ package usecase.lookup;
 import data_access.AbilityMap;
 import data_access.MoveMap;
 import data_access.PokemonLookupDataAccessObject;
-import entity.Pokemon;
-import entity.EmptyPokemonFactory;
+import entity.*;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.HashSet;
 
-import entity.Type;
-import entity.Move;
-import entity.Ability;
 import org.junit.jupiter.api.Test;
 import usecase.PokemonLookup.*;
 
@@ -38,7 +34,18 @@ class TestPokemonLookupInteractor {
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/11.png");
-        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
+        Pokemon magikarp = new PokemonBuilder()
+                .setName("magikarp")
+                .setType1(type1)
+                .setType2(null)
+                .setStats(statsikarp)
+                .setAbilities(abilitykarp)
+                .setHidden(abilitymap.getAbility(155))
+                .setMoves(moveskarp)
+                .setEggGroups(eggkarp)
+                .setPokedexes(pokedexkarp)
+                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png")
+                .build();
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
         PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary()
