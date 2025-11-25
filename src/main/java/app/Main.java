@@ -8,7 +8,6 @@ public class Main {
         JFrame application = appBuilder
                 .addTeamBuilderView()
                 .addPokemonLookupView()
-
                 .addTeamBuilderUseCase()
                 .addPokemonLookupUseCase()
                 .build();

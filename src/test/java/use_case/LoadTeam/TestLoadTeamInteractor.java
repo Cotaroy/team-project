@@ -25,8 +25,7 @@ public class TestLoadTeamInteractor {
         HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
         HashSet<String> wateres = new HashSet<>(Arrays.asList("steel", "fire", "ice", "water"));
 
-        Type type1 = new Type("water", 11,
-                waterstrength, waterweak, wateres);
+        Type type1 = new Type("water", 11, waterstrength, waterweak, wateres, "");
         Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
 
         Team expectedTeam = new Team("goat");
@@ -67,8 +66,7 @@ public class TestLoadTeamInteractor {
         HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
         HashSet<String> wateres = new HashSet<>(Arrays.asList("steel", "fire", "ice", "water"));
 
-        Type type1 = new Type("water", 11,
-                waterstrength, waterweak, wateres);
+        Type type1 = new Type("water", 11, waterstrength, waterweak, wateres, "");
         Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
 
         Team expectedTeam = new Team("goat");
@@ -108,8 +106,7 @@ public class TestLoadTeamInteractor {
         HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
         HashSet<String> wateres = new HashSet<>(Arrays.asList("steel", "fire", "ice", "water"));
 
-        Type type1 = new Type("water", 11,
-                waterstrength, waterweak, wateres);
+        Type type1 = new Type("water", 11, waterstrength, waterweak, wateres, "");
         Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
 
         Team expectedTeam = new Team("goat");
