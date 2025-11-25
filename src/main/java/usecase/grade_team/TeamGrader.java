@@ -1,11 +1,11 @@
 package usecase.grade_team;
 
-import entity.Pokemon;
-import entity.Team;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import entity.Pokemon;
+import entity.Team;
 
 public class TeamGrader implements GradingStrategy {
 

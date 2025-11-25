@@ -186,6 +186,37 @@ class TeamGraderTest {
     }
 
     @Test
+    void oneTypeCoverageTest() {
+        Team team = new Team("oneTypeTest");
+        Type normalType = new Type("normal", 1,
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(Arrays.asList("ghost", "rock", "steel")),
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/1.png");
+        Pokemon pokemon = EmptyPokemonFactory.create();
+        pokemon.setType1(normalType);
+        pokemon.setType2(null);
+        pokemon.setStats(new ArrayList<>(Arrays.asList(10, 20, 30, 40, 50, 60)));
+        team.setPokemon(pokemon, 0);
+        GradingStrategy strategy = new TeamGrader();
+        GradeTeamInputData inputData = new GradeTeamInputData("oneTypeTest", strategy);
+
+        InMemoryUserDataAccessObject dataAccessObject = new InMemoryUserDataAccessObject();
+        dataAccessObject.saveTeam(team);
+
+        GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
+                assertEquals(100 * (8.0 / 98), gradeTeamOutputData.getTeamScore());
+            }
+
+        };
+
+        GradeTeamInputBoundary interactor = new GradeTeamInteractor(dataAccessObject, successPresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
     void twoTypesCoverageTest() {
         Team team = new Team("twoTypesOnePokemonTeam");
         Type normalType = new Type("normal", 1,
