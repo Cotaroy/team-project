@@ -1,28 +1,12 @@
 package data_access;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-
 import entity.Pokemon;
 import entity.Team;
-import org.jetbrains.annotations.NotNull;
 import use_case.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import use_case.LoadTeam.LoadTeamDataAccessInterface;
 
-public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface,
-        LoadTeamDataAccessInterface {
-
-    private final String filePath;
-
-    public BuildPokemonTeamDataAccessObject() {
-        this("teamStorage/teams.csv");
-    }
-
-    public BuildPokemonTeamDataAccessObject(String filePath) {
-        this.filePath = filePath;
-    }
+public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface {
 
     @Override
     public void saveTeam(Team team) {
@@ -34,7 +18,7 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
             pokemons.add(x);
         }
 
-        try (FileReader x = new FileReader(filePath)) {
+        try (FileReader x = new FileReader("teamStorage/teams.csv")) {
             if (teamExists(team)) {
                 System.out.println("Please change the team name.");
                 return;
@@ -44,7 +28,7 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
             System.out.println(teamName);
             System.out.println(pokemons + "\n");
 
-            FileWriter writer = new FileWriter(filePath, true);
+            FileWriter writer = new FileWriter("teamStorage/teams.csv", true);
 
 
 
@@ -70,48 +54,10 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
         }
 
     }
-    @Override
-    public Team loadTeam(String teamName) {
-        String line = null;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith(teamName)) {
-                    break;
-                }
-            }
-            if (line == null) {
-                return null;
-            }
-            else {
-                return getTeam(teamName, line);
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException("Failed to load team", e);
-        }
-    }
-
-    @NotNull
-    private static Team getTeam(String teamName, String line) throws IOException {
-        List<String> names = new ArrayList<>(Arrays.asList(line.split(",")));
-        names.remove(0);  // Remove team name
-        names.replaceAll(String::trim);
-
-        Team result = new Team(teamName);
-
-        int i = 0;
-        for(String name : names){
-            PokemonLookupDataAccessObject lookup = new PokemonLookupDataAccessObject();
-            Pokemon pokemon = lookup.getPokemon(name);
-            result.setPokemon(pokemon, i);
-            i += 1;
-        }
-        return result;
-    }
 
     @Override
     public boolean teamExists(Team team) throws FileNotFoundException {
-        FileReader x = new FileReader(filePath);
+        FileReader x = new FileReader("teamStorage/teams.csv");
         Scanner sc = new Scanner(x);
         String teamName = team.getTeamName();
         while (sc.hasNextLine()) {
@@ -126,5 +72,6 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
         }
         return false;
     }
+
 }
 
