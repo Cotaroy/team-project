@@ -1,4 +1,6 @@
-package entity;
+package usecase.grade_team;
+
+import entity.Team;
 
 public interface GradingStrategy {
     /**

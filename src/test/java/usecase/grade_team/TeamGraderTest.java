@@ -28,7 +28,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(5, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (5. / 98), gradeTeamOutputData.getTeamScore());
             }
         };
 
@@ -52,7 +52,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(6, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (6. / 98), gradeTeamOutputData.getTeamScore());
             }
         };
 
@@ -76,7 +76,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(7, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (7. / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -101,7 +101,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(8, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (8. / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -126,7 +126,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(9, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (9. / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -151,7 +151,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(10, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (10. / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -176,7 +176,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(10, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (10. / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -213,7 +213,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(15.0, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (15.0 / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
@@ -263,7 +263,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(25.0, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (25.0 / 98), gradeTeamOutputData.getTeamScore());
             }
 
         };
