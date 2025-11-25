@@ -74,6 +74,7 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         buttons.add(gradeTeamButton);
 
         LabelTextPanel gradeTeamPanel = new LabelTextPanel(new JLabel("Team Score: "), teamScore);
+        gradeTeamPanel.add(new JLabel("/100"));
         teamScore.setEditable(false);
 
         buttons.add(gradeTeamPanel);
