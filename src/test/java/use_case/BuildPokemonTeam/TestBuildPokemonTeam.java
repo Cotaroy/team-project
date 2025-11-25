@@ -79,20 +79,11 @@ public class TestBuildPokemonTeam {
     @Test
     public void BuildPokemonTeamTestWithoutIndexFullTeam() throws IOException {
         Team t = new Team("Did Schlatt Win?");
-        EmptyPokemonFactory x = new EmptyPokemonFactory();
-        Pokemon a = EmptyPokemonFactory.create();
-        Pokemon b = EmptyPokemonFactory.create();
-        Pokemon c = EmptyPokemonFactory.create();
-        Pokemon d = EmptyPokemonFactory.create();
-        Pokemon e = EmptyPokemonFactory.create();
-        Pokemon f = EmptyPokemonFactory.create();
+        for (int i = 0; i < 6; i++){
+            Pokemon a = EmptyPokemonFactory.create();
+            t.setPokemon(a, i);
+        }
         Pokemon z = EmptyPokemonFactory.create();
-        t.setPokemon(a, 0);
-        t.setPokemon(b, 1);
-        t.setPokemon(c, 2);
-        t.setPokemon(d, 3);
-        t.setPokemon(e, 4);
-        t.setPokemon(f, 5);
 
         BuildPokemonTeamInputData inputData = new BuildPokemonTeamInputData(z.getName(), t); //HAS NO INDEX
         BuildPokemonTeamOutputBoundary presenter = new BuildPokemonTeamOutputBoundary() {
@@ -119,19 +110,11 @@ public class TestBuildPokemonTeam {
     @Test
     public void BuildPokemonTeamTestRemovePokemon() throws IOException { //THIS REMOVES A POKEMON AT INDEX 0
         Team t = new Team("Let's Not Meet");
-        EmptyPokemonFactory x = new EmptyPokemonFactory();
         Pokemon a = EmptyPokemonFactory.create();
-        Pokemon b = EmptyPokemonFactory.create();
-        Pokemon c = EmptyPokemonFactory.create();
-        Pokemon d = EmptyPokemonFactory.create();
-        Pokemon e = EmptyPokemonFactory.create();
-        Pokemon f = EmptyPokemonFactory.create();
-        t.setPokemon(a, 0);
-        t.setPokemon(b, 1);
-        t.setPokemon(c, 2);
-        t.setPokemon(d, 3);
-        t.setPokemon(e, 4);
-        t.setPokemon(f, 5);
+        for (int i = 1; i < 5; i++){
+            Pokemon b = EmptyPokemonFactory.create();
+            t.setPokemon(b, i);
+        }
 
         BuildPokemonTeamInputData inputData = new BuildPokemonTeamInputData(a.getName(), t, 0);
         BuildPokemonTeamOutputBoundary successPresenter = new BuildPokemonTeamOutputBoundary() {
@@ -155,19 +138,11 @@ public class TestBuildPokemonTeam {
     @Test
     public void BuildPokemonTeamTestSave() throws IOException { //Checks if save team is used.
         Team t = new Team("Let's Not Meet");
-        EmptyPokemonFactory x = new EmptyPokemonFactory();
         Pokemon a = EmptyPokemonFactory.create();
-        Pokemon b = EmptyPokemonFactory.create();
-        Pokemon c = EmptyPokemonFactory.create();
-        Pokemon d = EmptyPokemonFactory.create();
-        Pokemon e = EmptyPokemonFactory.create();
-        Pokemon f = EmptyPokemonFactory.create();
-        t.setPokemon(a, 0);
-        t.setPokemon(b, 1);
-        t.setPokemon(c, 2);
-        t.setPokemon(d, 3);
-        t.setPokemon(e, 4);
-        t.setPokemon(f, 5);
+        for (int i = 1; i < 5; i++){
+            Pokemon b = EmptyPokemonFactory.create();
+            t.setPokemon(b, i);
+        }
 
         BuildPokemonTeamInputData inputData = new BuildPokemonTeamInputData(a.getName(), t, 0);
         BuildPokemonTeamOutputBoundary successPresenter = new BuildPokemonTeamOutputBoundary() {
@@ -193,19 +168,11 @@ public class TestBuildPokemonTeam {
     @Test
     public void BuildPokemonTeamTestPresenter() throws IOException { //Checks if presenter is called.
         Team t = new Team("Let's Not Meet");
-        EmptyPokemonFactory x = new EmptyPokemonFactory();
         Pokemon a = EmptyPokemonFactory.create();
-        Pokemon b = EmptyPokemonFactory.create();
-        Pokemon c = EmptyPokemonFactory.create();
-        Pokemon d = EmptyPokemonFactory.create();
-        Pokemon e = EmptyPokemonFactory.create();
-        Pokemon f = EmptyPokemonFactory.create();
-        t.setPokemon(a, 0);
-        t.setPokemon(b, 1);
-        t.setPokemon(c, 2);
-        t.setPokemon(d, 3);
-        t.setPokemon(e, 4);
-        t.setPokemon(f, 5);
+        for (int i = 1; i < 5; i++){
+            Pokemon b = EmptyPokemonFactory.create();
+            t.setPokemon(b, i);
+        }
 
         BuildPokemonTeamInputData inputData = new BuildPokemonTeamInputData(a.getName(), t, 0);
         BuildPokemonTeamOutputBoundary successPresenter = new BuildPokemonTeamOutputBoundary() {
