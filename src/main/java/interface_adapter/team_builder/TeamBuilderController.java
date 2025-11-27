@@ -1,6 +1,6 @@
 package interface_adapter.team_builder;
 
-import entity.GradingStrategy;
+import usecase.grade_team.GradingStrategy;
 import entity.Team;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;

@@ -3,7 +3,7 @@ package app;
 import data_access.BuildPokemonTeamDataAccessObject;
 import data_access.PokemonLookupDataAccessObject;
 import entity.EmptyPokemonFactory;
-import entity.TeamGrader;
+import usecase.grade_team.TeamGrader;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.pokemon_lookup.PokemonLookupController;
 import interface_adapter.pokemon_lookup.PokemonLookupPresenter;

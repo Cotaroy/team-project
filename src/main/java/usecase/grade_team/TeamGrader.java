@@ -1,8 +1,11 @@
-package entity;
+package usecase.grade_team;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import entity.Pokemon;
+import entity.Team;
 
 public class TeamGrader implements GradingStrategy {
 
@@ -11,6 +14,8 @@ public class TeamGrader implements GradingStrategy {
     static final int STAT_LOWER_BOUND = 399;
     static final int STAT_UPPER_BOUND = 600;
     static final int STAT_INTERVAL = 50;
+    static final int MAX_SCORE = 98;
+    static final int PERCENTAGE = 100;
 
     @Override
     public float execute(Team team) {
@@ -21,7 +26,13 @@ public class TeamGrader implements GradingStrategy {
         finalScore += getCoverageScore(pokemon);
         finalScore += getStatScore(pokemon);
 
+        finalScore = normalize(finalScore);
+
         return finalScore;
+    }
+
+    private float normalize(float value) {
+        return PERCENTAGE * (value / MAX_SCORE);
     }
 
     private static float getCoverageScore(Pokemon[] pokemon) {
