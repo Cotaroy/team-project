@@ -55,16 +55,39 @@ public class DisplayPokemonInTeamJPanel extends JPanel {
     }
 
     @NotNull
-    private static JPanel getPokemonBasicInfo(Pokemon pokemon) {
+    private static JPanel getPokemonBasicInfo(Pokemon pokemon) throws MalformedURLException {
         JPanel basicPokemonInfo = new JPanel();
         basicPokemonInfo.setLayout(new BoxLayout(basicPokemonInfo, BoxLayout.Y_AXIS));
         basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        String name = Character.toUpperCase(pokemon.getName().charAt(0)) +
-                pokemon.getName().substring(1);
+        String name = pokemon.getProperName();
         basicPokemonInfo.add(new JLabel("Name: " + name));
-        basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().getName()));
+        URL sprite1URL = new URL(pokemon.getType1().getSprite());
+        JLabel type1Label = new JLabel();
+        Image sprite1 = (new ImageIcon(sprite1URL).getImage()).getScaledInstance(50, 20,
+                Image.SCALE_DEFAULT);
+        type1Label.setIcon(new ImageIcon(sprite1));
+        JPanel Type1Panel = new JPanel();
+        Type1Panel.setLayout(new BoxLayout(Type1Panel, BoxLayout.X_AXIS));
+        Type1Panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        type1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        Type1Panel.add(type1Label);
+        basicPokemonInfo.add(Type1Panel);
+        //  basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
         if (pokemon.getType2() != null) {
-            basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().getName()));
+            URL sprite2URL = new URL(pokemon.getType2().getSprite());
+            JLabel type2Label = new JLabel();
+            Image sprite2 = (new ImageIcon(sprite2URL).getImage()).getScaledInstance(50, 20,
+                    Image.SCALE_DEFAULT);
+            type2Label.setIcon(new ImageIcon(sprite2));
+            JPanel Type2Panel = new JPanel();
+            Type2Panel.setLayout(new BoxLayout(Type2Panel, BoxLayout.X_AXIS));
+            Type2Panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            type2Label.setAlignmentX(Component.LEFT_ALIGNMENT);
+            Type2Panel.add(type2Label);
+            basicPokemonInfo.add(Type2Panel);
+            //  basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
         }
         return basicPokemonInfo;
     }

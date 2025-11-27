@@ -62,17 +62,23 @@ public class TeamGrader implements GradingStrategy {
                 for (int stat : stats) {
                     sumStats += stat;
                 }
-                if (sumStats <= STAT_LOWER_BOUND) {
-                    result += BASE_STAT_SCORE;
-                }
-                else if (sumStats >= STAT_UPPER_BOUND) {
-                    result += MAX_STAT_SCORE;
-                }
-                else {
-                    result += BASE_STAT_SCORE + 1 + (int) (sumStats - STAT_LOWER_BOUND) / STAT_INTERVAL;
-                }
+                result += compareToBounds(sumStats);
             }
         }
         return result;
+    }
+
+    private static float compareToBounds(float sumStats) {
+        float change = 0;
+        if (sumStats <= STAT_LOWER_BOUND) {
+            change += BASE_STAT_SCORE;
+        }
+        else if (sumStats >= STAT_UPPER_BOUND) {
+            change += MAX_STAT_SCORE;
+        }
+        else {
+            change += BASE_STAT_SCORE + 1 + (int) (sumStats - STAT_LOWER_BOUND) / STAT_INTERVAL;
+        }
+        return change;
     }
 }
