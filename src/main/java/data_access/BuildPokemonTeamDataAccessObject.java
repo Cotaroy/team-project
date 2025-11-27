@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import entity.Pokemon;
 import entity.Team;
-import use_case.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface {
 

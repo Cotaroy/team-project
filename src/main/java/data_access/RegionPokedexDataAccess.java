@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import use_case.seeRegionPokedex.RegionPokedexDataAccessInterface;
+import usecase.seeRegionPokedex.RegionPokedexDataAccessInterface;
 
 public class RegionPokedexDataAccess implements RegionPokedexDataAccessInterface {
     private final OkHttpClient client = new OkHttpClient();

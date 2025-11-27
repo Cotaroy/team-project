@@ -2,14 +2,21 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
+public class TeamGrader implements GradingStrategy {
 
-public class TeamGrader implements GradingStrategy{
+    static final int BASE_STAT_SCORE = 5;
+    static final int MAX_STAT_SCORE = 10;
+    static final int STAT_LOWER_BOUND = 399;
+    static final int STAT_UPPER_BOUND = 600;
+    static final int STAT_INTERVAL = 50;
+
     @Override
     public float execute(Team team) {
         float finalScore = 0;
 
-        Pokemon[] pokemon = team.getPokemon();
+        final Pokemon[] pokemon = team.getPokemon();
 
         finalScore += getCoverageScore(pokemon);
         finalScore += getStatScore(pokemon);
@@ -18,35 +25,49 @@ public class TeamGrader implements GradingStrategy{
     }
 
     private static float getCoverageScore(Pokemon[] pokemon) {
-        HashSet<String> offensiveCoverage = new HashSet<>();
-        HashSet<String> defensiveCoverage = new HashSet<>();
+        final Set<String> offensiveCoverage = new HashSet<>();
+        final Set<String> defensiveCoverage = new HashSet<>();
         for (Pokemon value : pokemon) {
             if (value != null) {
-                offensiveCoverage.addAll(value.getStrengths());
-                defensiveCoverage.addAll(value.getResistances());
+                if (value.getType2() == null) {
+                    offensiveCoverage.addAll(value.getType1().getStrengths());
+                    defensiveCoverage.addAll(value.getType1().getResistances());
+                }
+                else {
+                    offensiveCoverage.addAll(value.getStrengths());
+                    defensiveCoverage.addAll(value.getResistances());
+                }
             }
         }
-        return (defensiveCoverage.size() + offensiveCoverage.size());
+        return defensiveCoverage.size() + offensiveCoverage.size();
     }
 
     private static float getStatScore(Pokemon[] pokemon) {
         float result = 0;
         for (Pokemon value : pokemon) {
             if (value != null) {
-                ArrayList<Integer> stats = value.getStats();
+                final ArrayList<Integer> stats = value.getStats();
                 float sumStats = 0;
                 for (int stat : stats) {
                     sumStats += stat;
                 }
-                if (sumStats <= 399) {
-                    result += 5;
-                } else if (sumStats > 600) {
-                    result += 10;
-                } else {
-                    result += 6 + (int) (sumStats - 400) / 50;
-                }
+                result += compareToBounds(sumStats);
             }
         }
         return result;
+    }
+
+    private static float compareToBounds(float sumStats) {
+        float change = 0;
+        if (sumStats <= STAT_LOWER_BOUND) {
+            change += BASE_STAT_SCORE;
+        }
+        else if (sumStats >= STAT_UPPER_BOUND) {
+            change += MAX_STAT_SCORE;
+        }
+        else {
+            change += BASE_STAT_SCORE + 1 + (int) (sumStats - STAT_LOWER_BOUND) / STAT_INTERVAL;
+        }
+        return change;
     }
 }
