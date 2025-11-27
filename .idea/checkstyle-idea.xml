@@ -4,11 +4,14 @@
     <checkstyleVersion>11.0.1</checkstyleVersion>
     <scanScope>JavaOnly</scanScope>
     <option name="thirdPartyClasspath" />
-    <option name="activeLocationIds" />
+    <option name="activeLocationIds">
+      <option value="11a3ffc5-ea94-4031-8f17-2aff740c722e" />
+    </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="11a3ffc5-ea94-4031-8f17-2aff740c722e" type="LOCAL_FILE" scope="All" description="CSC207 Checks">$PROJECT_DIR$/../Nate-s-refactoring-repo-M4-Coding-Module-/mystyle.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

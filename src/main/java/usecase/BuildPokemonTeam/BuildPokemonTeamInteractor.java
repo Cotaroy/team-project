@@ -8,15 +8,15 @@ import java.io.IOException;
 public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary {
     private final BuildPokemonTeamDataAccessInterface userDataAccessObject;
     private final BuildPokemonTeamOutputBoundary userPresenter;
-    private final Pokemon Pokemon;
+    private final Pokemon pokemon;
 
 
     public BuildPokemonTeamInteractor(BuildPokemonTeamDataAccessInterface buildPokemonTeamDataAccessInterface,
                                       BuildPokemonTeamOutputBoundary buildPokemonTeamOutputBoundary,
-                                      Pokemon Pokemon) {
+                                      Pokemon pokemon) {
         this.userDataAccessObject = buildPokemonTeamDataAccessInterface;
         this.userPresenter = buildPokemonTeamOutputBoundary;
-        this.Pokemon = Pokemon;
+        this.pokemon = pokemon;
     }
 
 
@@ -30,9 +30,9 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
         // Checks to see if the team can even be added to.
         if (index == -1){
             // Goes through each team slot to see if there's a slot that can be added to.
-            for ( int i = 0; i < 6; i++) {
+            for (int i = 0; i < 6; i++) {
                 if (team.getPokemon(i) == null){
-                    team.setPokemon(Pokemon, i);
+                    team.setPokemon(pokemon, i);
                     final BuildPokemonTeamOutputData buildPokemonTeamOutputData =
                             new BuildPokemonTeamOutputData(team);
                     userPresenter.prepareSuccessView(buildPokemonTeamOutputData);
