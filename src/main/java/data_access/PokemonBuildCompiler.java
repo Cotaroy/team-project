@@ -5,6 +5,7 @@ import entity.Move;
 import entity.Pokemon;
 import entity.Type;
 import usecase.lookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupInputBoundary;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 public class PokemonBuildCompiler {
 
-    public static String getBuildCode(String name) throws IOException {
+    public static String getBuildCode(String name) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         PokemonLookupDataAccessInterface pokemonLookupDataAccess = new PokemonLookupDataAccessObject();
         Pokemon pokemon = pokemonLookupDataAccess.getPokemon(name);
 
@@ -62,7 +63,7 @@ public class PokemonBuildCompiler {
         return result;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the name of the pokemon you want to lookup");
         System.out.println(getBuildCode(scan.nextLine()));

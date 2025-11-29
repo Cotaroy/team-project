@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface PokemonLookupDataAccessInterface {
 
-    Pokemon getPokemon(String name) throws IOException;
+    Pokemon getPokemon(String name) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException;
 
 }

@@ -108,6 +108,48 @@ class TestPokemonLookupInteractor {
         assertEquals("No Pokemon name provided.", receivedError[0]);
     }
 
+    @Test
+    void PokemonNotFoundExceptionTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+        // Fake Data Access that always throws the NotFoundException
+        PokemonLookupDataAccessInterface failingDataAccess = new PokemonLookupDataAccessInterface() {
+            @Override
+            public Pokemon getPokemon(String name) throws PokemonLookupInputBoundary.PokemonNotFoundException {
+                throw new PokemonLookupInputBoundary.PokemonNotFoundException(name);
+            }
+        };
+
+        final String[] receivedError = new String[1];
+
+        PokemonLookupOutputBoundary presenter = new PokemonLookupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(PokemonLookupOutputData outputData) {
+                fail("Success view should not be called when exception is thrown");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                receivedError[0] = errorMessage;
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+                fail("switchToTeamBuilderView should not be called in failure scenario");
+            }
+        };
+
+        PokemonLookupInputBoundary interactor =
+                new PokemonLookupInteractor(presenter, EmptyPokemonFactory.create(), failingDataAccess);
+
+        PokemonLookupInputData input = new PokemonLookupInputData("missingmon");
+
+        // Run the interactor
+        interactor.execute(input);
+
+        // Verify the correct exception message is forwarded
+        assertEquals("missingmon not found", receivedError[0]);
+    }
+
+
     // dual type return the right weakness test
     @Test
     void LudicoloTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {

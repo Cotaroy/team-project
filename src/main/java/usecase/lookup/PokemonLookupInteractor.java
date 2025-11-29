@@ -21,15 +21,27 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
 
     @Override
     public void execute(PokemonLookupInputData pokemonLookupInputData) throws IOException {
-        String name = pokemonLookupInputData.getName().toLowerCase();
+        String name = pokemonLookupInputData.getName();
+        if (name == null) {
+            userPresenter.prepareFailView("No Pokemon name provided.");
+            return;
+        }
+
+        name = name.toLowerCase();
+
         if ("".equals(name)) {
             userPresenter.prepareFailView("No Pokemon name provided.");
             return;
-        } else {
+        }
+
+        try {
             Pokemon pokemon = dataAccess.getPokemon(name);
             final PokemonLookupOutputData pokemonLookupOutputData =
                     new PokemonLookupOutputData(pokemon);
             userPresenter.prepareSuccessView(pokemonLookupOutputData);
+        } catch (PokemonLookupInputBoundary.PokemonNotFoundException e) {
+            // forward the exact message from the exception to the presenter
+            userPresenter.prepareFailView(e.getMessage());
         }
     }
 
