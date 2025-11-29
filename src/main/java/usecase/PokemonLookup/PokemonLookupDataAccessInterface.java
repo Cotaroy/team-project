@@ -9,5 +9,4 @@ public interface PokemonLookupDataAccessInterface {
 
     Pokemon getPokemon(String name) throws IOException;
 
-    Type getType(int typeID) throws IOException;
 }

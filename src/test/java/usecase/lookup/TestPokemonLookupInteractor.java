@@ -1,6 +1,7 @@
 package usecase.lookup;
 
 import data_access.AbilityMap;
+import data_access.InMemoryUserDataAccessObject;
 import data_access.MoveMap;
 import data_access.PokemonLookupDataAccessObject;
 import entity.*;
@@ -47,7 +48,7 @@ class TestPokemonLookupInteractor {
                 .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png")
                 .build();
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary()
         {
             @Override

@@ -173,7 +173,6 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
         }
     }
 
-    @Override
     public Type getType(int typeID) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
