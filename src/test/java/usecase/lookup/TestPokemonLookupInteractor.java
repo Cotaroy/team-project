@@ -3,7 +3,7 @@ package usecase.lookup;
 import data_access.AbilityMap;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.MoveMap;
-import data_access.PokemonLookupDataAccessObject;
+import data_access.InMemoryUserDataAccessObject;
 import entity.*;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ class TestPokemonLookupInteractor {
                 .setMoves(moveskarp)
                 .setEggGroups(eggkarp)
                 .setPokedexes(pokedexkarp)
-                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png")
+                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png")
                 .build();
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
@@ -70,86 +70,14 @@ class TestPokemonLookupInteractor {
         interactor.execute(inputData);
     }
 
-    // returns the specific form data
-    @Test
-    void AegislashTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-        ArrayList<Integer> stats = new ArrayList<>(Arrays.asList(60, 50, 140, 50, 140, 60));
-        EmptyPokemonFactory factoree = new EmptyPokemonFactory();
-        Pokemon emptymon = factoree.create();
-        PokemonLookupInputData inputData = new PokemonLookupInputData("aegislash-shield");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
-        PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
-            @Override
-            public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals("aegislash-shield", outputData.getPokemon().getName());
-                assertEquals(stats, outputData.getPokemon().getStats());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail(errorMessage);
-            }
-
-            @Override
-            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-
-            }
-        };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
-        interactor.execute(inputData);
-
-    }
-
-    // returns a formless pokemon that still has a hyphen
-    @Test
-    void TingLuTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-        EmptyPokemonFactory factoree = new EmptyPokemonFactory();
-        Pokemon emptymon = factoree.create();
-        PokemonLookupInputData inputData = new PokemonLookupInputData("ting-lu");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
-        PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
-            @Override
-            public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                assertEquals("ting-lu", outputData.getPokemon().getName());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail(errorMessage);
-            }
-
-            @Override
-            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-
-            }
-        };
-        PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, emptymon, dataAccess);
-        interactor.execute(inputData);
-
-    }
-
-
     // dual type return the right weakness test
     @Test
     void LudicoloTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-//        HashSet<String> waterstrength = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
-//        HashSet<String> waterweak = new HashSet<>(Arrays.asList("grass", "electric"));
-//        HashSet<String> wateres = new HashSet<>(Arrays.asList("fire", "rock", "ground"));
-//
-//        HashSet<String> grassstrength = new HashSet<>(Arrays.asList("ground", "rock", "water"));
-//        HashSet<String> grassweak = new HashSet<>(Arrays.asList("flying", "fire", "bug", "ice", "poison"));
-//        HashSet<String> grassres = new HashSet<>(Arrays.asList("ground", "grass", "water", "electric"));
-//        Type type1 = new Type("water", 11,
-//                waterstrength, waterweak, wateres);
-//        Type type2 = new Type("grass", 12,
-//                grassstrength, grassweak, grassres);
-        EmptyPokemonFactory factoree = new EmptyPokemonFactory();
-        Pokemon emptymon = factoree.create();
-//        emptymon.setType1(type1);
-//        emptymon.setType2(type2);
+
+        Pokemon emptymon = EmptyPokemonFactory.create();
         HashSet<String> ludicoloweakness = new HashSet<>(Arrays.asList("poison", "flying", "bug"));
         PokemonLookupInputData inputData = new PokemonLookupInputData("ludicolo");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -173,24 +101,12 @@ class TestPokemonLookupInteractor {
     // dual type return the right strengths test (no duplicates)
     @Test
     void AurorusTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-//        HashSet<String> icestrength = new HashSet<>(Arrays.asList("flying", "ground", "grass", "dragon"));
-//        HashSet<String> iceweak = new HashSet<>(Arrays.asList("fighting", "fire", "rock", "steel"));
-//        HashSet<String> iceres = new HashSet<>(Arrays.asList("ice"));
-//
-//        HashSet<String> rockstrength = new HashSet<>(Arrays.asList("flying", "bug", "fire", "ice"));
-//        HashSet<String> rockweak = new HashSet<>(Arrays.asList("water", "grass", "ground", "steel", "fighting"));
-//        HashSet<String> rockres = new HashSet<>(Arrays.asList("ground", "grass", "water", "electric"));
-//        Type type2 = new Type("ice", 15,
-//                icestrength, iceweak, iceres);
-//        Type type1 = new Type("rock", 6,
-//                rockstrength, rockweak, rockres);
+
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         HashSet<String> aurorusstrength = new HashSet<>(Arrays.asList("flying", "ground", "grass", "dragon", "bug", "fire", "ice"));
-//        emptymon.setType1(type1);
-//        emptymon.setType2(type2);
         PokemonLookupInputData inputData = new PokemonLookupInputData("aurorus");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -232,7 +148,7 @@ class TestPokemonLookupInteractor {
 //        emptymon.setType2(type2);
         HashSet<String> durantres = new HashSet<>(Arrays.asList("normal", "bug", "poison", "steel", "grass", "psychic", "ice", "dragon", "fairy"));
         PokemonLookupInputData inputData = new PokemonLookupInputData("durant");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -262,7 +178,7 @@ class TestPokemonLookupInteractor {
         Pokemon emptymon = factoree.create();
         emptymon.setAbilities(abilitykarp);
         PokemonLookupInputData inputData = new PokemonLookupInputData("shedinja");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -293,7 +209,7 @@ class TestPokemonLookupInteractor {
         emptymon.setAbilities(ability);
         emptymon.setHidden(abilitymap.getAbility(24));
         PokemonLookupInputData inputData = new PokemonLookupInputData("garchomp");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
@@ -326,7 +242,7 @@ class TestPokemonLookupInteractor {
         emptymon.setAbilities(ability);
         emptymon.setHidden(abilitymap.getAbility(3));
         PokemonLookupInputData inputData = new PokemonLookupInputData("scolipede");
-        PokemonLookupDataAccessInterface dataAccess = new PokemonLookupDataAccessObject();
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary() {
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {

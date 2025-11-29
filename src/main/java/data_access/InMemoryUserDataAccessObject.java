@@ -1,21 +1,18 @@
 package data_access;
 
-import entity.Pokemon;
-import entity.Team;
-import entity.Type;
-import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
-import usecase.grade_team.GradeTeamUserDataAccessInterface;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInterface, BuildPokemonTeamDataAccessInterface, PokemonLookupDataAccessInterface {
-    private MoveMap movemap = new MoveMap();
-    private AbilityMap abilitymap = new AbilityMap();
-    private PokemonMap pokemap = new PokemonMap(abilitymap, movemap);
+import entity.Pokemon;
+import entity.Team;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
+import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
+import usecase.grade_team.GradeTeamUserDataAccessInterface;
+
+public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInterface,
+        BuildPokemonTeamDataAccessInterface, PokemonLookupDataAccessInterface {
+    private PokemonMap pokemap = new PokemonMap();
     private final Map<String, Team> teams = new HashMap<>();
 
     @Override
@@ -24,11 +21,8 @@ public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInte
     }
 
     @Override
-    public boolean teamExists(Team name) throws FileNotFoundException {
-        if (teams.containsKey(name.getTeamName())){
-            return true;
-        }
-        return false;
+    public boolean teamExists(Team name) {
+        return teams.containsKey(name.getTeamName());
     }
 
     @Override
