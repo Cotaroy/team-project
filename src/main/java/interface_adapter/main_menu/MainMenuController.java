@@ -1,6 +1,6 @@
 package interface_adapter.main_menu;
 
-import use_case.main_menu.MainMenuInputBoundary;
+import usecase.main_menu.MainMenuInputBoundary;
 public class MainMenuController {
     private final MainMenuInputBoundary mainMenuInteractor;
 

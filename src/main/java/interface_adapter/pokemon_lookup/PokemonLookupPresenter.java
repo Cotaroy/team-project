@@ -5,8 +5,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import interface_adapter.team_builder.TeamBuilderState;
 import interface_adapter.team_builder.TeamBuilderViewModel;
-import use_case.PokemonLookup.PokemonLookupOutputBoundary;
-import use_case.PokemonLookup.PokemonLookupOutputData;
+import usecase.PokemonLookup.PokemonLookupOutputBoundary;
+import usecase.PokemonLookup.PokemonLookupOutputData;
 
 public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
 

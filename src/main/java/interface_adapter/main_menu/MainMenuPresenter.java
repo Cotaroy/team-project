@@ -2,8 +2,8 @@ package interface_adapter.main_menu;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.team_builder.TeamBuilderViewModel;
-import use_case.main_menu.MainMenuOutputBoundary;
-import use_case.main_menu.MainMenuOutputData;
+import usecase.main_menu.MainMenuOutputBoundary;
+import usecase.main_menu.MainMenuOutputData;
 
 public class MainMenuPresenter implements MainMenuOutputBoundary {
     private final MainViewModel menuViewModel;

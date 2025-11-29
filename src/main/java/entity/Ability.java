@@ -20,22 +20,28 @@ public class Ability {
         return capitalize() + ": " + description;
     }
 
+    /**
+     * Get the name with proper noun capitalization.
+     * @return the name instance variable but capitalized after spaces or dashes
+     */
     public String capitalize() {
-        if (name.split("-").length == 1) {
-            return name.substring(0, 1).toUpperCase() + name.substring(1);
+        final String splitBy = "-";
+        String result = "";
+        if (name.split(splitBy).length == 1) {
+            result = name.substring(0, 1).toUpperCase() + name.substring(1);
         }
         else {
-            StringBuilder nme = new StringBuilder();
-            for (int i = 0; i < name.split("-").length; i++)
-            {
-                String unit = name.split("-")[i].substring(0, 1).toUpperCase() + name.split("-")[i].substring(1);
-                 nme.append(unit);
-                 nme.append(" ");
+            final StringBuilder nme = new StringBuilder();
+            for (int i = 0; i < name.split(splitBy).length; i++) {
+                final String unit = name.split(splitBy)[i].substring(0, 1).toUpperCase()
+                        + name.split(splitBy)[i].substring(1);
+                nme.append(unit);
+                nme.append(" ");
             }
             nme.delete(nme.length() - 1, nme.length());
-            String result = nme.toString();
-            return result;
+            result = nme.toString();
         }
+        return result;
     }
 
     public String getName() {

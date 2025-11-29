@@ -1,11 +1,11 @@
 package interface_adapter.team_builder;
 
-import entity.GradingStrategy;
+import usecase.grade_team.GradingStrategy;
 import entity.Team;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInputData;
-import use_case.grade_team.GradeTeamInputBoundary;
-import use_case.grade_team.GradeTeamInputData;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;
+import usecase.grade_team.GradeTeamInputBoundary;
+import usecase.grade_team.GradeTeamInputData;
 
 import java.io.IOException;
 
