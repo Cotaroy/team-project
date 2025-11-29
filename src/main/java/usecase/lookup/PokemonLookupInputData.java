@@ -11,5 +11,7 @@ public class PokemonLookupInputData {
         this.name = name;
     }
 
-    String getName() { return name; }
+    String getName() {
+        return name;
+    }
 }

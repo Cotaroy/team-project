@@ -79,11 +79,13 @@ class TestPokemonLookupInteractor {
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
 
         final String[] receivedError = new String[1];
+        final boolean[] successCalled = {false};
 
         PokemonLookupOutputBoundary presenter = new PokemonLookupOutputBoundary() {
+
             @Override
             public void prepareSuccessView(PokemonLookupOutputData outputData) {
-                fail("Should not hit success branch for empty name");
+                successCalled[0] = true;
             }
 
             @Override
@@ -97,16 +99,55 @@ class TestPokemonLookupInteractor {
             }
         };
 
-        // Pass an empty-name input
-        PokemonLookupInputData emptyInput = new PokemonLookupInputData("");
+        PokemonLookupInputBoundary interactor =
+                new PokemonLookupInteractor(presenter, EmptyPokemonFactory.create(), dataAccess);
+
+        PokemonLookupInputData input = new PokemonLookupInputData("");
+
+        interactor.execute(input);
+
+        assertEquals("No Pokemon name provided.", receivedError[0]);
+        assertFalse(successCalled[0], "Success view should not be called.");
+    }
+
+    @Test
+    void NullNameTriggersFailView() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
+
+        final String[] receivedError = new String[1];
+        final boolean[] successCalled = {false};
+
+        PokemonLookupOutputBoundary presenter = new PokemonLookupOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(PokemonLookupOutputData outputData) {
+                successCalled[0] = true;
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                receivedError[0] = errorMessage;
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+                fail("switchToTeamBuilderView should not be called for null name");
+            }
+        };
 
         PokemonLookupInputBoundary interactor =
                 new PokemonLookupInteractor(presenter, EmptyPokemonFactory.create(), dataAccess);
 
-        interactor.execute(emptyInput);
+        // Construct input with null name
+        PokemonLookupInputData input = new PokemonLookupInputData(null);
+
+        interactor.execute(input);
 
         assertEquals("No Pokemon name provided.", receivedError[0]);
+        assertFalse(successCalled[0], "Success view should not be called.");
     }
+
+
 
     @Test
     void PokemonNotFoundExceptionTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {

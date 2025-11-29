@@ -1,11 +1,8 @@
 package usecase.lookup;
 
-import org.json.JSONArray;
+import java.io.IOException;
 
 import entity.Pokemon;
-
-import java.io.IOException;
-import java.util.HashSet;
 
 public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
     private final PokemonLookupOutputBoundary userPresenter;
@@ -22,28 +19,36 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
     @Override
     public void execute(PokemonLookupInputData pokemonLookupInputData) throws IOException {
         String name = pokemonLookupInputData.getName();
-        if (name == null) {
-            userPresenter.prepareFailView("No Pokemon name provided.");
-            return;
+
+        boolean valid = true;
+        Pokemon result = null;
+        String error = null;
+
+        // Validate name
+        if (name == null || name.isEmpty()) {
+            valid = false;
+            error = "No Pokemon name provided.";
         }
 
-        name = name.toLowerCase();
+        if (valid) {
+            name = name.toLowerCase();
 
-        if ("".equals(name)) {
-            userPresenter.prepareFailView("No Pokemon name provided.");
-            return;
+            try {
+                result = dataAccess.getPokemon(name);
+            } catch (PokemonLookupInputBoundary.PokemonNotFoundException e) {
+                valid = false;
+                error = e.getMessage();
+            }
         }
 
-        try {
-            Pokemon pokemon = dataAccess.getPokemon(name);
-            final PokemonLookupOutputData pokemonLookupOutputData =
-                    new PokemonLookupOutputData(pokemon);
-            userPresenter.prepareSuccessView(pokemonLookupOutputData);
-        } catch (PokemonLookupInputBoundary.PokemonNotFoundException e) {
-            // forward the exact message from the exception to the presenter
-            userPresenter.prepareFailView(e.getMessage());
+        // Single exit point
+        if (valid) {
+            userPresenter.prepareSuccessView(new PokemonLookupOutputData(result));
+        } else {
+            userPresenter.prepareFailView(error);
         }
     }
+
 
     @Override
     public void switchToTeamBuilderView(int index, Pokemon pokemon) {
