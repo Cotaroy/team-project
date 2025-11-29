@@ -37,14 +37,6 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
     public void switchToTeamBuilderView(int index, Pokemon pokemon) {
         userPresenter.switchToTeamBuilderView(index,pokemon);
     }
-
-    private static HashSet<String> getTypeNames(JSONArray typeList) {
-        HashSet<String> types = new HashSet<>();
-        for(int i = 0; i < typeList.length(); i++) {
-            types.add(typeList.getJSONObject(i).getString("name"));
-        }
-        return types;
-    }
 }
 
 

@@ -46,6 +46,8 @@ class TestPokemonLookupInteractor {
                 .build();
         PokemonLookupInputData inputData = new PokemonLookupInputData("magikarp");
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
+        final int[] receivedIndex = new int[1];
+        final Pokemon[] receivedPokemon = new Pokemon[1];
         PokemonLookupOutputBoundary successPresenter = new PokemonLookupOutputBoundary()
         {
             @Override
@@ -60,11 +62,50 @@ class TestPokemonLookupInteractor {
 
             @Override
             public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-
+                receivedIndex[0] = index;
+                receivedPokemon[0] = pokemon;
             }
         };
         PokemonLookupInputBoundary interactor = new PokemonLookupInteractor(successPresenter, magikarp, dataAccess);
         interactor.execute(inputData);
+        interactor.switchToTeamBuilderView(3, magikarp);
+
+        assertEquals(3, receivedIndex[0]);
+        assertEquals(magikarp.toString(), receivedPokemon[0].toString());
+    }
+
+    @Test
+    void EmptyNameTriggersFailView() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+        PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
+
+        final String[] receivedError = new String[1];
+
+        PokemonLookupOutputBoundary presenter = new PokemonLookupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(PokemonLookupOutputData outputData) {
+                fail("Should not hit success branch for empty name");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                receivedError[0] = errorMessage;
+            }
+
+            @Override
+            public void switchToTeamBuilderView(int index, Pokemon pokemon) {
+                fail("switchToTeamBuilderView should not be called for empty name");
+            }
+        };
+
+        // Pass an empty-name input
+        PokemonLookupInputData emptyInput = new PokemonLookupInputData("");
+
+        PokemonLookupInputBoundary interactor =
+                new PokemonLookupInteractor(presenter, EmptyPokemonFactory.create(), dataAccess);
+
+        interactor.execute(emptyInput);
+
+        assertEquals("No Pokemon name provided.", receivedError[0]);
     }
 
     // dual type return the right weakness test
