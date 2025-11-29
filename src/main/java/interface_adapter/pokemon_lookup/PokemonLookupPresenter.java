@@ -2,6 +2,7 @@ package interface_adapter.pokemon_lookup;
 
 import entity.Pokemon;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
 import interface_adapter.team_builder.TeamBuilderState;
 import interface_adapter.team_builder.TeamBuilderViewModel;
 import use_case.PokemonLookup.PokemonLookupOutputBoundary;
