@@ -1,7 +1,7 @@
 package interface_adapter.team_builder;
 
 import entity.Team;
-import use_case.grade_team.GradeTeamUserDataAccessInterface;
+import usecase.grade_team.GradeTeamUserDataAccessInterface;
 
 public class TeamBuilderState implements GradeTeamUserDataAccessInterface {
     private String teamNameError;

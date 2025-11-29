@@ -1,8 +1,8 @@
 package data_access;
 
 import entity.Team;
-import use_case.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import use_case.grade_team.GradeTeamUserDataAccessInterface;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
+import usecase.grade_team.GradeTeamUserDataAccessInterface;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
