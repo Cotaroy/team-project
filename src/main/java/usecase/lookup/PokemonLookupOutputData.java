@@ -3,14 +3,14 @@ package usecase.lookup;
 import entity.Pokemon;
 
 public class PokemonLookupOutputData {
-    private final Pokemon Pokemon;
+    private final Pokemon pokemon;
 
     public PokemonLookupOutputData(Pokemon Pokemon) {
-        this.Pokemon = Pokemon;
+        this.pokemon = Pokemon;
     }
 
     public Pokemon getPokemon() {
-        return Pokemon;
+        return pokemon;
     }
 
 }

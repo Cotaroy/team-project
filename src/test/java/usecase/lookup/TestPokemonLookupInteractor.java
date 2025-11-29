@@ -1,8 +1,8 @@
 package usecase.lookup;
 
-import data_access.AbilityMap;
-import data_access.InMemoryUserDataAccessObject;
-import data_access.MoveMap;
+import dataaccess.AbilityMap;
+import dataaccess.InMemoryUserDataAccessObject;
+import dataaccess.MoveMap;
 import entity.*;
 
 import java.io.IOException;

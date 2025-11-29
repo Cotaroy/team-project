@@ -1,22 +1,22 @@
 package view;
 
 import entity.Pokemon;
-import interface_adapter.pokemon_lookup.PokemonLookupController;
-import interface_adapter.pokemon_lookup.PokemonLookupState;
-import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
+import interfaceadapter.pokemonlookup.PokemonLookupController;
+import interfaceadapter.pokemonlookup.PokemonLookupState;
+import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
 import usecase.lookup.PokemonLookupInputBoundary;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.*;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
 

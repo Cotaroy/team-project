@@ -35,26 +35,24 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
 
             try {
                 result = dataAccess.getPokemon(name);
-            } catch (PokemonLookupInputBoundary.PokemonNotFoundException e) {
+            }
+            catch (PokemonLookupInputBoundary.PokemonNotFoundException exceptione) {
                 valid = false;
-                error = e.getMessage();
+                error = exceptione.getMessage();
             }
         }
 
         // Single exit point
         if (valid) {
             userPresenter.prepareSuccessView(new PokemonLookupOutputData(result));
-        } else {
+        }
+        else {
             userPresenter.prepareFailView(error);
         }
     }
 
-
     @Override
-    public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-        userPresenter.switchToTeamBuilderView(index,pokemon);
+    public void switchToTeamBuilderView(int index, Pokemon chosenpokemon) {
+        userPresenter.switchToTeamBuilderView(index, chosenpokemon);
     }
 }
-
-
-

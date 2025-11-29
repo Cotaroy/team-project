@@ -1,8 +1,8 @@
 package usecase.lookup;
 
-import data_access.AbilityMap;
-import data_access.MoveMap;
-import data_access.PokemonLookupDataAccessObject;
+import dataaccess.AbilityMap;
+import dataaccess.MoveMap;
+import dataaccess.PokemonLookupDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
 

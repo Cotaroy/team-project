@@ -1,4 +1,4 @@
-package interface_adapter.team_builder;
+package interfaceadapter.teambuilder;
 
 import entity.Team;
 import usecase.grade_team.GradeTeamUserDataAccessInterface;
