@@ -6,7 +6,7 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;

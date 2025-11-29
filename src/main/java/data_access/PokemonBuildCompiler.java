@@ -4,7 +4,7 @@ import entity.Ability;
 import entity.Move;
 import entity.Pokemon;
 import entity.Type;
-import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 
 import java.io.IOException;
 import java.util.List;

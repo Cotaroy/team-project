@@ -1,4 +1,4 @@
-package usecase.PokemonLookup;
+package usecase.lookup;
 
 /**
  * The input data for the Pokemon Lookup Use Case.

@@ -4,8 +4,8 @@ import entity.Pokemon;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.team_builder.TeamBuilderState;
 import interface_adapter.team_builder.TeamBuilderViewModel;
-import usecase.PokemonLookup.PokemonLookupOutputBoundary;
-import usecase.PokemonLookup.PokemonLookupOutputData;
+import usecase.lookup.PokemonLookupOutputBoundary;
+import usecase.lookup.PokemonLookupOutputData;
 
 public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
 

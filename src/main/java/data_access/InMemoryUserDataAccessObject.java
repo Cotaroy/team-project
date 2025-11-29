@@ -7,7 +7,7 @@ import java.util.Map;
 import entity.Pokemon;
 import entity.Team;
 import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.grade_team.GradeTeamUserDataAccessInterface;
 
 public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInterface,

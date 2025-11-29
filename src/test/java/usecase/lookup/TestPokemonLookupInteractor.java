@@ -3,7 +3,6 @@ package usecase.lookup;
 import data_access.AbilityMap;
 import data_access.InMemoryUserDataAccessObject;
 import data_access.MoveMap;
-import data_access.InMemoryUserDataAccessObject;
 import entity.*;
 
 import java.io.IOException;
@@ -11,12 +10,10 @@ import java.util.*;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
-import usecase.PokemonLookup.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestPokemonLookupInteractor {
-
 
     // a basic pokemon test
     @Test
@@ -131,21 +128,8 @@ class TestPokemonLookupInteractor {
 
     @Test
     void DurantTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
-//        HashSet<String> bugstrength = new HashSet<>(Arrays.asList("grass", "dark", "psychic"));
-//        HashSet<String> bugweak = new HashSet<>(Arrays.asList("fire", "rock", "flying"));
-//        HashSet<String> bugres = new HashSet<>(Arrays.asList("ground", "grass", "fighting"));
-//
-//        HashSet<String> steelstrength = new HashSet<>(Arrays.asList("rock", "ice", "fairy"));
-//        HashSet<String> steelweak = new HashSet<>(Arrays.asList("fire", "fighting", "ground"));
-//        HashSet<String> steelres = new HashSet<>(Arrays.asList("normal", "flying", "rock", "bug", "steel", "grass", "psychic", "ice", "dragon", "fairy"));
-//        Type type1 = new Type("bug", 7,
-//                bugstrength, bugweak, bugres);
-//        Type type2 = new Type("steel", 9,
-//                steelstrength, steelweak, steelres);
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
-//        emptymon.setType1(type1);
-//        emptymon.setType2(type2);
         HashSet<String> durantres = new HashSet<>(Arrays.asList("normal", "bug", "poison", "steel", "grass", "psychic", "ice", "dragon", "fairy"));
         PokemonLookupInputData inputData = new PokemonLookupInputData("durant");
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();

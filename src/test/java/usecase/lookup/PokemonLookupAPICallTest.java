@@ -5,7 +5,6 @@ import data_access.MoveMap;
 import data_access.PokemonLookupDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
-import usecase.PokemonLookup.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
