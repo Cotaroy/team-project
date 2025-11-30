@@ -28,7 +28,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
     private final JButton search;
     private final JButton saveToTeam;
-    private final DisplayPokemonJPanel displayPokemon = new DisplayPokemonJPanel();
+    private final DisplayPokemonPanel displayPokemon = new DisplayPokemonPanel();
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
