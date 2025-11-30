@@ -164,6 +164,9 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                     JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
                     currentState.setPokemonNameError(null);
                 }
+                else if ("No Pokemon name provided.".equals(currentState.getPokemonNameError())) {
+                    JOptionPane.showMessageDialog(null, "No Pokemon name provided");
+                }
             }
         }
     }
