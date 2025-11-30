@@ -82,6 +82,7 @@ public class AppBuilder {
         controller.setUserGradeTeamUseCaseInteractor(new GradeTeamInteractor(teamBuilderViewModel.getState(), buildPokemonTeamOutputBoundary));
 
         teamBuilderView.setTeamBuilderController(controller);
+        teamBuilderView.setSavedTeamsDropdown();
         return this;
     }
 

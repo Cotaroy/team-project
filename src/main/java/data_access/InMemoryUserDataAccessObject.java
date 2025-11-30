@@ -6,6 +6,7 @@ import use_case.LoadTeam.LoadTeamDataAccessInterface;
 import use_case.grade_team.GradeTeamUserDataAccessInterface;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,5 +36,10 @@ public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInte
     @Override
     public Team loadTeam(String teamName) {
         return teams.get(teamName);
+    }
+
+    @Override
+    public ArrayList<String> getAllTeamNames() {
+        return new ArrayList<>(teams.keySet());
     }
 }

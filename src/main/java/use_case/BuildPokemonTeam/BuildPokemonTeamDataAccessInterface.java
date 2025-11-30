@@ -2,6 +2,8 @@ package use_case.BuildPokemonTeam;
 import entity.Team;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public interface BuildPokemonTeamDataAccessInterface {
@@ -17,5 +19,19 @@ public interface BuildPokemonTeamDataAccessInterface {
      * @return true if team exists
      */
     boolean teamExists(Team name) throws FileNotFoundException;
+
+    /**
+     * returns all saved team names
+     * @return list of team names
+     */
+    ArrayList<String> getAllTeamNames();
+
+
+    /**
+     * returns a saved team that's being loaded
+     * @param teamName name of the team
+     * @return Team the team being loaded
+     */
+    Team loadTeam(String teamName) throws IOException;
 
 }

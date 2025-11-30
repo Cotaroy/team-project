@@ -75,7 +75,7 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
         String line = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith(teamName)) {
+                if (line.startsWith(teamName + ",")) {
                     break;
                 }
             }
@@ -100,11 +100,13 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
         Team result = new Team(teamName);
 
         int i = 0;
+        PokemonLookupDataAccessObject lookup = new PokemonLookupDataAccessObject();
         for(String name : names){
-            PokemonLookupDataAccessObject lookup = new PokemonLookupDataAccessObject();
-            Pokemon pokemon = lookup.getPokemon(name);
-            result.setPokemon(pokemon, i);
-            i += 1;
+            if (!name.equals("Null")) {
+                Pokemon pokemon = lookup.getPokemon(name);
+                result.setPokemon(pokemon, i);
+                i += 1;
+            }
         }
         return result;
     }
@@ -125,6 +127,23 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
 
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<String> getAllTeamNames() {
+        ArrayList<String> teamNames = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    String teamName = line.split(",")[0].trim();
+                    teamNames.add(teamName);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read team names", e);
+        }
+        return teamNames;
     }
 }
 

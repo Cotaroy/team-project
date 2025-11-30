@@ -5,6 +5,7 @@ import entity.Team;
 import entity.Pokemon;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary {
     private final BuildPokemonTeamDataAccessInterface userDataAccessObject;
@@ -74,5 +75,15 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
     @Override
     public void switchToPokemonLookupView(int index) {
         userPresenter.switchToPokemonLookupView(index);
+    }
+
+    @Override
+    public ArrayList<String> getAllTeamNames(){
+        return userDataAccessObject.getAllTeamNames();
+    }
+
+    @Override
+    public Team loadTeam(String teamName) throws IOException{
+        return userDataAccessObject.loadTeam(teamName);
     }
 }

@@ -1,6 +1,9 @@
 package use_case.BuildPokemonTeam;
 
+import entity.Team;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * The BuildPokemonTeam Use Case.
@@ -28,4 +31,18 @@ public interface BuildPokemonTeamInputBoundary {
      * Executes the switch to PokemonLookupView use case
      */
     void switchToPokemonLookupView(int index);
+
+    /**
+     * returns all saved team names
+     * @return ArrayList<String> names of saved teams
+     */
+    ArrayList<String> getAllTeamNames();
+
+    /**
+     * returns a saved team that's being loaded
+     * @param teamName name of the team
+     * @return Team the team being loaded
+     */
+    Team loadTeam(String teamName) throws IOException;
+
 }

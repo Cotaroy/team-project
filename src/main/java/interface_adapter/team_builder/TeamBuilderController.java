@@ -8,6 +8,7 @@ import use_case.grade_team.GradeTeamInputBoundary;
 import use_case.grade_team.GradeTeamInputData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TeamBuilderController {
 
@@ -48,8 +49,12 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.saveTeam(buildPokemonTeamInputData);
     }
 
-    public void loadTeam(Team team) throws IOException {
-        // TODO load team
+    public Team loadTeam(String teamName) throws IOException {
+        return this.userTeamBuilderUseCaseInteractor.loadTeam(teamName);
+    }
+
+    public ArrayList<String> getAllTeamNames(){
+        return userTeamBuilderUseCaseInteractor.getAllTeamNames();
     }
 
     public void gradeTeam(Team team) {
