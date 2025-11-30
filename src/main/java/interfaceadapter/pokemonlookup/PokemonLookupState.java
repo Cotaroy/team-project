@@ -6,12 +6,23 @@ public class PokemonLookupState {
     private String pokemonName = "";
     private String pokemonNameError;
 
+    private String filterType = "";
+    private String filterValue = "";
+
     private Pokemon displayPokemon;
 
     private int index = -1;
 
     public String getPokemonName() {
         return pokemonName;
+    }
+
+    public String getFilterType() {
+        return filterType;
+    }
+
+    public String getFilterValue() {
+        return filterValue;
     }
 
     public String getPokemonNameError() {
@@ -28,6 +39,14 @@ public class PokemonLookupState {
 
     public void setPokemonName(String pokemonName) {
         this.pokemonName = pokemonName;
+    }
+
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
+
+    public void setFilterValue(String filterValue) {
+        this.filterValue = filterValue;
     }
 
     public void setPokemonNameError(String pokemonNameError) {

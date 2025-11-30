@@ -4,6 +4,8 @@ import entity.Pokemon;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
+import usecase.filter.FilterPokemonDataAccess;
+import usecase.filter.FilterPokemonDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.*;
+import java.util.Collections;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -27,9 +30,16 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private final JTextField pokemonNameInputField = new JTextField(15);
     private PokemonLookupController pokemonLookupController = null;
 
+    private final JComboBox<String> filterTypeDropdown = new JComboBox<>(PokemonLookupViewModel.FILTERS);
+    private final DefaultListModel<String> filterValueModel = new DefaultListModel<>();
+    private JList<String> filterValueList = new JList<>(filterValueModel);
+    private final JScrollPane filterValueDropdown = new JScrollPane(filterValueList);
+
     private final JButton search;
     private final JButton saveToTeam;
+    private final JButton filterButton;
     private final DisplayPokemonPanel displayPokemon = new DisplayPokemonPanel();
+    private final DisplayFilterJList displayFilter = new DisplayFilterJList();
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
@@ -50,6 +60,14 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         buttons.add(saveToTeam);
 
         pokemonNameInfo.add(buttons);
+
+        final JPanel filterInfo = new JPanel();
+        filterInfo.add(new JLabel(PokemonLookupViewModel.FILTER_BY_LABEL));
+        filterInfo.add(filterTypeDropdown);
+        filterInfo.add(new JLabel(PokemonLookupViewModel.FILTER_VALUE_LABEL));
+        filterInfo.add(filterValueDropdown);
+        filterButton = new JButton(PokemonLookupViewModel.FILTER_BUTTON_LABEL);
+        filterInfo.add(filterButton);
 
         search.addActionListener(
                 new ActionListener() {
@@ -88,11 +106,47 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
                             updatePokemonDisplay(pokemonLookupViewModel);
                         }
+
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {}
                 }
+        );
+
+        filterTypeDropdown.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(filterTypeDropdown)) {
+                            String selectedType = filterTypeDropdown.getSelectedItem().toString();
+                            setFilterValues(selectedType);
+                        }
+
+                    }
+                }
+
+        );
+
+        filterButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(filterButton)) {
+
+                            String filterType = filterTypeDropdown.getSelectedItem().toString();
+                            String filterValue = filterValueList.getSelectedValue();
+                            FilterPokemonDataAccessInterface dataAccess =  new FilterPokemonDataAccess();
+
+                            if(dataAccess.filterTargetExists(filterType, filterValue)) {
+                                displayFilter.setPokemonList(dataAccess.getPokemonByFilter(filterType, filterValue));
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Not a valid Filter");
+                            }
+                        }
+
+                    }
+                }
+
         );
 
         addPokemonNameListener();
@@ -101,7 +155,9 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         this.add(title);
         this.add(pokemonNameInfo);
+        this.add(filterInfo);
         this.add(displayPokemon);
+        this.add(displayFilter);
     }
 
     private void updatePokemonDisplay(PokemonLookupViewModel pokemonLookupViewModel) {
@@ -170,4 +226,32 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
             }
         }
     }
-}
+
+    public void setFilterValues(String filterType) {
+        filterValueModel.clear();
+        switch (filterType) {
+            case "type":
+                for (String s : PokemonLookupViewModel.TYPE_VALUES) {
+                    filterValueModel.addElement(s);
+                }
+                break;
+            case "ability":
+                filterValueList = new JList<>();
+                break;
+            case "egg-group":
+                filterValueList = new JList<>();
+                break;
+            case "move":
+                filterValueList = new JList<>();
+                break;
+            case "pokedex":
+                break;
+
+        }
+        filterValueDropdown.setViewportView(filterValueList);
+        filterValueDropdown.revalidate();
+        filterValueDropdown.repaint();
+        }
+
+    }
+
