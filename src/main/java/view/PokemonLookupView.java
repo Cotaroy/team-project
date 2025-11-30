@@ -116,7 +116,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(filterTypeDropdown)) {
-                            String selectedType = filterTypeDropdown.getSelectedItem().toString();
+                            String selectedType = filterTypeDropdown.getSelectedItem();
                             setFilterValues(selectedType);
                         }
 
@@ -228,7 +228,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     public void setFilterValues(String filterType) {
         filterValueModel.clear();
         switch (filterType) {
-            case "Type":
+            case "type":
                 for (String s : PokemonLookupViewModel.TYPE_VALUES) {
                     filterValueModel.addElement(s);
                 }
