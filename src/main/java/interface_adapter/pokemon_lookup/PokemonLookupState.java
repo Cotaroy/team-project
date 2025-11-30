@@ -11,6 +11,8 @@ public class PokemonLookupState {
 
     private Pokemon displayPokemon;
 
+    private int index = -1;
+
     public String getPokemonName() {
         return pokemonName;
     }
@@ -31,6 +33,10 @@ public class PokemonLookupState {
         return displayPokemon;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     public void setPokemonName(String pokemonName) {
         this.pokemonName = pokemonName;
     }
@@ -49,6 +55,10 @@ public class PokemonLookupState {
 
     public void setDisplayPokemon(Pokemon displayPokemon) {
         this.displayPokemon = displayPokemon;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override
