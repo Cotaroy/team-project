@@ -3,6 +3,7 @@ package usecase.lookup;
 import java.io.IOException;
 
 import entity.Pokemon;
+import usecase.lookup.PokemonLookupDataAccessInterface.PokemonNotFoundException;
 
 /**
  * The Pokemon Lookup Use Case.
@@ -25,9 +26,4 @@ public interface PokemonLookupInputBoundary {
      */
     void switchToTeamBuilderView(int index, Pokemon pokemon);
 
-    class PokemonNotFoundException extends Exception {
-        public PokemonNotFoundException(String pokemonName) {
-            super(pokemonName + " not found");
-        }
-    }
 }

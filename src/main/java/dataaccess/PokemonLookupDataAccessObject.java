@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import usecase.lookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface.PokemonNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
 
 
     @Override
-    public Pokemon getPokemon(String name) throws IOException {
+    public Pokemon getPokemon(String name) throws IOException, PokemonNotFoundException {
         name = name.replace(" ", "-");
         ArrayList<String> hyphens = new ArrayList<>(Arrays.asList(
                 "ho-oh", "jangmo-o", "kommo-o", "hakamo-o", "porygon-z",
@@ -74,8 +75,14 @@ public class PokemonLookupDataAccessObject implements PokemonLookupDataAccessInt
 
                 // Parse the response JSON
                 String responseBody = response.body().string();
+                if ("Not Found".equals(responseBody)) {
+                    throw new PokemonLookupDataAccessInterface.PokemonNotFoundException(name);
+                }
                 JSONObject json = new JSONObject(responseBody);
                 String responseBody2 = response2.body().string();
+                if ("Not Found".equals(responseBody2)) {
+                    throw new PokemonLookupDataAccessInterface.PokemonNotFoundException(name);
+                }
                 JSONObject json2 = new JSONObject(responseBody2);
 
                 String pokename = json.getString("name");

@@ -3,6 +3,7 @@ package interfaceadapter.pokemonlookup;
 import java.io.IOException;
 
 import entity.Pokemon;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 import usecase.lookup.PokemonLookupInputData;
 
@@ -27,9 +28,10 @@ public class PokemonLookupController {
      * Executes.
      * @param pokemonName The Pokemon name to use.
      * @throws IOException throws an exception.
-     * @throws PokemonLookupInputBoundary.PokemonNotFoundException throws an exception.
+     * @throws PokemonLookupDataAccessInterface.PokemonNotFoundException throws an exception.
      */
-    public void execute(String pokemonName) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    public void execute(String pokemonName) throws IOException,
+            PokemonLookupDataAccessInterface.PokemonNotFoundException {
         final PokemonLookupInputData pokemonLookupInputData = new PokemonLookupInputData(pokemonName);
 
         userPokemonLookupUseCaseInteractor.execute(pokemonLookupInputData);

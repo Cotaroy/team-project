@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class PokemonLookupAPICallTest {
     // a basic pokemon test
     @Test
-    void MagikarpTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void MagikarpTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         MoveMap movemap = new MoveMap();
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
@@ -69,7 +69,7 @@ public class PokemonLookupAPICallTest {
 
     // returns the specific form data
     @Test
-    void AegislashTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void AegislashTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         ArrayList<Integer> stats = new ArrayList<>(Arrays.asList(60, 50, 140, 50, 140, 60));
         Pokemon emptymon = EmptyPokemonFactory.create();
         PokemonLookupInputData inputData = new PokemonLookupInputData("aegislash-shield");
@@ -98,7 +98,7 @@ public class PokemonLookupAPICallTest {
 
     // returns a formless pokemon that still has a hyphen
     @Test
-    void TingLuTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void TingLuTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         PokemonLookupInputData inputData = new PokemonLookupInputData("ting-lu");

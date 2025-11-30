@@ -36,7 +36,7 @@ public class PokemonLookupInteractor implements PokemonLookupInputBoundary {
             try {
                 result = dataAccess.getPokemon(name);
             }
-            catch (PokemonLookupInputBoundary.PokemonNotFoundException exceptione) {
+            catch (PokemonLookupDataAccessInterface.PokemonNotFoundException exceptione) {
                 valid = false;
                 error = exceptione.getMessage();
             }

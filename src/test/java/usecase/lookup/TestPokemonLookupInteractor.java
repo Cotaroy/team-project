@@ -17,7 +17,7 @@ class TestPokemonLookupInteractor {
 
     // a basic pokemon test
     @Test
-    void MagikarpTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void MagikarpTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         MoveMap movemap = new MoveMap();
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
@@ -75,7 +75,7 @@ class TestPokemonLookupInteractor {
     }
 
     @Test
-    void EmptyNameTriggersFailView() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void EmptyNameTriggersFailView() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
 
         final String[] receivedError = new String[1];
@@ -111,7 +111,7 @@ class TestPokemonLookupInteractor {
     }
 
     @Test
-    void NullNameTriggersFailView() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void NullNameTriggersFailView() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         PokemonLookupDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
 
         final String[] receivedError = new String[1];
@@ -150,12 +150,12 @@ class TestPokemonLookupInteractor {
 
 
     @Test
-    void PokemonNotFoundExceptionTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void PokemonNotFoundExceptionTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         // Fake Data Access that always throws the NotFoundException
         PokemonLookupDataAccessInterface failingDataAccess = new PokemonLookupDataAccessInterface() {
             @Override
-            public Pokemon getPokemon(String name) throws PokemonLookupInputBoundary.PokemonNotFoundException {
-                throw new PokemonLookupInputBoundary.PokemonNotFoundException(name);
+            public Pokemon getPokemon(String name) throws PokemonLookupDataAccessInterface.PokemonNotFoundException {
+                throw new PokemonLookupDataAccessInterface.PokemonNotFoundException(name);
             }
         };
 
@@ -193,7 +193,7 @@ class TestPokemonLookupInteractor {
 
     // dual type return the right weakness test
     @Test
-    void LudicoloTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void LudicoloTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
 
         Pokemon emptymon = EmptyPokemonFactory.create();
         HashSet<String> ludicoloweakness = new HashSet<>(Arrays.asList("poison", "flying", "bug"));
@@ -221,7 +221,7 @@ class TestPokemonLookupInteractor {
 
     // dual type return the right strengths test (no duplicates)
     @Test
-    void AurorusTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void AurorusTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
 
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
@@ -251,7 +251,7 @@ class TestPokemonLookupInteractor {
     // dual types return the right resistances
 
     @Test
-    void DurantTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void DurantTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
         Pokemon emptymon = factoree.create();
         HashSet<String> durantres = new HashSet<>(Arrays.asList("normal", "bug", "poison", "steel", "grass", "psychic", "ice", "dragon", "fairy"));
@@ -279,7 +279,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has one ability
     @Test
-    void ShedinjaTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void ShedinjaTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Ability> abilitykarp = new ArrayList<>(Arrays.asList(abilitymap.getAbility(25)));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
@@ -309,7 +309,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has one ability and one hidden ability
     @Test
-    void GarchompTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void GarchompTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Ability> ability = new ArrayList<>(Arrays.asList(abilitymap.getAbility(8)));
         EmptyPokemonFactory factoree = new EmptyPokemonFactory();
@@ -341,7 +341,7 @@ class TestPokemonLookupInteractor {
 
     // pokemon only has all three abilities
     @Test
-    void ScolipedeTest() throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    void ScolipedeTest() throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Ability> ability = new ArrayList<>(Arrays.asList(abilitymap.getAbility(38),
                 abilitymap.getAbility(68)));

@@ -4,6 +4,7 @@ import entity.Pokemon;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 
 import java.awt.event.ActionEvent;
@@ -109,7 +110,8 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
             pokemonLookupController.execute(currentState.getPokemonName());
             displayPokemon.setPokemon(currentState.getDisplayPokemon(), 384, 384);
 
-        } catch (IOException | PokemonLookupInputBoundary.PokemonNotFoundException e) {
+        }
+        catch (IOException | PokemonLookupDataAccessInterface.PokemonNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
         }
     }
@@ -155,6 +157,14 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if ("state".equals(evt.getPropertyName())) {
+            final PokemonLookupState currentState = (PokemonLookupState) evt.getNewValue();
+            if (currentState.getPokemonNameError() != null) {
+                if (currentState.getPokemonNameError().contains("not found")) {
+                    JOptionPane.showMessageDialog(null, "Not a valid Pokemon Name");
+                    currentState.setPokemonNameError(null);
+                }
+            }
+        }
     }
 }

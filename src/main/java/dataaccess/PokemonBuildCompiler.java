@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class PokemonBuildCompiler {
 
-    public static String getBuildCode(String name) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    public static String getBuildCode(String name) throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         PokemonLookupDataAccessInterface pokemonLookupDataAccess = new PokemonLookupDataAccessObject();
         Pokemon pokemon = pokemonLookupDataAccess.getPokemon(name);
 
@@ -63,7 +63,7 @@ public class PokemonBuildCompiler {
         return result;
     }
 
-    public static void main(String[] args) throws IOException, PokemonLookupInputBoundary.PokemonNotFoundException {
+    public static void main(String[] args) throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the name of the pokemon you want to lookup");
         System.out.println(getBuildCode(scan.nextLine()));
