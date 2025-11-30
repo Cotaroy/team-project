@@ -1,5 +1,4 @@
-package usecase.PokemonLookup;
-
+package usecase.lookup;
 
 import entity.Pokemon;
 
@@ -20,7 +19,7 @@ public interface PokemonLookupOutputBoundary {
     void prepareFailView(String errorMessage);
 
     /**
-     * Switches to TeamBuilder View
+     * Switches to TeamBuilder View.
      * @param index the index of the Pokemon we are replacing
      * @param pokemon the Pokemon that will be placed at the index
      */

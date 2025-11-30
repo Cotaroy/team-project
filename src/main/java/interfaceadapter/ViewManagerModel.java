@@ -1,4 +1,4 @@
-package interface_adapter;
+package interfaceadapter;
 
 public class ViewManagerModel extends ViewModel<String> {
 

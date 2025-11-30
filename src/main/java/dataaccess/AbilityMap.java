@@ -1,4 +1,4 @@
-package data_access;
+package dataaccess;
 
 import entity.Ability;
 import org.json.JSONArray;

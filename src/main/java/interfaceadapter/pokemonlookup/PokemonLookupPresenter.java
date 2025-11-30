@@ -1,11 +1,11 @@
-package interface_adapter.pokemon_lookup;
+package interfaceadapter.pokemonlookup;
 
 import entity.Pokemon;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.team_builder.TeamBuilderState;
-import interface_adapter.team_builder.TeamBuilderViewModel;
-import usecase.PokemonLookup.PokemonLookupOutputBoundary;
-import usecase.PokemonLookup.PokemonLookupOutputData;
+import interfaceadapter.ViewManagerModel;
+import interfaceadapter.teambuilder.TeamBuilderState;
+import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import usecase.lookup.PokemonLookupOutputBoundary;
+import usecase.lookup.PokemonLookupOutputData;
 
 public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
 
@@ -13,7 +13,8 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
     private final TeamBuilderViewModel teamBuilderViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public PokemonLookupPresenter(PokemonLookupViewModel pokemonLookupViewModel, TeamBuilderViewModel teamBuilderViewModel, ViewManagerModel viewManagerModel) {
+    public PokemonLookupPresenter(PokemonLookupViewModel pokemonLookupViewModel,
+                                  TeamBuilderViewModel teamBuilderViewModel, ViewManagerModel viewManagerModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
         this.teamBuilderViewModel = teamBuilderViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -35,8 +36,8 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
 
     @Override
     public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-        TeamBuilderState state = teamBuilderViewModel.getState();
-        Pokemon newPokemon = pokemon.getCopy();
+        final TeamBuilderState state = teamBuilderViewModel.getState();
+        final Pokemon newPokemon = pokemon.getCopy();
         state.getTeam().setPokemon(newPokemon, index);
         viewManagerModel.setState(teamBuilderViewModel.getViewName());
         viewManagerModel.firePropertyChange();

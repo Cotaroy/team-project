@@ -1,6 +1,6 @@
 package usecase.BuildPokemonTeam;
 
-import data_access.InMemoryUserDataAccessObject;
+import dataaccess.InMemoryUserDataAccessObject;
 import entity.Pokemon;
 import entity.EmptyPokemonFactory;
 import entity.Team;

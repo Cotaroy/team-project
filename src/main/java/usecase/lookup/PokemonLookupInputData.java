@@ -1,4 +1,4 @@
-package usecase.PokemonLookup;
+package usecase.lookup;
 
 /**
  * The input data for the Pokemon Lookup Use Case.
@@ -11,5 +11,7 @@ public class PokemonLookupInputData {
         this.name = name;
     }
 
-    String getName() { return name; }
+    String getName() {
+        return name;
+    }
 }

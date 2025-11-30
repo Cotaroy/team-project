@@ -1,4 +1,4 @@
-package data_access;
+package dataaccess;
 
 import entity.Move;
 import org.json.JSONArray;

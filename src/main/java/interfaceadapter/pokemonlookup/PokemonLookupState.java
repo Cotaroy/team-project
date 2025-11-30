@@ -1,4 +1,4 @@
-package interface_adapter.pokemon_lookup;
+package interfaceadapter.pokemonlookup;
 
 import entity.Pokemon;
 
