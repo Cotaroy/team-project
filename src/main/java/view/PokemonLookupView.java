@@ -4,6 +4,8 @@ import entity.Pokemon;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
+import usecase.filter.FilterPokemonDataAccess;
+import usecase.filter.FilterPokemonDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 
@@ -36,7 +38,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private final JButton search;
     private final JButton saveToTeam;
     private final JButton filterButton;
-    private final DisplayPokemonJPanel displayPokemon = new DisplayPokemonJPanel();
+    private final DisplayPokemonPanel displayPokemon = new DisplayPokemonPanel();
     private final DisplayFilterJList displayFilter = new DisplayFilterJList();
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
@@ -116,7 +118,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(filterTypeDropdown)) {
-                            String selectedType = filterTypeDropdown.getSelectedItem();
+                            String selectedType = filterTypeDropdown.getSelectedItem().toString();
                             setFilterValues(selectedType);
                         }
 
@@ -132,7 +134,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
                             String filterType = filterTypeDropdown.getSelectedItem().toString();
                             String filterValue = filterValueList.getSelectedValue();
-                            FilterPokemonDataAccess dataAccess =  new FilterPokemonDataAccess();
+                            FilterPokemonDataAccessInterface dataAccess =  new FilterPokemonDataAccess();
 
                             if(dataAccess.filterTargetExists(filterType, filterValue)) {
                                 displayFilter.setPokemonList(dataAccess.getPokemonByFilter(filterType, filterValue));
