@@ -230,6 +230,8 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
             case "move":
                 filterValueList = new JList<>();
                 break;
+            case "pokedex":
+                break;
 
         }
         filterValueDropdown.setViewportView(filterValueList);
