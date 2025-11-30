@@ -1,6 +1,6 @@
 package usecase.grade_team;
 
-import data_access.InMemoryUserDataAccessObject;
+import dataaccess.InMemoryUserDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
 
