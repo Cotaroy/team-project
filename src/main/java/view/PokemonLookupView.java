@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Collections;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -27,8 +28,10 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private final JTextField pokemonNameInputField = new JTextField(15);
     private PokemonLookupController pokemonLookupController = null;
 
-    private final JTextField filterTypeInputField = new JTextField(15);
-    private final JTextField filterValueInputField = new JTextField(15);
+    private final JComboBox<String> filterTypeDropdown = new JComboBox<>(PokemonLookupViewModel.FILTERS);
+    private final DefaultListModel<String> filterValueModel = new DefaultListModel<>();
+    private JList<String> filterValueList = new JList<>(filterValueModel);
+    private final JScrollPane filterValueDropdown = new JScrollPane(filterValueList);
 
     private final JButton search;
     private final JButton saveToTeam;
@@ -56,13 +59,12 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         pokemonNameInfo.add(buttons);
 
-        //Making filter panel
         final JPanel filterInfo = new JPanel();
-        filterInfo.add(new JLabel("Filter by:"));
-        filterInfo.add(filterTypeInputField);
-        filterInfo.add(new JLabel("Value:"));
-        filterInfo.add(filterValueInputField);
-        filterButton = new JButton("Filter");
+        filterInfo.add(new JLabel(PokemonLookupViewModel.FILTER_BY_LABEL));
+        filterInfo.add(filterTypeDropdown);
+        filterInfo.add(new JLabel(PokemonLookupViewModel.FILTER_VALUE_LABEL));
+        filterInfo.add(filterValueDropdown);
+        filterButton = new JButton(PokemonLookupViewModel.FILTER_BUTTON_LABEL);
         filterInfo.add(filterButton);
 
         search.addActionListener(
@@ -110,13 +112,26 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 }
         );
 
+        filterTypeDropdown.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(filterTypeDropdown)) {
+                            String selectedType = filterTypeDropdown.getSelectedItem().toString();
+                            setFilterValues(selectedType);
+                        }
+
+                    }
+                }
+
+        );
+
         filterButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(filterButton)) {
 
-                            String filterType = filterTypeInputField.getText();
-                            String filterValue = filterValueInputField.getText();
+                            String filterType = filterTypeDropdown.getSelectedItem().toString();
+                            String filterValue = filterValueList.getSelectedValue();
                             FilterPokemonDataAccess dataAccess =  new FilterPokemonDataAccess();
 
                             if(dataAccess.filterTargetExists(filterType, filterValue)) {
@@ -133,8 +148,6 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         );
 
         addPokemonNameListener();
-        addFilterTypeListener();
-        addFilterValueListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -182,58 +195,6 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         });
     }
 
-    private void addFilterTypeListener() {
-        filterTypeInputField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final PokemonLookupState currentState = pokemonLookupViewModel.getState();
-                currentState.setFilterType(filterTypeInputField.getText());
-                pokemonLookupViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-    }
-
-    private void addFilterValueListener() {
-        filterValueInputField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final PokemonLookupState currentState = pokemonLookupViewModel.getState();
-                currentState.setFilterValue(filterValueInputField.getText());
-                pokemonLookupViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-    }
-
     public void setPokemonLookupController(PokemonLookupController pokemonLookupController) {
         this.pokemonLookupController = pokemonLookupController;
     }
@@ -251,4 +212,30 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
-}
+
+    public void setFilterValues(String filterType) {
+        filterValueModel.clear();
+        switch (filterType) {
+            case "Type":
+                for (String s : PokemonLookupViewModel.TYPE_VALUES) {
+                    filterValueModel.addElement(s);
+                }
+                break;
+            case "ability":
+                filterValueList = new JList<>();
+                break;
+            case "egg-group":
+                filterValueList = new JList<>();
+                break;
+            case "move":
+                filterValueList = new JList<>();
+                break;
+
+        }
+        filterValueDropdown.setViewportView(filterValueList);
+        filterValueDropdown.revalidate();
+        filterValueDropdown.repaint();
+        }
+
+    }
+
