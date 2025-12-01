@@ -1,26 +1,29 @@
 package app;
 
-import data_access.BuildPokemonTeamDataAccessObject;
-import data_access.PokemonLookupDataAccessObject;
+import dataaccess.BuildPokemonTeamDataAccessObject;
+import dataaccess.PokemonLookupDataAccessObject;
 import entity.EmptyPokemonFactory;
-import entity.TeamGrader;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.pokemon_lookup.PokemonLookupController;
-import interface_adapter.pokemon_lookup.PokemonLookupPresenter;
-import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
-import interface_adapter.team_builder.TeamBuilderController;
-import interface_adapter.team_builder.TeamBuilderPresenter;
-import interface_adapter.team_builder.TeamBuilderState;
-import interface_adapter.team_builder.TeamBuilderViewModel;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
-import use_case.BuildPokemonTeam.BuildPokemonTeamInteractor;
-import use_case.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
-import use_case.PokemonLookup.PokemonLookupInputBoundary;
-import use_case.PokemonLookup.PokemonLookupInteractor;
-import use_case.PokemonLookup.PokemonLookupOutputBoundary;
-import use_case.grade_team.GradeTeamInputBoundary;
-import use_case.grade_team.GradeTeamInteractor;
-import use_case.grade_team.GradeTeamOutputBoundary;
+import usecase.grade_team.TeamGrader;
+import interfaceadapter.ViewManagerModel;
+import interfaceadapter.pokemonlookup.PokemonLookupController;
+import interfaceadapter.pokemonlookup.PokemonLookupPresenter;
+import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
+import interfaceadapter.teambuilder.TeamBuilderController;
+import interfaceadapter.teambuilder.TeamBuilderPresenter;
+import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import interfaceadapter.main_menu.MainMenuController;
+import interfaceadapter.main_menu.MainMenuPresenter;
+import interfaceadapter.main_menu.MainViewModel;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
+import usecase.BuildPokemonTeam.BuildPokemonTeamInteractor;
+import usecase.lookup.PokemonLookupInputBoundary;
+import usecase.lookup.PokemonLookupInteractor;
+import usecase.lookup.PokemonLookupOutputBoundary;
+import usecase.grade_team.GradeTeamInteractor;
+import usecase.main_menu.MainMenuInputBoundary;
+import usecase.main_menu.MainMenuInteractor;
+import usecase.main_menu.MainMenuOutputBoundary;
+import view.HomePageView;
 import view.PokemonLookupView;
 import view.TeamBuilderView;
 import view.ViewManager;
@@ -44,14 +47,31 @@ public class AppBuilder {
     private TeamBuilderView teamBuilderView;
     private TeamBuilderViewModel teamBuilderViewModel;
 
+    private HomePageView homepageView;
+    private MainViewModel mainViewModel;
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
 
+    public AppBuilder addHomePageView() {
+        mainViewModel = new MainViewModel();
+        homepageView = new HomePageView(mainViewModel);
+        cardPanel.add(homepageView, homepageView.getViewName());
+        return this;
+    }
+    public AppBuilder addMainMenuUseCase() {
+        MainMenuOutputBoundary mainMenuOutputBoundary = new MainMenuPresenter(mainViewModel, viewManagerModel, teamBuilderViewModel);
+        MainMenuInputBoundary mainMenuInputBoundary = new MainMenuInteractor(mainMenuOutputBoundary);
+        MainMenuController mainMenuController = new MainMenuController(mainMenuInputBoundary);
+        homepageView.setController(mainMenuController);
+        return this;
+    }
     public AppBuilder addPokemonLookupView() {
         pokemonLookupViewModel = new PokemonLookupViewModel();
         pokemonLookupView = new PokemonLookupView(pokemonLookupViewModel);
-        cardPanel.add(pokemonLookupView, pokemonLookupView.getViewName());
+        JScrollPane scrollerPokemonLookupView = new JScrollPane(pokemonLookupView);
+        cardPanel.add(scrollerPokemonLookupView, pokemonLookupView.getViewName());
         return this;
     }
 
@@ -91,7 +111,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(teamBuilderView.getViewName());
+        viewManagerModel.setState(homepageView.getViewName());
 
         return application;
     }
