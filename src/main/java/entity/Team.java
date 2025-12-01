@@ -1,7 +1,7 @@
 package entity;
 
 public class Team {
-    static final int TOTAL_TEAM_SLOTS = 6;
+    public static final int TOTAL_TEAM_SLOTS = 6;
     private String teamName;
     private Pokemon[] pokemon;
 

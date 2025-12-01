@@ -57,6 +57,11 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.saveTeam(buildPokemonTeamInputData);
     }
 
+    public void overwriteTeam(Team team) throws IOException {
+        final BuildPokemonTeamInputData buildPokemonTeamInputData = new BuildPokemonTeamInputData(team.getTeamName(), team);
+        userTeamBuilderUseCaseInteractor.overwriteTeam(buildPokemonTeamInputData);
+    }
+
     public void loadTeam(String teamName) {
         final LoadTeamInputData loadTeamInputData = new LoadTeamInputData(teamName);
         loadTeamInteractor.execute(loadTeamInputData);
