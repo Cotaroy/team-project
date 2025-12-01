@@ -22,7 +22,6 @@ public class DisplayPokemonInTeamJPanel extends JPanel {
         pokemonInfo.setLayout(new BoxLayout(pokemonInfo, BoxLayout.Y_AXIS));
         this.add(spriteLabel);
         this.add(pokemonInfo);
-        this.setPreferredSize(new Dimension(600,400));
     }
     public void setPokemon(Pokemon pokemon, int iconWidth, int iconHeight) {
         try {

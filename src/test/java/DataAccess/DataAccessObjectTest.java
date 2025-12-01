@@ -4,13 +4,12 @@ import entity.EmptyPokemonFactory;
 import entity.Pokemon;
 import entity.Team;
 import org.junit.Test;
-import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 
 public class DataAccessObjectTest {
 
     @Test
-    public void BuildPokemonTeamAccessTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
+    public void BuildPokemonTeamAccessTest() {
         BuildPokemonTeamDataAccessObject d = new BuildPokemonTeamDataAccessObject();
         Team t = new Team("Ash's Team");
 
