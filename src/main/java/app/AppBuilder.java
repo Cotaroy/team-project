@@ -72,7 +72,7 @@ public class AppBuilder {
         return this;
     }
     public AppBuilder addMainMenuUseCase() {
-        MainMenuOutputBoundary mainMenuOutputBoundary = new MainMenuPresenter(mainViewModel, viewManagerModel, teamBuilderViewModel);
+        MainMenuOutputBoundary mainMenuOutputBoundary = new MainMenuPresenter(mainViewModel, viewManagerModel, pokemonLookupViewModel, teamBuilderViewModel);
         MainMenuInputBoundary mainMenuInputBoundary = new MainMenuInteractor(mainMenuOutputBoundary);
         MainMenuController mainMenuController = new MainMenuController(mainMenuInputBoundary);
         homepageView.setController(mainMenuController);
