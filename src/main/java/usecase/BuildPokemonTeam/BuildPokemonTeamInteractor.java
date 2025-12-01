@@ -1,15 +1,14 @@
 package usecase.BuildPokemonTeam;
-import entity.Team;
-
-import entity.Pokemon;
 
 import java.io.IOException;
+
+import entity.Pokemon;
+import entity.Team;
 
 public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary {
     private final BuildPokemonTeamDataAccessInterface userDataAccessObject;
     private final BuildPokemonTeamOutputBoundary userPresenter;
     private final Pokemon pokemon;
-
 
     public BuildPokemonTeamInteractor(BuildPokemonTeamDataAccessInterface buildPokemonTeamDataAccessInterface,
                                       BuildPokemonTeamOutputBoundary buildPokemonTeamOutputBoundary,
@@ -19,19 +18,17 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
         this.pokemon = pokemon;
     }
 
-
     @Override
     public void addToTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
 
         final int index = buildPokemonTeamInputData.getIndex();
-        final Team team = buildPokemonTeamInputData.getTeam();
-
+        final Team team = buildPokemonTeamInputData.getSelectedTeam();
 
         // Checks to see if the team can even be added to.
-        if (index == -1){
+        if (index == -1) {
             // Goes through each team slot to see if there's a slot that can be added to.
-            for (int i = 0; i < 6; i++) {
-                if (team.getPokemon(i) == null){
+            for (int i = 0; i < Team.TOTAL_TEAM_SLOTS; i++) {
+                if (team.getPokemon(i) == null) {
                     team.setPokemon(pokemon, i);
                     final BuildPokemonTeamOutputData buildPokemonTeamOutputData =
                             new BuildPokemonTeamOutputData(team);
@@ -43,7 +40,7 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
             return;
         }
 
-        team.setPokemon(Pokemon, index);
+        team.setPokemon(pokemon, index);
 
         final BuildPokemonTeamOutputData buildPokemonTeamOutputData =
                 new BuildPokemonTeamOutputData(team);
@@ -55,7 +52,7 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
     public void removeFromTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
 
         final int index = buildPokemonTeamInputData.getIndex();
-        final Team team = buildPokemonTeamInputData.getTeam();
+        final Team team = buildPokemonTeamInputData.getSelectedTeam();
         team.setPokemon(null, index);
 
         final BuildPokemonTeamOutputData buildPokemonTeamOutputData =
@@ -66,7 +63,7 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
 
     @Override
     public void saveTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
-        final Team team = buildPokemonTeamInputData.getTeam();
+        final Team team = buildPokemonTeamInputData.getSelectedTeam();
         userDataAccessObject.saveTeam(team);
     }
 
