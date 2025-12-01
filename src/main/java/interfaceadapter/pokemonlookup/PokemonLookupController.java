@@ -9,17 +9,22 @@ import usecase.filter.FilterPokemonInputData;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 import usecase.lookup.PokemonLookupInputData;
+import usecase.seeRegionPokedex.RegionPokedexInputBoundary;
+import usecase.seeRegionPokedex.RegionPokedexInputData;
 
 public class PokemonLookupController {
 
     private final PokemonLookupInputBoundary userPokemonLookupUseCaseInteractor;
     private final FilterPokemonInputBoundary filterPokemonInteractor;
+    private final RegionPokedexInputBoundary regionPokedexInteractor;
 
 
     public PokemonLookupController(PokemonLookupInputBoundary userPokemonLookupUseCaseInteractor,
-                                   FilterPokemonInputBoundary filterPokemonInteractor) {
+                                   FilterPokemonInputBoundary filterPokemonInteractor,
+                                   RegionPokedexInputBoundary regionPokedexInteractor) {
         this.userPokemonLookupUseCaseInteractor = userPokemonLookupUseCaseInteractor;
         this.filterPokemonInteractor = filterPokemonInteractor;
+        this.regionPokedexInteractor = regionPokedexInteractor;
     }
 
     /**
@@ -45,7 +50,15 @@ public class PokemonLookupController {
     }
 
     public void setFilterDisplay (String filterCategory, String filterValue) throws IOException {
-        final FilterPokemonInputData filterInputData = new FilterPokemonInputData(filterCategory, filterValue);
-        filterPokemonInteractor.execute(filterInputData);
+        if (filterCategory == "pokedex"){
+            final RegionPokedexInputData regionPokedexInputData = new RegionPokedexInputData(filterValue);
+            regionPokedexInteractor.execute(regionPokedexInputData);
+        }
+
+        else{
+            final FilterPokemonInputData filterInputData = new FilterPokemonInputData(filterCategory, filterValue);
+            filterPokemonInteractor.execute(filterInputData);
+        }
     }
+
 }

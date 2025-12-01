@@ -305,7 +305,11 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 }
                 break;
             case "pokedex":
+                for (String s : PokemonLookupViewModel.REGIONS) {
+                    filterValueModel.addElement(s);
+                }
                 break;
+
             default:
                 break;
 
