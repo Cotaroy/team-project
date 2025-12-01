@@ -2,7 +2,13 @@ package app;
 
 import dataaccess.BuildPokemonTeamDataAccessObject;
 import dataaccess.PokemonLookupDataAccessObject;
+import dataaccess.RegionPokedexDataAccess;
 import entity.EmptyPokemonFactory;
+import usecase.filter.*;
+import usecase.LoadTeam.LoadTeamInputBoundary;
+import usecase.LoadTeam.LoadTeamInteractor;
+import usecase.LoadTeam.LoadTeamOutputBoundary;
+import usecase.LoadTeam.LoadTeamDataAccessInterface;
 import usecase.grade_team.TeamGrader;
 import interfaceadapter.ViewManagerModel;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
@@ -23,6 +29,9 @@ import usecase.grade_team.GradeTeamInteractor;
 import usecase.main_menu.MainMenuInputBoundary;
 import usecase.main_menu.MainMenuInteractor;
 import usecase.main_menu.MainMenuOutputBoundary;
+import usecase.seeRegionPokedex.RegionPokedexInputBoundary;
+import usecase.seeRegionPokedex.RegionPokedexInteractor;
+import usecase.seeRegionPokedex.RegionPokedexOutputBoundary;
 import view.HomePageView;
 import view.PokemonLookupView;
 import view.TeamBuilderView;
@@ -40,6 +49,8 @@ public class AppBuilder {
 
     private final BuildPokemonTeamDataAccessObject buildPokemonTeamDataAccessObject = new BuildPokemonTeamDataAccessObject();
     private final PokemonLookupDataAccessObject pokemonLookupDataAccessObject = new PokemonLookupDataAccessObject();
+    private final FilterPokemonDataAccess filterPokemonDataAccessObject = new FilterPokemonDataAccess();
+    private final RegionPokedexDataAccess regionPokedexDataAccess = new RegionPokedexDataAccess();
 
     private PokemonLookupView pokemonLookupView;
     private PokemonLookupViewModel pokemonLookupViewModel;
@@ -80,10 +91,20 @@ public class AppBuilder {
                 pokemonLookupViewModel, teamBuilderViewModel, viewManagerModel);
         final PokemonLookupInputBoundary pokemonLookupInteractor =
                 new PokemonLookupInteractor(pokemonLookupOutputBoundary, EmptyPokemonFactory.create(), pokemonLookupDataAccessObject);
-        PokemonLookupController controller = new PokemonLookupController(pokemonLookupInteractor);
+
+        final FilterPokemonInputBoundary filterPokemonInteractor =
+                new FilterPokemonInteractor(filterPokemonDataAccessObject, (FilterPokemonOutputBoundary) pokemonLookupOutputBoundary);
+
+        final RegionPokedexInputBoundary regionPokedexInteractor =
+                new RegionPokedexInteractor(regionPokedexDataAccess, (RegionPokedexOutputBoundary) pokemonLookupOutputBoundary);
+
+        PokemonLookupController controller = new PokemonLookupController(pokemonLookupInteractor,
+                filterPokemonInteractor, regionPokedexInteractor);
+
         pokemonLookupView.setPokemonLookupController(controller);
         return this;
     }
+
 
     public AppBuilder addTeamBuilderView() {
         teamBuilderViewModel = new TeamBuilderViewModel();
@@ -97,11 +118,16 @@ public class AppBuilder {
                 teamBuilderViewModel, pokemonLookupViewModel, viewManagerModel);
         final BuildPokemonTeamInputBoundary buildPokemonTeamInteractor =
                 new BuildPokemonTeamInteractor(buildPokemonTeamDataAccessObject, buildPokemonTeamOutputBoundary, EmptyPokemonFactory.create());
-        TeamBuilderController controller = new TeamBuilderController(new TeamGrader(), buildPokemonTeamInteractor);
+
+        final LoadTeamInputBoundary loadTeamInteractor =
+                new LoadTeamInteractor(buildPokemonTeamDataAccessObject, buildPokemonTeamOutputBoundary);
+
+        TeamBuilderController controller = new TeamBuilderController(new TeamGrader(), buildPokemonTeamInteractor, loadTeamInteractor);
 
         controller.setUserGradeTeamUseCaseInteractor(new GradeTeamInteractor(teamBuilderViewModel.getState(), buildPokemonTeamOutputBoundary));
 
         teamBuilderView.setTeamBuilderController(controller);
+        teamBuilderView.setSavedTeamsDropdown();
         return this;
     }
 

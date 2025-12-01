@@ -16,6 +16,10 @@ public class MoveMap {
         return moves.get(id);
     }
 
+    public Map<Integer, Move> getMoves() {
+        return moves;
+    }
+
     public MoveMap() {
         try {
             String jsonText = new String(

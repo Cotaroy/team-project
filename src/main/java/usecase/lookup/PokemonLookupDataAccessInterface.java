@@ -1,5 +1,8 @@
 package usecase.lookup;
 
+import entity.Pokemon;
+import entity.Type;
+
 import java.io.IOException;
 
 import entity.Pokemon;

@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TeamBuilderView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -28,6 +29,7 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     private final JButton saveButton;
     private final JButton loadButton;
     private final JButton gradeTeamButton;
+    private final JComboBox<String> savedTeamsDropdown = new JComboBox<>();
 
     private final JTextField teamScore = new JTextField();
 
@@ -76,9 +78,11 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         addTeamSlotMouseListeners();
         updateSlotDisplays();
 
+
         final JPanel buttons = new JPanel();
         saveButton = new JButton(TeamBuilderViewModel.SAVE_BUTTON_LABEL);
         buttons.add(saveButton);
+        buttons.add(savedTeamsDropdown);
         loadButton = new JButton(TeamBuilderViewModel.LOAD_BUTTON_LABEL);
         buttons.add(loadButton);
         gradeTeamButton = new JButton(TeamBuilderViewModel.GRADE_TEAM_BUTTON_LABEL);
@@ -150,10 +154,14 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         );
 
 
+
         loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(loadButton)) {
-                    // TODO implement the loading use case
+                    final TeamBuilderState currentState = teamBuilderViewModel.getState();
+                    String teamName = savedTeamsDropdown.getSelectedItem().toString();
+                    teamBuilderController.loadTeam(teamName);
+                    updateSlotDisplays();
                 }
             }
         });
@@ -295,8 +303,11 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         updateSlotDisplays();
     }
 
-
-
-
-
+    public void setSavedTeamsDropdown(){
+        ArrayList<String> savedTeamsNames = this.teamBuilderController.getAllTeamNames();
+        for (String teamName : savedTeamsNames){
+            this.savedTeamsDropdown.addItem(teamName);
+        }
+    }
 }
+
