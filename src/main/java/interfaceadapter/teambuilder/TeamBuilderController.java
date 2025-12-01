@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import entity.Team;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;
+import usecase.LoadTeam.LoadTeamInputBoundary;
+import usecase.LoadTeam.LoadTeamInputData;
 import usecase.grade_team.GradeTeamInputBoundary;
 import usecase.grade_team.GradeTeamInputData;
 import usecase.grade_team.GradingStrategy;
@@ -18,10 +20,14 @@ public class TeamBuilderController {
 
     private GradeTeamInputBoundary userGradeTeamUseCaseInteractor;
 
+    private LoadTeamInputBoundary loadTeamInteractor;
+
     public TeamBuilderController(GradingStrategy gradingStrategy,
-                                 BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor) {
+                                 BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor,
+                                 LoadTeamInputBoundary loadTeamInteractor) {
         this.gradingStrategy = gradingStrategy;
         this.userTeamBuilderUseCaseInteractor = userTeamBuilderUseCaseInteractor;
+        this.loadTeamInteractor = loadTeamInteractor;
     }
 
     public void setUserGradeTeamUseCaseInteractor(GradeTeamInputBoundary userGradeTeamUseCaseInteractor) {
@@ -50,8 +56,9 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.saveTeam(buildPokemonTeamInputData);
     }
 
-    public Team loadTeam(String teamName) throws IOException {
-        return this.userTeamBuilderUseCaseInteractor.loadTeam(teamName);
+    public void loadTeam(String teamName) {
+        final LoadTeamInputData loadTeamInputData = new LoadTeamInputData(teamName);
+        loadTeamInteractor.execute(loadTeamInputData);
     }
 
     public ArrayList<String> getAllTeamNames(){

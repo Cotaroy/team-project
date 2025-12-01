@@ -14,20 +14,20 @@ public class LoadTeamInteractor implements LoadTeamInputBoundary {
     public void execute(LoadTeamInputData inputData) {
         String teamName = inputData.getTeamName();
         if ("".equals(teamName)) {
-            presenter.prepareFailureView("No Pokemon name provided.");
+            presenter.prepareFailView("No Pokemon name provided.");
         }
         else {
             try {
                 Team team = dataAccess.loadTeam(teamName);
                 if (team == null) {
-                    presenter.prepareFailureView("Team not found.");
+                    presenter.prepareFailView("Team not found.");
                 } else {
                     final LoadTeamOutputData outputData = new LoadTeamOutputData(team);
                     presenter.prepareSuccessView(outputData);
                 }
             }
             catch (Exception e) {
-                presenter.prepareFailureView("Some exception occurred");
+                presenter.prepareFailView("Some exception occurred");
             }
         }
     }

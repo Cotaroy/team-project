@@ -147,13 +147,8 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                 if (evt.getSource().equals(loadButton)) {
                     final TeamBuilderState currentState = teamBuilderViewModel.getState();
                     String teamName = savedTeamsDropdown.getSelectedItem().toString();
-                    try {
-                        Team team = teamBuilderController.loadTeam(teamName);
-                        currentState.setTeam(team);
-                        updateSlotDisplays();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    teamBuilderController.loadTeam(teamName);
+                    updateSlotDisplays();
                 }
             }
         });
