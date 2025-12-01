@@ -15,6 +15,10 @@ public class AbilityMap {
         return abilities.get(id);
     }
 
+    public Map<Integer, Ability> getAbilities() {
+        return abilities;
+    }
+
     public AbilityMap() {
         try {
             String jsonText = new String(

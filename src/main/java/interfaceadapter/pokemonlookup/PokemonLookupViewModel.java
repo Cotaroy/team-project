@@ -18,6 +18,8 @@ public class PokemonLookupViewModel extends ViewModel<PokemonLookupState> {
     public static final String[] TYPE_VALUES = {"water", "Fire", "Grass", "Electric", "Normal", "Ghost", "Fighting",
                                                 "Dark", "Psychic", "Fairy", "Poison", "Flying", "Steel", "Rock", "Ground",
                                                 "Ice", "Dragon", "Bug"};
+    public static final String[] EGG_GROUPS = {    "Monster", "HumanLike", "Water 1", "Water 2", "Water 3",
+            "Bug", "Flying", "Field", "Fairy", "Grass", "Dragon", "Amorphous", "Mineral", "Ditto", "Undiscovered"};
 
     public PokemonLookupViewModel() {
         super("pokemon lookup");

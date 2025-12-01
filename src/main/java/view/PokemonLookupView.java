@@ -1,5 +1,9 @@
 package view;
 
+import dataaccess.AbilityMap;
+import dataaccess.MoveMap;
+import entity.Ability;
+import entity.Move;
 import entity.Pokemon;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupState;
@@ -21,6 +25,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.*;
 import java.util.Collections;
+import java.util.Map;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -32,7 +37,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
     private final JComboBox<String> filterTypeDropdown = new JComboBox<>(PokemonLookupViewModel.FILTERS);
     private final DefaultListModel<String> filterValueModel = new DefaultListModel<>();
-    private JList<String> filterValueList = new JList<>(filterValueModel);
+    private final JList<String> filterValueList = new JList<>(filterValueModel);
     private final JScrollPane filterValueDropdown = new JScrollPane(filterValueList);
 
     private final JButton search;
@@ -236,15 +241,27 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
                 }
                 break;
             case "ability":
-                filterValueList = new JList<>();
+                AbilityMap abilityMap = new AbilityMap();
+                Map<Integer, Ability> abilities = abilityMap.getAbilities();
+                for (Ability ability : abilities.values()) {
+                    filterValueModel.addElement(ability.getName());
+                }
                 break;
             case "egg-group":
-                filterValueList = new JList<>();
+                for (String s : PokemonLookupViewModel.EGG_GROUPS) {
+                    filterValueModel.addElement(s);
+                }
                 break;
             case "move":
-                filterValueList = new JList<>();
+                MoveMap moveMap = new MoveMap();
+                Map<Integer, Move> moves = moveMap.getMoves();
+                for (Move move : moves.values()) {
+                    filterValueModel.addElement(move.getName());
+                }
                 break;
             case "pokedex":
+                break;
+            default:
                 break;
 
         }
