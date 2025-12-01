@@ -30,6 +30,27 @@ public class TestRegionPokedex {
         RegionPokedexInputData input = new RegionPokedexInputData("kanto");
         interactor.execute(input);
     }
+    @Test
+    void invalidRegionFails() throws IOException {
+
+        RegionPokedexOutputBoundary presenter = new RegionPokedexOutputBoundary() {
+            @Override
+            public void prepareSuccessView(RegionPokedexOutputData data) {
+                fail("Should not succeed for invalid region");
+            }
+
+            @Override
+            public void prepareFailureView(String error) {
+                assertEquals("Region not found", error);
+            }
+        };
+
+        RegionPokedexDataAccessInterface dataAccess = new RegionPokedexDataAccess();
+        RegionPokedexInteractor interactor = new RegionPokedexInteractor(dataAccess, presenter);
+
+        RegionPokedexInputData input = new RegionPokedexInputData("madeup-region");
+        interactor.execute(input);
+    }
 
 
 }
