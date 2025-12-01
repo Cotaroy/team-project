@@ -4,6 +4,7 @@ import entity.Team;
 import interfaceadapter.teambuilder.TeamBuilderController;
 import interfaceadapter.teambuilder.TeamBuilderState;
 import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -96,8 +97,20 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
                             try {
                                 teamBuilderController.saveTeam(currentState.getTeam());
-                            } catch (IOException e) {
+                            }
+                            catch (IOException e) {
                                 JOptionPane.showMessageDialog(null, "Error saving team");
+                            }
+                            catch (BuildPokemonTeamDataAccessInterface.TeamExistsException e) {
+                                int overwriteResponse = JOptionPane.showConfirmDialog(null,
+                                        e.getMessage() + "\nWould you like to overwrite it?");
+                                if (overwriteResponse == JOptionPane.YES_OPTION) {
+                                    try {
+                                        teamBuilderController.overwriteTeam(currentState.getTeam());
+                                    } catch (IOException ex) {
+                                        JOptionPane.showMessageDialog(null, "Error saving team");
+                                    }
+                                }
                             }
 
                         }

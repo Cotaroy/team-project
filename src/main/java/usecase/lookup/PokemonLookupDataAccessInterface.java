@@ -19,5 +19,4 @@ public interface PokemonLookupDataAccessInterface {
             super(pokemonName + " not found");
         }
     }
-
 }
