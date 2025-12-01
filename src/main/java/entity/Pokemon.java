@@ -54,6 +54,7 @@ public class Pokemon {
                 + ", moves=" + moves
                 + ", egggroups=" + egggroup
                 + ", pokedexes=" + pokedexes
+                + ", sprite='" + sprite + '\''
                 + '}';
     }
 

@@ -1,6 +1,5 @@
 package usecase.grade_team;
 
-import entity.GradingStrategy;
 import entity.Team;
 
 public class TestStrategy implements GradingStrategy {

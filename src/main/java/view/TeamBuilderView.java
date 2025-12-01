@@ -1,10 +1,10 @@
 package view;
 
-import entity.Pokemon;
 import entity.Team;
-import interface_adapter.team_builder.TeamBuilderController;
-import interface_adapter.team_builder.TeamBuilderState;
-import interface_adapter.team_builder.TeamBuilderViewModel;
+import interfaceadapter.teambuilder.TeamBuilderController;
+import interfaceadapter.teambuilder.TeamBuilderState;
+import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TeamBuilderView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -28,6 +29,7 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     private final JButton saveButton;
     private final JButton loadButton;
     private final JButton gradeTeamButton;
+    private final JComboBox<String> savedTeamsDropdown = new JComboBox<>();
 
     private final JTextField teamScore = new JTextField();
 
@@ -76,15 +78,18 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         addTeamSlotMouseListeners();
         updateSlotDisplays();
 
+
         final JPanel buttons = new JPanel();
         saveButton = new JButton(TeamBuilderViewModel.SAVE_BUTTON_LABEL);
         buttons.add(saveButton);
+        buttons.add(savedTeamsDropdown);
         loadButton = new JButton(TeamBuilderViewModel.LOAD_BUTTON_LABEL);
         buttons.add(loadButton);
         gradeTeamButton = new JButton(TeamBuilderViewModel.GRADE_TEAM_BUTTON_LABEL);
         buttons.add(gradeTeamButton);
 
         LabelTextPanel gradeTeamPanel = new LabelTextPanel(new JLabel("Team Score: "), teamScore);
+        gradeTeamPanel.add(new JLabel("/100"));
         teamScore.setEditable(false);
 
         buttons.add(gradeTeamPanel);
@@ -96,8 +101,20 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
                             try {
                                 teamBuilderController.saveTeam(currentState.getTeam());
-                            } catch (IOException e) {
+                            }
+                            catch (IOException e) {
                                 JOptionPane.showMessageDialog(null, "Error saving team");
+                            }
+                            catch (BuildPokemonTeamDataAccessInterface.TeamExistsException e) {
+                                int overwriteResponse = JOptionPane.showConfirmDialog(null,
+                                        e.getMessage() + "\nWould you like to overwrite it?");
+                                if (overwriteResponse == JOptionPane.YES_OPTION) {
+                                    try {
+                                        teamBuilderController.overwriteTeam(currentState.getTeam());
+                                    } catch (IOException ex) {
+                                        JOptionPane.showMessageDialog(null, "Error saving team");
+                                    }
+                                }
                             }
 
                         }
@@ -137,10 +154,14 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         );
 
 
+
         loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(loadButton)) {
-                    // TODO implement the loading use case
+                    final TeamBuilderState currentState = teamBuilderViewModel.getState();
+                    String teamName = savedTeamsDropdown.getSelectedItem().toString();
+                    teamBuilderController.loadTeam(teamName);
+                    updateSlotDisplays();
                 }
             }
         });
@@ -191,22 +212,25 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                         @Override
                         public void mousePressed(MouseEvent evt) {
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
-                            currentSlotIndex = index;
-                            if (currentState.getTeam().getPokemon(index) != null){
-                                    JPanel currentScreen = teamSlots[index];
-
-//                                    currentScreen.removeAll();
-                                    currentScreen.add(pokemonActionPanel);
-                                    buttonAdd.setVisible(true);
-                                    buttonRemove.setVisible(true);
-                                    currentScreen.revalidate();
-                                    currentScreen.repaint();
-
-                                    return;
+                            currentSlotIndex =  index;
+                            if (buttonAdd.isVisible()) {
+                                buttonAdd.setVisible(false);
+                                buttonRemove.setVisible(false);
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
+                            }
+                            else if (currentState.getTeam().getPokemon(index) != null){
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.add(pokemonActionPanel);
+                                buttonAdd.setVisible(true);
+                                buttonRemove.setVisible(true);
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
                             }
 
-                            buttonAdd.setVisible(false);
-                            buttonRemove.setVisible(false);
                             teamBuilderController.switchToPokemonLookupView(index);
                             System.out.println("Pokemon Slot " + index + " clicked");
                         }
@@ -279,8 +303,11 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
         updateSlotDisplays();
     }
 
-
-
-
-
+    public void setSavedTeamsDropdown(){
+        ArrayList<String> savedTeamsNames = this.teamBuilderController.getAllTeamNames();
+        for (String teamName : savedTeamsNames){
+            this.savedTeamsDropdown.addItem(teamName);
+        }
+    }
 }
+

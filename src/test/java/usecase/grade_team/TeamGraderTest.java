@@ -1,8 +1,9 @@
 package usecase.grade_team;
 
-import data_access.InMemoryUserDataAccessObject;
+import dataaccess.InMemoryUserDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeamGraderTest {
 
     @Test
-    void totalStat399Test() {
+    void totalStat399Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -28,7 +29,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(5, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (5. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
         };
 
@@ -37,7 +38,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat400Test() {
+    void totalStat400Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -52,7 +53,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(6, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (6. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
         };
 
@@ -61,7 +62,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat450Test() {
+    void totalStat450Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -76,7 +77,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(7, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (7. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -86,7 +87,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat500Test() {
+    void totalStat500Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -101,7 +102,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(8, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (8. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -111,7 +112,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat550Test() {
+    void totalStat550Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -126,7 +127,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(9, gradeTeamOutputData.getTeamScore());
+                assertEquals(100. * (9. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -136,7 +137,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat600Test() {
+    void totalStat600Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -151,7 +152,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(10, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (10. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -161,7 +162,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat601Test() {
+    void totalStat601Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -176,7 +177,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(10, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (10. / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -186,7 +187,38 @@ class TeamGraderTest {
     }
 
     @Test
-    void twoTypesCoverageTest() {
+    void oneTypeCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
+        Team team = new Team("oneTypeTest");
+        Type normalType = new Type("normal", 1,
+                new HashSet<>(),
+                new HashSet<>(),
+                new HashSet<>(Arrays.asList("ghost", "rock", "steel")),
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/1.png");
+        Pokemon pokemon = EmptyPokemonFactory.create();
+        pokemon.setType1(normalType);
+        pokemon.setType2(null);
+        pokemon.setStats(new ArrayList<>(Arrays.asList(10, 20, 30, 40, 50, 60)));
+        team.setPokemon(pokemon, 0);
+        GradingStrategy strategy = new TeamGrader();
+        GradeTeamInputData inputData = new GradeTeamInputData("oneTypeTest", strategy);
+
+        InMemoryUserDataAccessObject dataAccessObject = new InMemoryUserDataAccessObject();
+        dataAccessObject.saveTeam(team);
+
+        GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
+            @Override
+            public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
+                assertEquals(100 * (8.0 / 98), gradeTeamOutputData.getTeamScore(), .000001);
+            }
+
+        };
+
+        GradeTeamInputBoundary interactor = new GradeTeamInteractor(dataAccessObject, successPresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void twoTypesCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("twoTypesOnePokemonTeam");
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),
@@ -213,7 +245,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(15.0, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (15.0 / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };
@@ -223,7 +255,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void threeTypesCoverageTest() {
+    void threeTypesCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("threeTypesTwoPokemonTeam");
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),
@@ -263,7 +295,7 @@ class TeamGraderTest {
         GradeTeamOutputBoundary successPresenter = new GradeTeamOutputBoundary() {
             @Override
             public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
-                assertEquals(25.0, gradeTeamOutputData.getTeamScore());
+                assertEquals(100 * (25.0 / 98), gradeTeamOutputData.getTeamScore(), .000001);
             }
 
         };

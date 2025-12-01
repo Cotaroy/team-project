@@ -1,16 +1,16 @@
 package DataAccess;
-import data_access.BuildPokemonTeamDataAccessObject;
+import dataaccess.BuildPokemonTeamDataAccessObject;
 import entity.EmptyPokemonFactory;
 import entity.Pokemon;
 import entity.Team;
 import org.junit.Test;
-import java.util.ArrayList;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 
 public class DataAccessObjectTest {
 
     @Test
-    public void BuildPokemonTeamAccessTest() {
+    public void BuildPokemonTeamAccessTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         BuildPokemonTeamDataAccessObject d = new BuildPokemonTeamDataAccessObject();
         Team t = new Team("Ash's Team");
 

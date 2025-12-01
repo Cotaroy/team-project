@@ -1,6 +1,7 @@
 package usecase.BuildPokemonTeam;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import entity.Pokemon;
 import entity.Team;
@@ -62,13 +63,29 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
     }
 
     @Override
-    public void saveTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
-        final Team team = buildPokemonTeamInputData.getSelectedTeam();
+    public void saveTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException, BuildPokemonTeamDataAccessInterface.TeamExistsException {
+        final Team team = buildPokemonTeamInputData.getTeam();
         userDataAccessObject.saveTeam(team);
+    }
+
+    @Override
+    public void overwriteTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
+        final Team team = buildPokemonTeamInputData.getTeam();
+        userDataAccessObject.overwriteTeam(team);
     }
 
     @Override
     public void switchToPokemonLookupView(int index) {
         userPresenter.switchToPokemonLookupView(index);
+    }
+
+    @Override
+    public ArrayList<String> getAllTeamNames(){
+        return userDataAccessObject.getAllTeamNames();
+    }
+
+    @Override
+    public Team loadTeam(String teamName) throws IOException{
+        return userDataAccessObject.loadTeam(teamName);
     }
 }

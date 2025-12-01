@@ -1,17 +1,17 @@
 package usecase.grade_team;
 
-import data_access.InMemoryUserDataAccessObject;
+import dataaccess.InMemoryUserDataAccessObject;
 import entity.EmptyPokemonFactory;
-import entity.GradingStrategy;
 import entity.Team;
 import org.junit.jupiter.api.Test;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GradeTeamInteractorTest {
 
     @Test
-    void emptyTeamTest(){
+    void emptyTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("emptyTeam");
         GradingStrategy strategy = new TestStrategy();
         GradeTeamInputData inputData = new GradeTeamInputData("emptyTeam", strategy);
@@ -30,7 +30,7 @@ class GradeTeamInteractorTest {
     }
 
     @Test
-    void fullTeamTest(){
+    void fullTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("fullTeam");
         for(int i = 0; i < 6; i++){
             team.setPokemon(EmptyPokemonFactory.create(), i);
@@ -52,7 +52,7 @@ class GradeTeamInteractorTest {
     }
 
     @Test
-    void firstHalfTeamTest(){
+    void firstHalfTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("halfFullTeam");
         for(int i = 0; i < 3; i++){
             team.setPokemon(EmptyPokemonFactory.create(), i);

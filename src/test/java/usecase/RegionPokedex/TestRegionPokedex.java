@@ -1,6 +1,6 @@
 package usecase.RegionPokedex;
 
-import data_access.RegionPokedexDataAccess;
+import dataaccess.RegionPokedexDataAccess;
 import org.junit.jupiter.api.Test;
 import usecase.seeRegionPokedex.*;
 
@@ -19,7 +19,7 @@ public class TestRegionPokedex {
             }
 
             @Override
-            public void prepareFailureView(String error) {
+            public void prepareFailView(String error) {
                 fail("Should not fail: " + error);
             }
         };
@@ -28,6 +28,27 @@ public class TestRegionPokedex {
         RegionPokedexInteractor interactor = new RegionPokedexInteractor(dataAccess, presenter);
 
         RegionPokedexInputData input = new RegionPokedexInputData("kanto");
+        interactor.execute(input);
+    }
+    @Test
+    void invalidRegionFails() throws IOException {
+
+        RegionPokedexOutputBoundary presenter = new RegionPokedexOutputBoundary() {
+            @Override
+            public void prepareSuccessView(RegionPokedexOutputData data) {
+                fail("Should not succeed for invalid region");
+            }
+
+            @Override
+            public void prepareFailureView(String error) {
+                assertEquals("Region not found", error);
+            }
+        };
+
+        RegionPokedexDataAccessInterface dataAccess = new RegionPokedexDataAccess();
+        RegionPokedexInteractor interactor = new RegionPokedexInteractor(dataAccess, presenter);
+
+        RegionPokedexInputData input = new RegionPokedexInputData("madeup-region");
         interactor.execute(input);
     }
 

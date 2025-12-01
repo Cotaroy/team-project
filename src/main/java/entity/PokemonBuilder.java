@@ -27,7 +27,7 @@ public class PokemonBuilder {
     }
 
     /**
-     * Set the first type of the Pokemon.
+     * Set the second type of the Pokemon.
      * @param type Type object that we are setting
      * @return PokemonBuilder with pokemon having type as its type2
      */

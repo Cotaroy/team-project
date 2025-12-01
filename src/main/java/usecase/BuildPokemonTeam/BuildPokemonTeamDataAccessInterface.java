@@ -1,15 +1,23 @@
 package usecase.BuildPokemonTeam;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import entity.Team;
 
 public interface BuildPokemonTeamDataAccessInterface {
     /**
-     * Saves or updates a team.
+     * Saves a team.
      * @param team the team to save
      */
-    void saveTeam(Team team);
+    void saveTeam(Team team) throws TeamExistsException;
+
+    /**
+     * Overwrite a saved team.
+     * @param team the team being overwritten
+     */
+    void overwriteTeam(Team team);
 
     /**
      * Checks if a team exists.
@@ -18,5 +26,24 @@ public interface BuildPokemonTeamDataAccessInterface {
      * @throws FileNotFoundException if ever.
      */
     boolean teamExists(Team name) throws FileNotFoundException;
+
+    class TeamExistsException extends Exception {
+        public TeamExistsException(String teamName) {
+            super(teamName + " already exists");
+        }
+    }
+    /**
+     * returns all saved team names
+     * @return list of team names
+     */
+    ArrayList<String> getAllTeamNames();
+
+
+    /**
+     * returns a saved team that's being loaded
+     * @param teamName name of the team
+     * @return Team the team being loaded
+     */
+    Team loadTeam(String teamName) throws IOException;
 
 }
