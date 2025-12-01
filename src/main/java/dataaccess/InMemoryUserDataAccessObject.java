@@ -22,16 +22,7 @@ public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInte
     private final Map<String, Team> teams = new HashMap<>();
 
     @Override
-    public void saveTeam(Team team) throws TeamExistsException{
-        if (teams.containsKey(team.getTeamName())) {
-            throw new TeamExistsException(team.getTeamName());
-        }
-        teams.put(team.getTeamName(), team);
-
-    }
-
-    @Override
-    public void overwriteTeam(Team team) {
+    public void saveTeam(Team team) {
         teams.put(team.getTeamName(), team);
     }
 

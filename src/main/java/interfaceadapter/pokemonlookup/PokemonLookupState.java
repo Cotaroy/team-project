@@ -61,7 +61,7 @@ public class PokemonLookupState {
     }
 
     public void setDisplayPokemon(Pokemon displayPokemon) {
-        this.displayPokemon = displayPokemon.getCopy();
+        this.displayPokemon = displayPokemon;
     }
 
     public void setIndex(int index) {

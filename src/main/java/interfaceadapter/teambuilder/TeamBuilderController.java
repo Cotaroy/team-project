@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import entity.Team;
-import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;
 import usecase.LoadTeam.LoadTeamInputBoundary;
@@ -52,7 +51,7 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.removeFromTeam(buildPokemonTeamInputData);
     }
 
-    public void saveTeam(Team team) throws IOException, BuildPokemonTeamDataAccessInterface.TeamExistsException {
+    public void saveTeam(Team team) throws IOException {
         final BuildPokemonTeamInputData buildPokemonTeamInputData = new BuildPokemonTeamInputData(team.getTeamName(), team);
         userTeamBuilderUseCaseInteractor.saveTeam(buildPokemonTeamInputData);
     }
