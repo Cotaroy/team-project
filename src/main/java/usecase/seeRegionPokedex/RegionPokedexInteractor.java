@@ -23,7 +23,6 @@ public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
             return;
         }
         try {
-//            try fetching from data access
             ArrayList<String> pokemons = dataAccess.getPokedexData(name);
             RegionPokedexOutputData outputData = new RegionPokedexOutputData(pokemons);
             userPresenter.prepareSuccessView(outputData);

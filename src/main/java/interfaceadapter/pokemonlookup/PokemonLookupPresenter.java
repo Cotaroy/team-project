@@ -4,10 +4,15 @@ import entity.Pokemon;
 import interfaceadapter.ViewManagerModel;
 import interfaceadapter.teambuilder.TeamBuilderState;
 import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import usecase.filter.FilterPokemonOutputBoundary;
+import usecase.filter.FilterPokemonOutputData;
 import usecase.lookup.PokemonLookupOutputBoundary;
 import usecase.lookup.PokemonLookupOutputData;
+import usecase.seeRegionPokedex.RegionPokedexOutputBoundary;
+import usecase.seeRegionPokedex.RegionPokedexOutputData;
 
-public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
+public class PokemonLookupPresenter implements PokemonLookupOutputBoundary, FilterPokemonOutputBoundary,
+        RegionPokedexOutputBoundary {
 
     private final PokemonLookupViewModel pokemonLookupViewModel;
     private final TeamBuilderViewModel teamBuilderViewModel;
@@ -24,6 +29,20 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
     public void prepareSuccessView(PokemonLookupOutputData outputData) {
         final PokemonLookupState pokemonLookupState = pokemonLookupViewModel.getState();
         pokemonLookupState.setDisplayPokemon(outputData.getPokemon());
+        pokemonLookupViewModel.firePropertyChange();
+    }
+
+    @Override
+    public void prepareSuccessView(FilterPokemonOutputData responseModel) {
+        final PokemonLookupState pokemonLookupState = pokemonLookupViewModel.getState();
+        pokemonLookupState.setFilteredDisplay(responseModel.getPokemonNames());
+        pokemonLookupViewModel.firePropertyChange();
+    }
+
+    @Override
+    public void prepareSuccessView(RegionPokedexOutputData outputData) {
+        final PokemonLookupState pokemonLookupState = pokemonLookupViewModel.getState();
+        pokemonLookupState.setFilteredDisplay(outputData.getPokemonNames());
         pokemonLookupViewModel.firePropertyChange();
     }
 

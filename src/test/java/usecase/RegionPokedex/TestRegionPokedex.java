@@ -19,7 +19,7 @@ public class TestRegionPokedex {
             }
 
             @Override
-            public void prepareFailureView(String error) {
+            public void prepareFailView(String error) {
                 fail("Should not fail: " + error);
             }
         };

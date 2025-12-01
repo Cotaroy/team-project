@@ -2,16 +2,30 @@ package interfaceadapter.pokemonlookup;
 
 import entity.Pokemon;
 
+import java.util.List;
+
 public class PokemonLookupState {
     private String pokemonName = "";
     private String pokemonNameError;
 
+    private String filterType = "";
+    private String filterValue = "";
+
     private Pokemon displayPokemon;
+    private List<String> filteredPokemonList;
 
     private int index = -1;
 
     public String getPokemonName() {
         return pokemonName;
+    }
+
+    public String getFilterType() {
+        return filterType;
+    }
+
+    public String getFilterValue() {
+        return filterValue;
     }
 
     public String getPokemonNameError() {
@@ -22,6 +36,8 @@ public class PokemonLookupState {
         return displayPokemon;
     }
 
+    public List<String> getFilteredPokemonList() {return filteredPokemonList;}
+
     public int getIndex() {
         return index;
     }
@@ -29,6 +45,16 @@ public class PokemonLookupState {
     public void setPokemonName(String pokemonName) {
         this.pokemonName = pokemonName;
     }
+
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
+
+    public void setFilterValue(String filterValue) {
+        this.filterValue = filterValue;
+    }
+
+    public void setFilteredDisplay(List<String> filteredPokemonList) {this.filteredPokemonList = filteredPokemonList;}
 
     public void setPokemonNameError(String pokemonNameError) {
         this.pokemonNameError = pokemonNameError;
