@@ -1,6 +1,11 @@
 package usecase.lookup;
 
+import org.json.JSONArray;
+
+import entity.Pokemon;
+
 import java.io.IOException;
+import java.util.HashSet;
 
 import entity.Pokemon;
 
