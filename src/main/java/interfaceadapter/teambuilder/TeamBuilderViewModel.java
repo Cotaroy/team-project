@@ -1,6 +1,6 @@
-package interface_adapter.teambuilder;
+package interfaceadapter.teambuilder;
 
-import interface_adapter.ViewModel;
+import interfaceadapter.ViewModel;
 
 public class TeamBuilderViewModel extends ViewModel<TeamBuilderState> {
 

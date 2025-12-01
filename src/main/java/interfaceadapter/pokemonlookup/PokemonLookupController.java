@@ -1,4 +1,4 @@
-package interface_adapter.pokemonlookup;
+package interfaceadapter.pokemonlookup;
 
 import entity.Pokemon;
 import usecase.lookup.PokemonLookupInputBoundary;

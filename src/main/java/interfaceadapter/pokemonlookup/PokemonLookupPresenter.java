@@ -1,9 +1,9 @@
-package interface_adapter.pokemonlookup;
+package interfaceadapter.pokemonlookup;
 
 import entity.Pokemon;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.teambuilder.TeamBuilderState;
-import interface_adapter.teambuilder.TeamBuilderViewModel;
+import interfaceadapter.ViewManagerModel;
+import interfaceadapter.teambuilder.TeamBuilderState;
+import interfaceadapter.teambuilder.TeamBuilderViewModel;
 import usecase.lookup.PokemonLookupOutputBoundary;
 import usecase.lookup.PokemonLookupOutputData;
 

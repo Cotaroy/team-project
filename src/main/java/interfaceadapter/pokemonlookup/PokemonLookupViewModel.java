@@ -1,6 +1,6 @@
-package interface_adapter.pokemonlookup;
+package interfaceadapter.pokemonlookup;
 
-import interface_adapter.ViewModel;
+import interfaceadapter.ViewModel;
 
 public class PokemonLookupViewModel extends ViewModel<PokemonLookupState> {
 
