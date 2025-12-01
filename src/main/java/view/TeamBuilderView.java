@@ -4,6 +4,7 @@ import entity.Team;
 import interfaceadapter.teambuilder.TeamBuilderController;
 import interfaceadapter.teambuilder.TeamBuilderState;
 import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -100,8 +101,20 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
                             try {
                                 teamBuilderController.saveTeam(currentState.getTeam());
-                            } catch (IOException e) {
+                            }
+                            catch (IOException e) {
                                 JOptionPane.showMessageDialog(null, "Error saving team");
+                            }
+                            catch (BuildPokemonTeamDataAccessInterface.TeamExistsException e) {
+                                int overwriteResponse = JOptionPane.showConfirmDialog(null,
+                                        e.getMessage() + "\nWould you like to overwrite it?");
+                                if (overwriteResponse == JOptionPane.YES_OPTION) {
+                                    try {
+                                        teamBuilderController.overwriteTeam(currentState.getTeam());
+                                    } catch (IOException ex) {
+                                        JOptionPane.showMessageDialog(null, "Error saving team");
+                                    }
+                                }
                             }
 
                         }
@@ -199,22 +212,25 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                         @Override
                         public void mousePressed(MouseEvent evt) {
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
-                            currentSlotIndex = index;
-                            if (currentState.getTeam().getPokemon(index) != null){
-                                    JPanel currentScreen = teamSlots[index];
-
-//                                    currentScreen.removeAll();
-                                    currentScreen.add(pokemonActionPanel);
-                                    buttonAdd.setVisible(true);
-                                    buttonRemove.setVisible(true);
-                                    currentScreen.revalidate();
-                                    currentScreen.repaint();
-
-                                    return;
+                            currentSlotIndex =  index;
+                            if (buttonAdd.isVisible()) {
+                                buttonAdd.setVisible(false);
+                                buttonRemove.setVisible(false);
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
+                            }
+                            else if (currentState.getTeam().getPokemon(index) != null){
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.add(pokemonActionPanel);
+                                buttonAdd.setVisible(true);
+                                buttonRemove.setVisible(true);
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
                             }
 
-                            buttonAdd.setVisible(false);
-                            buttonRemove.setVisible(false);
                             teamBuilderController.switchToPokemonLookupView(index);
                             System.out.println("Pokemon Slot " + index + " clicked");
                         }

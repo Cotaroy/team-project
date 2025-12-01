@@ -29,7 +29,14 @@ public interface BuildPokemonTeamInputBoundary {
      * @param BuildPokemonTeamInputData the input data for this use case
      * @throws IOException if it does not work.
      */
-    void saveTeam(BuildPokemonTeamInputData BuildPokemonTeamInputData) throws IOException;
+    void saveTeam(BuildPokemonTeamInputData BuildPokemonTeamInputData) throws IOException,
+            BuildPokemonTeamDataAccessInterface.TeamExistsException;
+
+    /**
+     * Execute the update Team Use Case.
+     * @param BuildPokemonTeamInputData the input data for this use case
+     */
+    void overwriteTeam(BuildPokemonTeamInputData BuildPokemonTeamInputData) throws IOException;
 
     /**
      * Executes the switch to PokemonLookupView use case.
