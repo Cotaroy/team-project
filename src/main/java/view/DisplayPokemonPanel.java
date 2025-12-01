@@ -54,12 +54,12 @@ public class DisplayPokemonPanel extends JPanel {
         };
 
         private final Color[] statColors = {
-                new Color(230, EIGHTY, EIGHTY),
-                new Color(255, 150, 60),
-                new Color(240, 220, 90),
-                new Color(100, 149, 255),
-                new Color(120, TWOH, 120),
-                new Color(255, 0, 255)
+            new Color(230, EIGHTY, EIGHTY),
+            new Color(255, 150, 60),
+            new Color(240, 220, 90),
+            new Color(100, 149, 255),
+            new Color(120, TWOH, 120),
+            new Color(255, 0, 255)
         };
 
         BarChartPanel(java.util.List<Integer> stats) {
@@ -113,6 +113,7 @@ public class DisplayPokemonPanel extends JPanel {
         this.add(spriteLabel);
         this.add(pokemonInfo);
     }
+
     public void setPokemon(Pokemon pokemon, int iconWidth, int iconHeight) {
         try {
             final URL spriteUrl = new URL(pokemon.getSprite());
@@ -131,11 +132,9 @@ public class DisplayPokemonPanel extends JPanel {
             this.pokemonInfo.revalidate();
             this.pokemonInfo.repaint();
 
-        }
-        catch (MalformedURLException exceptione) {
+        } catch (MalformedURLException exceptione) {
             throw new RuntimeException(exceptione);
-        }
-        catch (NullPointerException exceptione) {
+        } catch (NullPointerException exceptione) {
             clearPokemon();
         }
     }
@@ -151,7 +150,7 @@ public class DisplayPokemonPanel extends JPanel {
     private static JPanel getPokemonBasicInfo(Pokemon pokemon) throws MalformedURLException {
         final JPanel basicPokemonInfo = new JPanel();
         basicPokemonInfo.setLayout(new BoxLayout(basicPokemonInfo, BoxLayout.Y_AXIS));
-    //    basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        //    basicPokemonInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         final String name = pokemon.getProperName();
         basicPokemonInfo.add(new JLabel("Name: " + name));
         final URL sprite1Url = new URL(pokemon.getType1().getSprite());
@@ -166,7 +165,7 @@ public class DisplayPokemonPanel extends JPanel {
         type1Label.setAlignmentX(Component.LEFT_ALIGNMENT);
         Type1Panel.add(type1Label);
         basicPokemonInfo.add(Type1Panel);
-      //  basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
+        //  basicPokemonInfo.add(new JLabel("Type 1: " + pokemon.getType1().toProperName()));
         if (pokemon.getType2() != null) {
             URL sprite2URL = new URL(pokemon.getType2().getSprite());
             JLabel type2Label = new JLabel();
@@ -180,7 +179,7 @@ public class DisplayPokemonPanel extends JPanel {
             type2Label.setAlignmentX(Component.LEFT_ALIGNMENT);
             Type2Panel.add(type2Label);
             basicPokemonInfo.add(Type2Panel);
-          //  basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
+            //  basicPokemonInfo.add(new JLabel("Type 2: " + pokemon.getType2().toProperName()));
         }
         basicPokemonInfo.add(new JLabel("Abilities:"));
         basicPokemonInfo.add(new JLabel(pokemon.getAbilities().get(0).getProperName()));
@@ -197,8 +196,7 @@ public class DisplayPokemonPanel extends JPanel {
         for (Move move : pokemon.getMoves()) {
             if (move != null) {
                 moves.add(move.capitalize());
-            }
-            else continue;
+            } else continue;
         }
 
 // Sort alphabetically
