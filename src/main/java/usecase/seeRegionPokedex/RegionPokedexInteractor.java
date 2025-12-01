@@ -17,7 +17,7 @@ public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
     public void execute(RegionPokedexInputData regionPokedexInputData) throws IOException {
         String name = regionPokedexInputData.getPokedex().toLowerCase();
         if ("".equals(name)) {
-            userPresenter.prepareFailureView(("No pokemon game provided"));
+            userPresenter.prepareFailView(("No pokemon game provided"));
             return;
         }
         ArrayList<String> pokemons = dataAccess.getPokedexData(name);
