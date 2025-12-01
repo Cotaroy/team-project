@@ -27,7 +27,8 @@ public class TeamBuilderState implements GradeTeamUserDataAccessInterface {
     }
 
     public void setTeam(Team team) {
-        this.team = team;
+        this.team = new Team(team.getTeamName());
+        this.team.setPokemon(team.getPokemon().clone());
     }
 
     public void setTeamScore(float teamScore) {

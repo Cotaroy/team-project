@@ -1,6 +1,7 @@
 package usecase.BuildPokemonTeam;
 
 import dataaccess.InMemoryUserDataAccessObject;
+import dataaccess.PokemonMap;
 import entity.Pokemon;
 import entity.EmptyPokemonFactory;
 import entity.Team;
@@ -12,6 +13,47 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class TestBuildPokemonTeam {
+
+    @Test
+    public void overwriteExistingTeamTest() throws IOException {
+        Team team = new Team("I think, therefore I am");
+        Pokemon magikarp = new PokemonMap().getPokemon("magikarp");
+        team.setPokemon(magikarp, 0);
+        InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+        try {
+            userDataAccessObject.saveTeam(team);
+        } catch (BuildPokemonTeamDataAccessInterface.TeamExistsException e) {
+            throw new RuntimeException(e);
+        }
+
+        team.setPokemon(EmptyPokemonFactory.create(), 0);
+
+        BuildPokemonTeamInputData inputData = new BuildPokemonTeamInputData(magikarp.getName(), team);
+        BuildPokemonTeamOutputBoundary successPresenter = new BuildPokemonTeamOutputBoundary() {
+            @Override
+            public void prepareSuccessView(BuildPokemonTeamOutputData outputData) {
+                assertEquals(team, outputData.getTeam());
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail(errorMessage);
+            }
+
+            @Override
+            public void switchToPokemonLookupView(int index) {
+
+            }
+        };
+        BuildPokemonTeamInteractor interactor = new BuildPokemonTeamInteractor(userDataAccessObject, successPresenter,
+                EmptyPokemonFactory.create());
+        try {
+            interactor.saveTeam(inputData);
+        } catch (BuildPokemonTeamDataAccessInterface.TeamExistsException e) {
+            interactor.overwriteTeam(inputData);
+        }
+
+    }
 
     @Test
     public void BuildPokemonTeamTestWithIndex() throws IOException {

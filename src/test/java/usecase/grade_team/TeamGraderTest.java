@@ -3,6 +3,7 @@ package usecase.grade_team;
 import dataaccess.InMemoryUserDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeamGraderTest {
 
     @Test
-    void totalStat399Test() {
+    void totalStat399Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -37,7 +38,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat400Test() {
+    void totalStat400Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -61,7 +62,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat450Test() {
+    void totalStat450Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -86,7 +87,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat500Test() {
+    void totalStat500Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -111,7 +112,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat550Test() {
+    void totalStat550Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -136,7 +137,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat600Test() {
+    void totalStat600Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -161,7 +162,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void totalStat601Test() {
+    void totalStat601Test() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("statTest");
 
         Pokemon pokemon = EmptyPokemonFactory.create();
@@ -186,7 +187,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void oneTypeCoverageTest() {
+    void oneTypeCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("oneTypeTest");
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),
@@ -217,7 +218,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void twoTypesCoverageTest() {
+    void twoTypesCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("twoTypesOnePokemonTeam");
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),
@@ -254,7 +255,7 @@ class TeamGraderTest {
     }
 
     @Test
-    void threeTypesCoverageTest() {
+    void threeTypesCoverageTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException {
         Team team = new Team("threeTypesTwoPokemonTeam");
         Type normalType = new Type("normal", 1,
                 new HashSet<>(),

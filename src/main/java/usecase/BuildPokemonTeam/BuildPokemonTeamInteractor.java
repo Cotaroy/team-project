@@ -63,9 +63,15 @@ public class BuildPokemonTeamInteractor implements BuildPokemonTeamInputBoundary
     }
 
     @Override
-    public void saveTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
+    public void saveTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException, BuildPokemonTeamDataAccessInterface.TeamExistsException {
         final Team team = buildPokemonTeamInputData.getTeam();
         userDataAccessObject.saveTeam(team);
+    }
+
+    @Override
+    public void overwriteTeam(BuildPokemonTeamInputData buildPokemonTeamInputData) throws IOException {
+        final Team team = buildPokemonTeamInputData.getTeam();
+        userDataAccessObject.overwriteTeam(team);
     }
 
     @Override
