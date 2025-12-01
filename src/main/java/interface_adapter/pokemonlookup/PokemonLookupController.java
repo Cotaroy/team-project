@@ -1,8 +1,8 @@
-package interface_adapter.pokemon_lookup;
+package interface_adapter.pokemonlookup;
 
 import entity.Pokemon;
-import usecase.PokemonLookup.PokemonLookupInputBoundary;
-import usecase.PokemonLookup.PokemonLookupInputData;
+import usecase.lookup.PokemonLookupInputBoundary;
+import usecase.lookup.PokemonLookupInputData;
 
 import java.io.IOException;
 

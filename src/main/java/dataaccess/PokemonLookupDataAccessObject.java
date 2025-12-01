@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import entity.Pokemon;
 import entity.Move;
 import entity.Ability;
-import usecase.PokemonLookup.PokemonLookupDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;

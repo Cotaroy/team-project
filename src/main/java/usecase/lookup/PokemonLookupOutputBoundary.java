@@ -1,4 +1,4 @@
-package usecase.PokemonLookup;
+package usecase.lookup;
 
 
 import entity.Pokemon;

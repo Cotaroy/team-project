@@ -1,4 +1,4 @@
-package interface_adapter.pokemon_lookup;
+package interface_adapter.pokemonlookup;
 
 import interface_adapter.ViewModel;
 

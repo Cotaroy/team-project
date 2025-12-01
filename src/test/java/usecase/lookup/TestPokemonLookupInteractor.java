@@ -14,7 +14,6 @@ import entity.Type;
 import entity.Move;
 import entity.Ability;
 import org.junit.jupiter.api.Test;
-import usecase.PokemonLookup.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

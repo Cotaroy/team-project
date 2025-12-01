@@ -1,10 +1,10 @@
 package view;
 
 import entity.Pokemon;
-import interface_adapter.pokemon_lookup.PokemonLookupController;
-import interface_adapter.pokemon_lookup.PokemonLookupState;
-import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
-import usecase.PokemonLookup.PokemonLookupInputBoundary;
+import interface_adapter.pokemonlookup.PokemonLookupController;
+import interface_adapter.pokemonlookup.PokemonLookupState;
+import interface_adapter.pokemonlookup.PokemonLookupViewModel;
+import usecase.lookup.PokemonLookupInputBoundary;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

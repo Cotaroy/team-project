@@ -1,8 +1,8 @@
-package interface_adapter.team_builder;
+package interface_adapter.teambuilder;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.pokemon_lookup.PokemonLookupState;
-import interface_adapter.pokemon_lookup.PokemonLookupViewModel;
+import interface_adapter.pokemonlookup.PokemonLookupState;
+import interface_adapter.pokemonlookup.PokemonLookupViewModel;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputData;
 import usecase.grade_team.GradeTeamOutputBoundary;

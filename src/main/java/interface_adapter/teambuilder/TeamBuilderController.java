@@ -1,4 +1,4 @@
-package interface_adapter.team_builder;
+package interface_adapter.teambuilder;
 
 import entity.GradingStrategy;
 import entity.Team;

@@ -1,4 +1,4 @@
-package interface_adapter.team_builder;
+package interface_adapter.teambuilder;
 
 import interface_adapter.ViewModel;
 

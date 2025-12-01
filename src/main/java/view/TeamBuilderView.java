@@ -1,9 +1,9 @@
 package view;
 
 import entity.Team;
-import interface_adapter.team_builder.TeamBuilderController;
-import interface_adapter.team_builder.TeamBuilderState;
-import interface_adapter.team_builder.TeamBuilderViewModel;
+import interface_adapter.teambuilder.TeamBuilderController;
+import interface_adapter.teambuilder.TeamBuilderState;
+import interface_adapter.teambuilder.TeamBuilderViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
