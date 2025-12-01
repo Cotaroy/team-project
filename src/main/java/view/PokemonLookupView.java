@@ -44,6 +44,10 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
         this.pokemonLookupViewModel.addPropertyChangeListener(this);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize.width -= 10;
+        screenSize.height -= 200;
+        this.setPreferredSize(screenSize);
 
         this.viewName = pokemonLookupViewModel.getViewName();
 

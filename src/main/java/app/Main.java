@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +20,10 @@ public class Main {
         application.setLocationRelativeTo(null);
         application.setVisible(true);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        application.setSize(600, 600);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        application.setSize(screenSize.width, screenSize.height);
         application.setResizable(true);
     }
 }
