@@ -13,7 +13,8 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
     private final TeamBuilderViewModel teamBuilderViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public PokemonLookupPresenter(PokemonLookupViewModel pokemonLookupViewModel, TeamBuilderViewModel teamBuilderViewModel, ViewManagerModel viewManagerModel) {
+    public PokemonLookupPresenter(PokemonLookupViewModel pokemonLookupViewModel,
+                                  TeamBuilderViewModel teamBuilderViewModel, ViewManagerModel viewManagerModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
         this.teamBuilderViewModel = teamBuilderViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -35,8 +36,8 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary {
 
     @Override
     public void switchToTeamBuilderView(int index, Pokemon pokemon) {
-        TeamBuilderState state = teamBuilderViewModel.getState();
-        Pokemon newPokemon = pokemon.getCopy();
+        final TeamBuilderState state = teamBuilderViewModel.getState();
+        final Pokemon newPokemon = pokemon.getCopy();
         state.getTeam().setPokemon(newPokemon, index);
         viewManagerModel.setState(teamBuilderViewModel.getViewName());
         viewManagerModel.firePropertyChange();

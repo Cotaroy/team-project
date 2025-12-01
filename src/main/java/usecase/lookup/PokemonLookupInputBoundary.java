@@ -1,8 +1,9 @@
 package usecase.lookup;
 
-import entity.Pokemon;
-
 import java.io.IOException;
+
+import entity.Pokemon;
+import usecase.lookup.PokemonLookupDataAccessInterface.PokemonNotFoundException;
 
 /**
  * The Pokemon Lookup Use Case.
@@ -12,20 +13,17 @@ public interface PokemonLookupInputBoundary {
 
     /**
      * Execute the Pokemon Lookup Use Case.
-     * @param pokemonLookupInputData the input data for this use case
+     * @param pokemonLookupInputData the input data for this use case.
+     * @throws IOException throws an exception.
+     * @throws PokemonNotFoundException throws an exception.
      */
     void execute(PokemonLookupInputData pokemonLookupInputData) throws IOException, PokemonNotFoundException;
 
     /**
-     * Executes the switchToTeamBuilderView use case
-     * @param index index of Pokemon slot being changed in Team
-     * @param pokemon Pokemon that will be replacing that slot
+     * Switches to the Team builder view.
+     * @param index The team slot.
+     * @param pokemon The Pokemon to be set on the team.
      */
     void switchToTeamBuilderView(int index, Pokemon pokemon);
 
-    class PokemonNotFoundException extends Exception {
-        public PokemonNotFoundException(String pokemonName) {
-            super(pokemonName + " not found");
-        }
-    }
 }

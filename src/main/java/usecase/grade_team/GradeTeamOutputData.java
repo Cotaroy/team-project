@@ -8,5 +8,7 @@ public class GradeTeamOutputData {
         this.teamScore = teamScore;
     }
 
-    public float getTeamScore() {return teamScore;}
+    public float getTeamScore() {
+        return teamScore;
+    }
 }

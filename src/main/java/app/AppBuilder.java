@@ -3,7 +3,7 @@ package app;
 import dataaccess.BuildPokemonTeamDataAccessObject;
 import dataaccess.PokemonLookupDataAccessObject;
 import entity.EmptyPokemonFactory;
-import entity.TeamGrader;
+import usecase.grade_team.TeamGrader;
 import interfaceadapter.ViewManagerModel;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupPresenter;
@@ -11,12 +11,19 @@ import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
 import interfaceadapter.teambuilder.TeamBuilderController;
 import interfaceadapter.teambuilder.TeamBuilderPresenter;
 import interfaceadapter.teambuilder.TeamBuilderViewModel;
+import interfaceadapter.main_menu.MainMenuController;
+import interfaceadapter.main_menu.MainMenuPresenter;
+import interfaceadapter.main_menu.MainViewModel;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInteractor;
 import usecase.lookup.PokemonLookupInputBoundary;
 import usecase.lookup.PokemonLookupInteractor;
 import usecase.lookup.PokemonLookupOutputBoundary;
 import usecase.grade_team.GradeTeamInteractor;
+import usecase.main_menu.MainMenuInputBoundary;
+import usecase.main_menu.MainMenuInteractor;
+import usecase.main_menu.MainMenuOutputBoundary;
+import view.HomePageView;
 import view.PokemonLookupView;
 import view.TeamBuilderView;
 import view.ViewManager;
@@ -40,14 +47,31 @@ public class AppBuilder {
     private TeamBuilderView teamBuilderView;
     private TeamBuilderViewModel teamBuilderViewModel;
 
+    private HomePageView homepageView;
+    private MainViewModel mainViewModel;
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
 
+    public AppBuilder addHomePageView() {
+        mainViewModel = new MainViewModel();
+        homepageView = new HomePageView(mainViewModel);
+        cardPanel.add(homepageView, homepageView.getViewName());
+        return this;
+    }
+    public AppBuilder addMainMenuUseCase() {
+        MainMenuOutputBoundary mainMenuOutputBoundary = new MainMenuPresenter(mainViewModel, viewManagerModel, teamBuilderViewModel);
+        MainMenuInputBoundary mainMenuInputBoundary = new MainMenuInteractor(mainMenuOutputBoundary);
+        MainMenuController mainMenuController = new MainMenuController(mainMenuInputBoundary);
+        homepageView.setController(mainMenuController);
+        return this;
+    }
     public AppBuilder addPokemonLookupView() {
         pokemonLookupViewModel = new PokemonLookupViewModel();
         pokemonLookupView = new PokemonLookupView(pokemonLookupViewModel);
-        cardPanel.add(pokemonLookupView, pokemonLookupView.getViewName());
+        JScrollPane scrollerPokemonLookupView = new JScrollPane(pokemonLookupView);
+        cardPanel.add(scrollerPokemonLookupView, pokemonLookupView.getViewName());
         return this;
     }
 
@@ -88,7 +112,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(teamBuilderView.getViewName());
+        viewManagerModel.setState(homepageView.getViewName());
 
         return application;
     }

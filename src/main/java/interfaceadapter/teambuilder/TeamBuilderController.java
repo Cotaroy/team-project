@@ -1,14 +1,14 @@
 package interfaceadapter.teambuilder;
 
-import entity.GradingStrategy;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import entity.Team;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamInputData;
 import usecase.grade_team.GradeTeamInputBoundary;
 import usecase.grade_team.GradeTeamInputData;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import usecase.grade_team.GradingStrategy;
 
 public class TeamBuilderController {
 
@@ -18,7 +18,8 @@ public class TeamBuilderController {
 
     private GradeTeamInputBoundary userGradeTeamUseCaseInteractor;
 
-    public TeamBuilderController(GradingStrategy gradingStrategy, BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor) {
+    public TeamBuilderController(GradingStrategy gradingStrategy,
+                                 BuildPokemonTeamInputBoundary userTeamBuilderUseCaseInteractor) {
         this.gradingStrategy = gradingStrategy;
         this.userTeamBuilderUseCaseInteractor = userTeamBuilderUseCaseInteractor;
     }

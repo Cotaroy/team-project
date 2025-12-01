@@ -5,9 +5,21 @@ import entity.Type;
 
 import java.io.IOException;
 
+import entity.Pokemon;
+
 public interface PokemonLookupDataAccessInterface {
+    /**
+     * Gets the provided Pokemon.
+     * @param name the Pokemon to get.
+     * @return returns.
+     * @throws IOException throws an exception.
+     * @throws PokemonNotFoundException throws an exception.
+     */
+    Pokemon getPokemon(String name) throws IOException, PokemonNotFoundException;
 
-    Pokemon getPokemon(String name) throws IOException;
-
-    Type getType(int typeID) throws IOException;
+    class PokemonNotFoundException extends Exception {
+        public PokemonNotFoundException(String pokemonName) {
+            super(pokemonName + " not found");
+        }
+    }
 }

@@ -1,7 +1,5 @@
 package usecase.grade_team;
 
-import entity.GradingStrategy;
-
 public class GradeTeamInputData {
 
     private final String teamName;
@@ -12,7 +10,9 @@ public class GradeTeamInputData {
         this.strategy = strategy;
     }
 
-    public String getTeamName() {return teamName;}
+    public String getTeamName() {
+        return teamName;
+    }
 
     public GradingStrategy getStrategy() {
         return strategy;

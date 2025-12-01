@@ -10,6 +10,7 @@ import entity.Team;
 import org.jetbrains.annotations.NotNull;
 import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
 import usecase.LoadTeam.LoadTeamDataAccessInterface;
+import usecase.lookup.PokemonLookupDataAccessInterface;
 
 public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface,
         LoadTeamDataAccessInterface {
@@ -86,13 +87,13 @@ public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAcc
                 return getTeam(teamName, line);
             }
         }
-        catch (IOException e) {
+        catch (IOException | PokemonLookupDataAccessInterface.PokemonNotFoundException e) {
             throw new RuntimeException("Failed to load team", e);
         }
     }
 
     @NotNull
-    private static Team getTeam(String teamName, String line) throws IOException {
+    private static Team getTeam(String teamName, String line) throws IOException, PokemonLookupDataAccessInterface.PokemonNotFoundException {
         List<String> names = new ArrayList<>(Arrays.asList(line.split(",")));
         names.remove(0);  // Remove team name
         names.replaceAll(String::trim);
