@@ -3,6 +3,10 @@ package app;
 import dataaccess.BuildPokemonTeamDataAccessObject;
 import dataaccess.PokemonLookupDataAccessObject;
 import entity.EmptyPokemonFactory;
+import usecase.LoadTeam.LoadTeamInputBoundary;
+import usecase.LoadTeam.LoadTeamInteractor;
+import usecase.LoadTeam.LoadTeamOutputBoundary;
+import usecase.LoadTeam.LoadTeamDataAccessInterface;
 import usecase.grade_team.TeamGrader;
 import interfaceadapter.ViewManagerModel;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
@@ -97,11 +101,16 @@ public class AppBuilder {
                 teamBuilderViewModel, pokemonLookupViewModel, viewManagerModel);
         final BuildPokemonTeamInputBoundary buildPokemonTeamInteractor =
                 new BuildPokemonTeamInteractor(buildPokemonTeamDataAccessObject, buildPokemonTeamOutputBoundary, EmptyPokemonFactory.create());
-        TeamBuilderController controller = new TeamBuilderController(new TeamGrader(), buildPokemonTeamInteractor);
+
+        final LoadTeamInputBoundary loadTeamInteractor =
+                new LoadTeamInteractor(buildPokemonTeamDataAccessObject, buildPokemonTeamOutputBoundary);
+
+        TeamBuilderController controller = new TeamBuilderController(new TeamGrader(), buildPokemonTeamInteractor, loadTeamInteractor);
 
         controller.setUserGradeTeamUseCaseInteractor(new GradeTeamInteractor(teamBuilderViewModel.getState(), buildPokemonTeamOutputBoundary));
 
         teamBuilderView.setTeamBuilderController(controller);
+        teamBuilderView.setSavedTeamsDropdown();
         return this;
     }
 

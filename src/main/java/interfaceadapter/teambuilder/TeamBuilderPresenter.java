@@ -5,10 +5,12 @@ import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputData;
+import usecase.LoadTeam.LoadTeamOutputBoundary;
+import usecase.LoadTeam.LoadTeamOutputData;
 import usecase.grade_team.GradeTeamOutputBoundary;
 import usecase.grade_team.GradeTeamOutputData;
 
-public class TeamBuilderPresenter implements BuildPokemonTeamOutputBoundary, GradeTeamOutputBoundary {
+public class TeamBuilderPresenter implements BuildPokemonTeamOutputBoundary, GradeTeamOutputBoundary, LoadTeamOutputBoundary {
 
     private final TeamBuilderViewModel teamBuilderViewModel;
     private final PokemonLookupViewModel pokemonLookupViewModel;
@@ -50,6 +52,13 @@ public class TeamBuilderPresenter implements BuildPokemonTeamOutputBoundary, Gra
     public void prepareSuccessView(GradeTeamOutputData gradeTeamOutputData) {
         final TeamBuilderState teamBuilderState = teamBuilderViewModel.getState();
         teamBuilderState.setTeamScore(gradeTeamOutputData.getTeamScore());
+        teamBuilderViewModel.firePropertyChange();
+    }
+
+    @Override
+    public void prepareSuccessView(LoadTeamOutputData loadTeamOutputData) {
+        final TeamBuilderState teamBuilderState = teamBuilderViewModel.getState();
+        teamBuilderState.setTeam(loadTeamOutputData.getTeam());
         teamBuilderViewModel.firePropertyChange();
     }
 }
