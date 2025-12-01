@@ -191,22 +191,25 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                         @Override
                         public void mousePressed(MouseEvent evt) {
                             final TeamBuilderState currentState = teamBuilderViewModel.getState();
-                            currentSlotIndex = index;
-                            if (currentState.getTeam().getPokemon(index) != null){
-                                    JPanel currentScreen = teamSlots[index];
-
-//                                    currentScreen.removeAll();
-                                    currentScreen.add(pokemonActionPanel);
-                                    buttonAdd.setVisible(true);
-                                    buttonRemove.setVisible(true);
-                                    currentScreen.revalidate();
-                                    currentScreen.repaint();
-
-                                    return;
+                            currentSlotIndex =  index;
+                            if (buttonAdd.isVisible()) {
+                                buttonAdd.setVisible(false);
+                                buttonRemove.setVisible(false);
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
+                            }
+                            else if (currentState.getTeam().getPokemon(index) != null){
+                                JPanel currentScreen = teamSlots[index];
+                                currentScreen.add(pokemonActionPanel);
+                                buttonAdd.setVisible(true);
+                                buttonRemove.setVisible(true);
+                                currentScreen.revalidate();
+                                currentScreen.repaint();
+                                return;
                             }
 
-                            buttonAdd.setVisible(false);
-                            buttonRemove.setVisible(false);
                             teamBuilderController.switchToPokemonLookupView(index);
                             System.out.println("Pokemon Slot " + index + " clicked");
                         }
