@@ -4,7 +4,7 @@ package usecase.BuildPokemonTeam;
  * The output boundary for the BuildPokemonTeam Use Case.
  */
 public interface BuildPokemonTeamOutputBoundary {
-    /**-are you
+    /**
      * Prepares the success view for the BuildPokemonTeam Use Case.
      * @param outputData the output data
      */
@@ -17,8 +17,8 @@ public interface BuildPokemonTeamOutputBoundary {
     void prepareFailView(String errorMessage);
 
     /**
-     * Switches to PokemonLookup View
-     * @param index the index of the Pokemon we are trying to change
+     * Switches to PokemonLookup View.
+     * @param index the index of the Pokémon we are trying to change
      */
     void switchToPokemonLookupView(int index);
 }
