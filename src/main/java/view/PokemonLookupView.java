@@ -13,10 +13,7 @@ import usecase.filter.FilterPokemonDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -159,6 +156,30 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         );
 
+        filteredList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Double-click
+                    int index = filteredList.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        String selectedPokemonName = filteredListModel.getElementAt(index);
+                        if (selectedPokemonName != null) {
+                            // Set the selected Pokémon name in the input field and state
+                            pokemonNameInputField.setText(selectedPokemonName);
+
+                            // Update the state
+                            final PokemonLookupState currentState = pokemonLookupViewModel.getState();
+                            currentState.setPokemonName(selectedPokemonName);
+                            pokemonLookupViewModel.setState(currentState);
+
+                            // Trigger the search/display for this Pokémon
+                            updatePokemonDisplay(pokemonLookupViewModel);
+                        }
+                    }
+                }
+            }
+        });
+
         addPokemonNameListener();
         addFilterTypeListener();
         addFilterValueListener();
@@ -203,8 +224,6 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
             displayFilter.setViewportView(filteredList);
             displayFilter.revalidate();
             displayFilter.repaint();
-
-            //displayFilter.setPokemonList(currentState.getFilteredPokemonList());
         }
         catch (IOException e) {JOptionPane.showMessageDialog(null, "Failed to filter");
         }
