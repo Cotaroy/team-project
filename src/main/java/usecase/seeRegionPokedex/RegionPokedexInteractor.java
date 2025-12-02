@@ -19,7 +19,7 @@ public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
 
 
         if (name.isEmpty()) {
-            userPresenter.prepareFailureView(("No pokedex provided"));
+            userPresenter.prepareFailView(("No pokedex provided"));
             return;
         }
         try {
@@ -27,7 +27,7 @@ public class RegionPokedexInteractor implements RegionPokedexInputBoundary {
             RegionPokedexOutputData outputData = new RegionPokedexOutputData(pokemons);
             userPresenter.prepareSuccessView(outputData);
         } catch (IOException e) {
-            userPresenter.prepareFailureView("Region not found");
+            userPresenter.prepareFailView("Region not found");
         }
 
 
