@@ -17,8 +17,12 @@ public class HomePageView extends JPanel{
 
         final JButton pokedexButton = new JButton("Pokedex");
         final JButton teamsButton = new JButton("Teams");
+        final ImageIcon icon = new ImageIcon("src/main/resources/metagross.png");
+        final JLabel title = new JLabel(icon);
+
         viewname = viewModel.getViewName();
 
+        home.add(title);
         home.add(pokedexButton);
         home.add(teamsButton);
 
