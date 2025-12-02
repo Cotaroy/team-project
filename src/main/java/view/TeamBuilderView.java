@@ -116,6 +116,7 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
                                     }
                                 }
                             }
+                            setSavedTeamsDropdown();
 
                         }
                     }
@@ -313,6 +314,7 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     }
 
     public void setSavedTeamsDropdown(){
+        savedTeamsDropdown.removeAllItems();
         ArrayList<String> savedTeamsNames = this.teamBuilderController.getAllTeamNames();
         for (String teamName : savedTeamsNames){
             this.savedTeamsDropdown.addItem(teamName);
