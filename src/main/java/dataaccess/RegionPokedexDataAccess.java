@@ -24,7 +24,7 @@ public class RegionPokedexDataAccess implements RegionPokedexDataAccessInterface
         try (Response response = client.newCall(request1).execute()) {
             System.out.println("Response code: " + response.code());
             if (!response.isSuccessful()) {
-                throw new IOException("Pokdex not found: " + pokedexName);
+                throw new IOException("Region not found");
             }
             String responseBody = response.body().string();
             JSONObject json = new JSONObject(responseBody);
