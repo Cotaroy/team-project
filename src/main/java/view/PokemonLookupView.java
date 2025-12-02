@@ -8,10 +8,7 @@ import entity.Pokemon;
 import interfaceadapter.pokemonlookup.PokemonLookupController;
 import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
-import usecase.filter.FilterPokemonDataAccess;
-import usecase.filter.FilterPokemonDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
-import usecase.lookup.PokemonLookupInputBoundary;
 
 import java.awt.event.*;
 import java.awt.*;
@@ -23,7 +20,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.util.Collections;
 import java.util.Map;
 
 public class PokemonLookupView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -52,10 +48,6 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
         this.pokemonLookupViewModel.addPropertyChangeListener(this);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.width -= 10;
-        screenSize.height -= 200;
-        this.setPreferredSize(screenSize);
 
         this.viewName = pokemonLookupViewModel.getViewName();
 
