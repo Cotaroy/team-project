@@ -1,11 +1,23 @@
 package usecase.LoadTeam;
 
 public class LoadTeamInputData {
+    /**
+     * Name of the team.
+     */
     private final String teamName;
 
-    public LoadTeamInputData(String teamName) {
-        this.teamName = teamName;
+    /**
+     * Initialize input data.
+     * @param teamNameParam name of the team being loaded.
+     */
+    public LoadTeamInputData(final String teamNameParam) {
+        this.teamName = teamNameParam;
     }
+
+    /**
+     * Get the name of the team.
+     * @return name of the team.
+     */
     public String getTeamName() {
         return teamName;
     }

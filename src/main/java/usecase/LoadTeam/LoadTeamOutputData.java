@@ -8,6 +8,7 @@ public class LoadTeamOutputData {
     public LoadTeamOutputData(Team team) {
         this.team = team;
     }
+
     public Team getTeam() {
         return team;
     }
