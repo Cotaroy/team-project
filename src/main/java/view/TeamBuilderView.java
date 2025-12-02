@@ -191,6 +191,11 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     }
 
     private void updateSlotDisplays() {
+        String teamName = teamBuilderViewModel.getState().getTeam().getTeamName();
+        if (teamName != null && !teamName.equals("")) {
+            teamNameInputField.setText(teamName);
+        }
+
         for (int i = 0; i < teamDisplayPanel.getComponentCount(); i++) {
             DisplayPokemonInTeamJPanel component = (DisplayPokemonInTeamJPanel) teamDisplayPanel.getComponent(i);
             Team team = teamBuilderViewModel.getState().getTeam();
