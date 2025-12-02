@@ -38,6 +38,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private PokemonLookupController pokemonLookupController = null;
 
     private final JComboBox<String> filterTypeDropdown = new JComboBox<>(PokemonLookupViewModel.FILTERS);
+
     private final DefaultListModel<String> filterValueModel = new DefaultListModel<>();
     private final JList<String> filterValueList = new JList<>(filterValueModel);
     private final JScrollPane filterValueDropdown = new JScrollPane(filterValueList);
@@ -46,7 +47,10 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private final JButton saveToTeam;
     private final JButton filterButton;
     private final DisplayPokemonPanel displayPokemon = new DisplayPokemonPanel();
-    private final DisplayFilterJList displayFilter = new DisplayFilterJList();
+
+    private final DefaultListModel<String> filteredListModel =  new DefaultListModel<>();
+    private final JList<String> filteredList = new JList<>(filteredListModel);
+    private final JScrollPane displayFilter = new JScrollPane(filteredList);
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
@@ -161,11 +165,19 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.add(pokemonNameInfo);
+        topPanel.add(filterInfo);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(displayPokemon,  BorderLayout.WEST);
+        bottomPanel.add(displayFilter,  BorderLayout.EAST);
+
         this.add(title);
-        this.add(pokemonNameInfo);
-        this.add(filterInfo);
-        this.add(displayPokemon);
-        this.add(displayFilter);
+        this.add(topPanel);
+        this.add(bottomPanel);
     }
 
     private void updatePokemonDisplay(PokemonLookupViewModel pokemonLookupViewModel) {
@@ -184,7 +196,15 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         final PokemonLookupState currentState = pokemonLookupViewModel.getState();
         try {
             pokemonLookupController.setFilterDisplay(currentState.getFilterType(), currentState.getFilterValue());
-            displayFilter.setPokemonList(currentState.getFilteredPokemonList());
+            filteredListModel.clear();
+            for (String s : currentState.getFilteredPokemonList()){
+                filteredListModel.addElement(s);
+            }
+            displayFilter.setViewportView(filteredList);
+            displayFilter.revalidate();
+            displayFilter.repaint();
+
+            //displayFilter.setPokemonList(currentState.getFilteredPokemonList());
         }
         catch (IOException e) {JOptionPane.showMessageDialog(null, "Failed to filter");
         }
