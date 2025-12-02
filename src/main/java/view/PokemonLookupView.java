@@ -13,10 +13,7 @@ import usecase.filter.FilterPokemonDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 import usecase.lookup.PokemonLookupInputBoundary;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,6 +35,7 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private PokemonLookupController pokemonLookupController = null;
 
     private final JComboBox<String> filterTypeDropdown = new JComboBox<>(PokemonLookupViewModel.FILTERS);
+
     private final DefaultListModel<String> filterValueModel = new DefaultListModel<>();
     private final JList<String> filterValueList = new JList<>(filterValueModel);
     private final JScrollPane filterValueDropdown = new JScrollPane(filterValueList);
@@ -46,7 +44,10 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
     private final JButton saveToTeam;
     private final JButton filterButton;
     private final DisplayPokemonPanel displayPokemon = new DisplayPokemonPanel();
-    private final DisplayFilterJList displayFilter = new DisplayFilterJList();
+
+    private final DefaultListModel<String> filteredListModel =  new DefaultListModel<>();
+    private final JList<String> filteredList = new JList<>(filteredListModel);
+    private final JScrollPane displayFilter = new JScrollPane(filteredList);
 
     public PokemonLookupView(PokemonLookupViewModel pokemonLookupViewModel) {
         this.pokemonLookupViewModel = pokemonLookupViewModel;
@@ -155,17 +156,49 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
 
         );
 
+        filteredList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Double-click
+                    int index = filteredList.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        String selectedPokemonName = filteredListModel.getElementAt(index);
+                        if (selectedPokemonName != null) {
+                            // Set the selected Pokémon name in the input field and state
+                            pokemonNameInputField.setText(selectedPokemonName);
+
+                            // Update the state
+                            final PokemonLookupState currentState = pokemonLookupViewModel.getState();
+                            currentState.setPokemonName(selectedPokemonName);
+                            pokemonLookupViewModel.setState(currentState);
+
+                            // Trigger the search/display for this Pokémon
+                            updatePokemonDisplay(pokemonLookupViewModel);
+                        }
+                    }
+                }
+            }
+        });
+
         addPokemonNameListener();
         addFilterTypeListener();
         addFilterValueListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.add(pokemonNameInfo);
+        topPanel.add(filterInfo);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(displayPokemon,  BorderLayout.WEST);
+        bottomPanel.add(displayFilter,  BorderLayout.EAST);
+
         this.add(title);
-        this.add(pokemonNameInfo);
-        this.add(filterInfo);
-        this.add(displayPokemon);
-        this.add(displayFilter);
+        this.add(topPanel);
+        this.add(bottomPanel);
     }
 
     private void updatePokemonDisplay(PokemonLookupViewModel pokemonLookupViewModel) {
@@ -184,7 +217,13 @@ public class PokemonLookupView extends JPanel implements ActionListener, Propert
         final PokemonLookupState currentState = pokemonLookupViewModel.getState();
         try {
             pokemonLookupController.setFilterDisplay(currentState.getFilterType(), currentState.getFilterValue());
-            displayFilter.setPokemonList(currentState.getFilteredPokemonList());
+            filteredListModel.clear();
+            for (String s : currentState.getFilteredPokemonList()){
+                filteredListModel.addElement(s);
+            }
+            displayFilter.setViewportView(filteredList);
+            displayFilter.revalidate();
+            displayFilter.repaint();
         }
         catch (IOException e) {JOptionPane.showMessageDialog(null, "Failed to filter");
         }
