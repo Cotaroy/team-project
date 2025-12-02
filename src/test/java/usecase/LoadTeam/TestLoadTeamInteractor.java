@@ -3,8 +3,11 @@ package usecase.LoadTeam;
 import dataaccess.*;
 import entity.*;
 import org.junit.Test;
+import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,7 +15,7 @@ import java.util.HashSet;
 public class TestLoadTeamInteractor {
 
     @Test
-    public void validTeamTest() {
+    public void validTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException, IOException {
         MoveMap movemap = new MoveMap();
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
@@ -27,12 +30,22 @@ public class TestLoadTeamInteractor {
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/11.png");
-        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
-
+        Pokemon magikarp = new PokemonBuilder()
+                .setName("magikarp")
+                .setType1(type1)
+                .setType2(null)
+                .setStats(statsikarp)
+                .setAbilities(abilitykarp)
+                .setHidden(abilitymap.getAbility(155))
+                .setMoves(moveskarp)
+                .setEggGroups(eggkarp)
+                .setPokedexes(pokedexkarp)
+                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png")
+                .build();
         Team expectedTeam = new Team("goat");
         expectedTeam.setPokemon(magikarp, 0);
 
-        InMemoryUserDataAccessObject dataAccess = new InMemoryUserDataAccessObject();
+        LoadTeamDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         dataAccess.saveTeam(expectedTeam);
 
         LoadTeamInputData inputData = new LoadTeamInputData("goat");
@@ -45,7 +58,7 @@ public class TestLoadTeamInteractor {
             }
 
             @Override
-            public void prepareFailureView(String errorMessage) {
+            public void prepareFailView(String errorMessage) {
                 System.out.println("Failed to load team: " + errorMessage);
             }
         };
@@ -54,7 +67,7 @@ public class TestLoadTeamInteractor {
     }
 
     @Test
-    public void nonexistentTeamTest() {
+    public void nonexistentTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException, IOException {
         MoveMap movemap = new MoveMap();
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
@@ -69,12 +82,22 @@ public class TestLoadTeamInteractor {
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/11.png");
-        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
-
+        Pokemon magikarp = new PokemonBuilder()
+                .setName("magikarp")
+                .setType1(type1)
+                .setType2(null)
+                .setStats(statsikarp)
+                .setAbilities(abilitykarp)
+                .setHidden(abilitymap.getAbility(155))
+                .setMoves(moveskarp)
+                .setEggGroups(eggkarp)
+                .setPokedexes(pokedexkarp)
+                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png")
+                .build();
         Team expectedTeam = new Team("goat");
         expectedTeam.setPokemon(magikarp, 0);
 
-        InMemoryUserDataAccessObject dataAccess = new InMemoryUserDataAccessObject();
+        LoadTeamDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         dataAccess.saveTeam(expectedTeam);
 
         LoadTeamInputData inputData = new LoadTeamInputData("nonexistent team");
@@ -85,7 +108,7 @@ public class TestLoadTeamInteractor {
             }
 
             @Override
-            public void prepareFailureView(String errorMessage) {
+            public void prepareFailView(String errorMessage) {
                 assertNotNull(errorMessage);
                 assertFalse(errorMessage.isEmpty());
             }
@@ -95,7 +118,7 @@ public class TestLoadTeamInteractor {
     }
 
     @Test
-    public void emptyNameTeamTest() {
+    public void emptyNameTeamTest() throws BuildPokemonTeamDataAccessInterface.TeamExistsException, IOException {
         MoveMap movemap = new MoveMap();
         AbilityMap abilitymap = new AbilityMap();
         ArrayList<Integer> statsikarp = new ArrayList<>(Arrays.asList(20, 10, 55, 15, 20, 80));
@@ -110,12 +133,22 @@ public class TestLoadTeamInteractor {
 
         Type type1 = new Type("water", 11,
                 waterstrength, waterweak, wateres, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/11.png");
-        Pokemon magikarp = new Pokemon("magikarp", type1, null, statsikarp, abilitykarp, abilitymap.getAbility(155), moveskarp, eggkarp, pokedexkarp, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png");
-
+        Pokemon magikarp = new PokemonBuilder()
+                .setName("magikarp")
+                .setType1(type1)
+                .setType2(null)
+                .setStats(statsikarp)
+                .setAbilities(abilitykarp)
+                .setHidden(abilitymap.getAbility(155))
+                .setMoves(moveskarp)
+                .setEggGroups(eggkarp)
+                .setPokedexes(pokedexkarp)
+                .setSprite("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png")
+                .build();
         Team expectedTeam = new Team("goat");
         expectedTeam.setPokemon(magikarp, 0);
 
-        InMemoryUserDataAccessObject dataAccess = new InMemoryUserDataAccessObject();
+        LoadTeamDataAccessInterface dataAccess = new InMemoryUserDataAccessObject();
         dataAccess.saveTeam(expectedTeam);
 
         LoadTeamInputData inputData = new LoadTeamInputData("");
@@ -126,7 +159,7 @@ public class TestLoadTeamInteractor {
             }
 
             @Override
-            public void prepareFailureView(String errorMessage) {
+            public void prepareFailView(String errorMessage) {
                 assertEquals("No Pokemon name provided.", errorMessage);
             }
         };

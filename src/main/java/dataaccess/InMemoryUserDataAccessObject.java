@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryUserDataAccessObject implements GradeTeamUserDataAccessInterface,
-        BuildPokemonTeamDataAccessInterface, PokemonLookupDataAccessInterface {
+        BuildPokemonTeamDataAccessInterface, PokemonLookupDataAccessInterface, LoadTeamDataAccessInterface {
     private PokemonMap pokemap = new PokemonMap();
 
     private final Map<String, Team> teams = new HashMap<>();

@@ -40,7 +40,7 @@ public class TestRegionPokedex {
             }
 
             @Override
-            public void prepareFailureView(String error) {
+            public void prepareFailView(String error) {
                 assertEquals("Region not found", error);
             }
         };
