@@ -301,6 +301,14 @@ public class TeamBuilderView extends JPanel implements ActionListener, PropertyC
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         updateSlotDisplays();
+
+        if (evt.getPropertyName().equals("state")) {
+            TeamBuilderState currentState = (TeamBuilderState) evt.getNewValue();
+            if ("Team Full Error".equals(currentState.getTeam())) {
+                JOptionPane.showMessageDialog(null, "No Pokemon added, since team is full");
+                currentState.setTeamNameError(null);
+            }
+        }
     }
 
     public void setSavedTeamsDropdown(){

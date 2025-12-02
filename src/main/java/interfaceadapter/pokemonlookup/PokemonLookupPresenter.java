@@ -57,9 +57,32 @@ public class PokemonLookupPresenter implements PokemonLookupOutputBoundary, Filt
     public void switchToTeamBuilderView(int index, Pokemon pokemon) {
         final TeamBuilderState state = teamBuilderViewModel.getState();
         final Pokemon newPokemon = pokemon.getCopy();
-        state.getTeam().setPokemon(newPokemon, index);
-        viewManagerModel.setState(teamBuilderViewModel.getViewName());
-        viewManagerModel.firePropertyChange();
-        teamBuilderViewModel.firePropertyChange();
+
+        if (index != -1) {
+            state.getTeam().setPokemon(newPokemon, index);
+            viewManagerModel.setState(teamBuilderViewModel.getViewName());
+            viewManagerModel.firePropertyChange();
+            teamBuilderViewModel.firePropertyChange();
+        }
+        else {
+            Pokemon[] team = state.getTeam().getPokemon();
+            for (int i = 0; i < team.length; i++) {
+                if (team[i] == null) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) {
+                state.setTeamNameError("Team Full Error");
+                viewManagerModel.setState(teamBuilderViewModel.getViewName());
+                viewManagerModel.firePropertyChange();
+                teamBuilderViewModel.firePropertyChange();
+                return;
+            }
+            state.getTeam().setPokemon(newPokemon, index);
+            viewManagerModel.setState(teamBuilderViewModel.getViewName());
+            viewManagerModel.firePropertyChange();
+            teamBuilderViewModel.firePropertyChange();
+        }
     }
 }
