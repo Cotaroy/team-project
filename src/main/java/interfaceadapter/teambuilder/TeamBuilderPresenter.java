@@ -5,8 +5,8 @@ import interfaceadapter.pokemonlookup.PokemonLookupState;
 import interfaceadapter.pokemonlookup.PokemonLookupViewModel;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputBoundary;
 import usecase.BuildPokemonTeam.BuildPokemonTeamOutputData;
-import usecase.LoadTeam.LoadTeamOutputBoundary;
-import usecase.LoadTeam.LoadTeamOutputData;
+import usecase.load_team.LoadTeamOutputBoundary;
+import usecase.load_team.LoadTeamOutputData;
 import usecase.grade_team.GradeTeamOutputBoundary;
 import usecase.grade_team.GradeTeamOutputData;
 
