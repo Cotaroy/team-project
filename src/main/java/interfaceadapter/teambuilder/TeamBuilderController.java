@@ -62,7 +62,7 @@ public class TeamBuilderController {
         userTeamBuilderUseCaseInteractor.overwriteTeam(buildPokemonTeamInputData);
     }
 
-    public void loadTeam(String teamName) {
+    public void loadTeam(String teamName) throws IOException {
         final LoadTeamInputData loadTeamInputData = new LoadTeamInputData(teamName);
         loadTeamInteractor.execute(loadTeamInputData);
     }

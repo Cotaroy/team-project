@@ -2,6 +2,8 @@ package usecase.LoadTeam;
 
 import entity.Team;
 
+import java.io.IOException;
+
 public class LoadTeamInteractor implements LoadTeamInputBoundary {
     private final LoadTeamDataAccessInterface dataAccess;
     private final LoadTeamOutputBoundary presenter;
@@ -11,13 +13,12 @@ public class LoadTeamInteractor implements LoadTeamInputBoundary {
         this.presenter = presenter;
     }
     @Override
-    public void execute(LoadTeamInputData inputData) {
+    public void execute(LoadTeamInputData inputData) throws IOException {
         String teamName = inputData.getTeamName();
         if ("".equals(teamName)) {
             presenter.prepareFailView("No Pokemon name provided.");
         }
         else {
-            try {
                 Team team = dataAccess.loadTeam(teamName);
                 if (team == null) {
                     presenter.prepareFailView("Team not found.");
@@ -26,9 +27,5 @@ public class LoadTeamInteractor implements LoadTeamInputBoundary {
                     presenter.prepareSuccessView(outputData);
                 }
             }
-            catch (Exception e) {
-                presenter.prepareFailView("Some exception occurred");
-            }
         }
     }
-}

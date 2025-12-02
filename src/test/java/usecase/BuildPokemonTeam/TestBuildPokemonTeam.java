@@ -178,7 +178,7 @@ public class TestBuildPokemonTeam {
     }
 
     @Test
-    public void BuildPokemonTeamTestSave() throws IOException { //Checks if save team is used.
+    public void BuildPokemonTeamTestSave() throws IOException, BuildPokemonTeamDataAccessInterface.TeamExistsException { //Checks if save team is used.
         Team t = new Team("Let's Not Meet");
         Pokemon a = EmptyPokemonFactory.create();
         for (int i = 1; i < 5; i++){
