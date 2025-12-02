@@ -1,4 +1,4 @@
-package usecase.LoadTeam;
+package usecase.load_team;
 
 import java.io.IOException;
 

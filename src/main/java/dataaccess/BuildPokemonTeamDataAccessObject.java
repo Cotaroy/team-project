@@ -9,7 +9,7 @@ import entity.Pokemon;
 import entity.Team;
 import org.jetbrains.annotations.NotNull;
 import usecase.BuildPokemonTeam.BuildPokemonTeamDataAccessInterface;
-import usecase.LoadTeam.LoadTeamDataAccessInterface;
+import usecase.load_team.LoadTeamDataAccessInterface;
 import usecase.lookup.PokemonLookupDataAccessInterface;
 
 public class BuildPokemonTeamDataAccessObject implements BuildPokemonTeamDataAccessInterface,

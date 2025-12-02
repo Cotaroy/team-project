@@ -1,4 +1,4 @@
-package usecase.LoadTeam;
+package usecase.load_team;
 
 public class LoadTeamInputData {
     /**
